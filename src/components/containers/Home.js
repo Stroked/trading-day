@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Styled from 'styled-components';
 
-import StackedBarGraph from '../components/StackedBarGraph.js';
-import CardGraph from '../components/CardGraph.js';
-import NewsCard from '../components/NewsCard.js';
-import Spinner from '../components/Spinner.js';
+import StackedBarGraph from '../quote-ninja/StackedBarGraph.js';
+import CardGraph from '../quote-ninja/CardGraph.js';
+import NewsCard from '../quote-ninja/NewsCard.js';
+import Spinner from '../quote-ninja/Spinner.js';
 
 const Header = Styled.div`
 background-color: #282c34;

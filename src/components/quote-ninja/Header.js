@@ -14,6 +14,7 @@ justify-content: space-around;
 font-size: calc(10px + 2vmin);
 color: white;
 `;
+
 class Header extends React.Component {
   render() {
     return (
