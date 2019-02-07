@@ -2,15 +2,21 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
-import Header from './components/quote-ninja/Header.js';
+import { DataProvider } from './components/quotes-ninja/WithDataContext';
+import Header from './components/openStock/Header.js';
 import Home from './components/containers/Home.js';
 import Stocks from './components/containers/Stocks.js';
 import NotFound from './components/containers/NotFound.js';
-import Orb from './components/quote-ninja/Orb';
-import BitcoinVX from './components/containers/BitcoinVX';
-import EthereumVX from './components/containers/EthereumVX';
+import Orb from './components/openStock/Orb';
 
-import logo from './logo.svg';
+import QuotesHomepage from './routes/HomePage';
+import QuotePage from './routes/QuotePage';
+import NotFoundPage from './routes/NotFoundPage';
+
+
+import StockTracker from './components/simple-stock-tracker/'
+
+import logo from './assets/orange-wheel-art-800x800.png';
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -54,13 +60,18 @@ export default class App extends React.Component {
         </AppWrapper>
         <Header />
         <div>
+        <DataProvider>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/Homepage" render={props => <QuotesHomepage {...props} />} />
             <Route exact path="/Stocks" component={Stocks} />
-            <Route exact path="/Bitcoin" component={BitcoinVX} />
-            <Route exact path="/Ethereum" component={EthereumVX} />
-            <Route component={NotFound} />
+            <Route exact path="/StockTracker" component={StockTracker} />
+            <Route exact path="/:id" render={props => 
+            (<QuotePage symbol={props.match.params.id} {...props} />)}/>
+            <Route component={NotFound}        />
+            <Route component={NotFoundPage} />
           </Switch>
+           </DataProvider> 
         </div>
       </div>
     );

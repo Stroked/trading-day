@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as d3 from 'd3';
 
-import Company from '../quote-ninja/Company.js';
-import CardGraph from '../quote-ninja/CardGraph.js';
-import Graph from '../quote-ninja/Graph.js';
-import Statistics from '../quote-ninja/Statistics.js';
-import Spinner from '../quote-ninja/Spinner.js';
-import NewsCard from '../quote-ninja/NewsCard.js';
+import Company from '../openStock/Company.js';
+import CardGraph from '../openStock/CardGraph.js';
+import Graph from '../openStock/Graph.js';
+import Statistics from '../openStock/Statistics.js';
+import Spinner from '../openStock/Spinner.js';
+import NewsCard from '../openStock/NewsCard.js';
 
 class Info extends React.Component {
   state = {
