@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // import Media from 'react-media';
-import _ from 'lodash';
-import { Grid, Segment, List, Icon, Header } from 'semantic-ui-react';
+import _ from "lodash";
+import { Grid, Segment, List, Icon, Header } from "semantic-ui-react";
 // import {
 //   ResponsiveContainer,
 //   Area,
@@ -12,15 +12,14 @@ import { Grid, Segment, List, Icon, Header } from 'semantic-ui-react';
 //   ComposedChart,
 //   Bar
 // } from 'recharts';
-import ChartMenu from './ChartMenu';
+import ChartMenu from "./ChartMenu";
 import {
   price,
   numRounded,
   formatNumber,
   chartUpDown
-} from '../../utils/format';
-import styled from 'styled-components';
-
+} from "../../utils/format";
+import styled from "styled-components";
 const ChartWrapper = styled.div`
   @media (min-width: 768px) {
     /* justify-content: space-around; */
@@ -33,7 +32,7 @@ const CustomTooltip = ({ chart, label, active }) => {
     const item = chart[label];
     return (
       <Segment inverted>
-        <List size="mini" inverted>
+        <List size='mini' inverted>
           <List.Item>
             <List.Header>{item.label}</List.Header>
           </List.Item>
@@ -48,8 +47,9 @@ const CustomTooltip = ({ chart, label, active }) => {
 };
 
 const Chart = ({ charts, display }) => {
-  const [activeChart, setActiveChart] = useState('d1');
+  const [activeChart, setActiveChart] = useState("d1");
   const { up, perc } = chartUpDown(activeChart, charts[activeChart], display);
+  console.log(charts[activeChart]);
   return (
     <ChartWrapper>
       {matches => (
@@ -63,6 +63,7 @@ const Chart = ({ charts, display }) => {
                 onClick={setActiveChart}
               />
               <Segment attached>
+                
                 {/* {!_.isEmpty(charts[activeChart]) ? (
                   <ResponsiveContainer height={300}>
                     <ComposedChart data={charts[activeChart]}>

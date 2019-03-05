@@ -1,14 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import * as d3 from 'd3';
 
-import Company from '../openStock/Company.js';
-import CardGraph from '../openStock/CardGraph.js';
-import Graph from '../openStock/Graph.js';
-import Statistics from '../openStock/Statistics.js';
-import Spinner from '../openStock/Spinner.js';
-import NewsCard from '../openStock/NewsCard.js';
+import Company from '../Company.js';
+import CardGraph from '../CardGraph.js';
+import Graph from '../Graph.js';
+import Statistics from '../Statistics.js';
+import Spinner from '../Spinner.js';
+import NewsCard from '../NewsCard.js';
 
 class Info extends React.Component {
   state = {
@@ -35,7 +33,7 @@ class Info extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.symbol != this.props.symbol) {
+    if (prevProps.symbol !== this.props.symbol) {
       this.setState({
         fetched: false,
         companyFetched: false,
@@ -158,7 +156,7 @@ class Info extends React.Component {
       frequency;
     let timeParser = d3.timeParse('%Y-%m-%d');
 
-    if (frequency == '1d') {
+    if (frequency === '1d') {
       timeParser = d3.timeParse('%Y%m%d%H:%M');
     }
 
@@ -176,15 +174,15 @@ class Info extends React.Component {
 
         for (let i = 0; i < d.length; i++) {
           if (
-            d[i]['marketNumberOfTrades'] == 0 ||
-            d[i]['marketAverage'] == -1
+            d[i]['marketNumberOfTrades'] === 0 ||
+            d[i]['marketAverage'] === -1
           ) {
             d.splice(i, 1);
             i--;
             continue;
           }
 
-          if (frequency == '1d') {
+          if (frequency === '1d') {
             d[i]['close'] = d[i]['marketAverage'];
             d[i]['date'] = timeParser(d[i]['date'] + d[i]['minute']);
           } else {

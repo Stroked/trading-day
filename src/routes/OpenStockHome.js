@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Styled from 'styled-components';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import Styled from "styled-components";
 
-import StackedBarGraph from '../openStock/StackedBarGraph.js';
-import CardGraph from '../openStock/CardGraph.js';
-import NewsCard from '../openStock/NewsCard.js';
-import Spinner from '../openStock/Spinner.js';
+import StackedBarGraph from "../components/openStock/StackedBarGraph.js";
+import CardGraph from "../components/openStock/CardGraph.js";
+import NewsCard from "../components/openStock/NewsCard.js";
+import Spinner from "../components/openStock/Spinner.js";
 
 const Header = Styled.div`
 background-color: #282c34;
@@ -19,7 +19,7 @@ font-size: calc(10px + 2vmin);
 color: white;
 `;
 
-class Home extends React.Component {
+class OpenStockHome extends React.Component {
   state = {
     stocksFetched: false,
     marketFetched: false,
@@ -42,9 +42,9 @@ class Home extends React.Component {
     // Get Exchanges and batch call.
     let parent = this;
     fetch(
-      'https://api.iextrading.com/1.0/stock/market/batch?symbols=NDAQ,SPY,DIA&types=quote,chart&range=1d',
+      "https://api.iextrading.com/1.0/stock/market/batch?symbols=NDAQ,SPY,DIA&types=quote,chart&range=1d",
       {
-        method: 'GET'
+        method: "GET"
       }
     )
       .then(function(data) {
@@ -53,7 +53,7 @@ class Home extends React.Component {
       .then(function(json) {
         parent.setState({
           stocksFetched: true,
-          stocks: ['NDAQ', 'SPY', 'DIA'],
+          stocks: ["NDAQ", "SPY", "DIA"],
           stocksData: json
         });
       })
@@ -64,8 +64,8 @@ class Home extends React.Component {
     // API CALL
     // https://api.iextrading.com/1.0/market
     let parent = this;
-    fetch('https://api.iextrading.com/1.0/market', {
-      method: 'GET'
+    fetch("https://api.iextrading.com/1.0/market", {
+      method: "GET"
     })
       .then(function(data) {
         return data.json();
@@ -83,8 +83,8 @@ class Home extends React.Component {
     // API CALL
     // https://api.iextrading.com/1.0/stock/market/news
     let parent = this;
-    fetch('https://api.iextrading.com/1.0/stock/market/news', {
-      method: 'GET'
+    fetch("https://api.iextrading.com/1.0/stock/market/news", {
+      method: "GET"
     })
       .then(function(data) {
         return data.json();
@@ -99,92 +99,92 @@ class Home extends React.Component {
   };
 
   render() {
-    const NDAQ = this.state.stocksData['NDAQ'];
-    const DIA = this.state.stocksData['DIA'];
-    const SPY = this.state.stocksData['SPY'];
+    const NDAQ = this.state.stocksData["NDAQ"];
+    const DIA = this.state.stocksData["DIA"];
+    const SPY = this.state.stocksData["SPY"];
 
     return (
-      <div className="container-fluid">
-        <div className="row">
+      <div className='container-fluid'>
+        <div className='row'>
           {/* <div className="col-3"></div> */}
-          <div className="d-none d-sm-block col-6 market card">
-            <h2 className="large"> Market Trading Volume (24h) </h2>
+          <div className='d-none d-sm-block col-6 market card'>
+            <h2 className='large'> Market Trading Volume (24h) </h2>
             {this.state.marketFetched ? (
-              <StackedBarGraph name="market" d={this.state.marketData} />
+              <StackedBarGraph name='market' d={this.state.marketData} />
             ) : (
               <Spinner />
             )}
           </div>
           {/* <div className="col-3"></div> */}
         </div>
-        <div className="row">
-          <div className="d-none d-lg-block col" />
-          <div className="d-none d-lg-block col" />
-          <div className="col card-stock">
+        <div className='row'>
+          <div className='d-none d-lg-block col' />
+          <div className='d-none d-lg-block col' />
+          <div className='col card-stock'>
             {this.state.stocksFetched ? (
               <CardGraph
-                name="NDAQ"
+                name='NDAQ'
                 d={NDAQ.chart}
-                companyName="Nasdaq Inc."
+                companyName='Nasdaq Inc.'
                 latestPrice={NDAQ.quote.latestPrice}
                 changePercent={NDAQ.quote.changePercent}
                 volume={NDAQ.quote.latestVolume}
-                width="250"
-                height="75"
+                width='250'
+                height='75'
               />
             ) : (
               <Spinner />
             )}
           </div>
-          <div className="col card-stock">
+          <div className='col card-stock'>
             {this.state.stocksFetched ? (
               <CardGraph
-                name="SPY"
+                name='SPY'
                 d={SPY.chart}
-                companyName="S&P 500"
+                companyName='S&P 500'
                 latestPrice={SPY.quote.latestPrice}
                 changePercent={SPY.quote.changePercent}
                 volume={SPY.quote.latestVolume}
-                width="250"
-                height="75"
+                width='250'
+                height='75'
               />
             ) : (
               <Spinner />
             )}
           </div>
-          <div className="col card-stock">
+          <div className='col card-stock'>
             {this.state.stocksFetched ? (
               <CardGraph
-                name="DIA"
+                name='DIA'
                 d={DIA.chart}
-                companyName="Dow Jones"
+                companyName='Dow Jones'
                 latestPrice={DIA.quote.latestPrice}
                 changePercent={DIA.quote.changePercent}
                 volume={DIA.quote.latestVolume}
-                width="250"
-                height="75"
+                width='250'
+                height='75'
               />
             ) : (
               <Spinner />
             )}
           </div>
-          <div className="d-none d-lg-block col" />
-          <div className="d-none d-lg-block col" />
+          <div className='d-none d-lg-block col' />
+          <div className='d-none d-lg-block col' />
         </div>
-        <div className="row">
-          <div className="col-3" />
-          <div className="col-6">
+        <div className='row'>
+          <div className='col-3' />
+          <div className='col-6'>
             {this.state.newsFetched ? (
               <NewsCard data={this.state.newsData} />
             ) : (
               <Spinner />
             )}
           </div>
-          <div className="col-3" />
+          <div className='col-3' />
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+export default OpenStockHome;

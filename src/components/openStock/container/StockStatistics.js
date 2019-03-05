@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import StatisticsTable from '../openStock/StatisticsTable.js';
-import Spinner from '../openStock/Spinner.js';
+import StatisticsTable from '../StatisticsTable.js';
+import Spinner from '../Spinner.js';
 
 class StocksStatistics extends React.Component {
   state = {

@@ -1,79 +1,120 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+// react ecosystem
+import React from "react";
+import styled, { keyframes } from "styled-components";
+import { Switch, Route } from "react-router-dom";
+//---------------------------------------------------
+//QUOTES-NINJA
+import { DataProvider } from "./components/quotes-ninja/WithDataContext";
+import QuotesHome from "./routes/QuotesHome";
+import QuotePage from "./routes/QuotePage";
+//OPEN-STOCK
+import Header from "./components/openStock/Header.js";
+import OpenStockHome from "./routes/OpenStockHome.js";
+import Stocks from "./components/openStock/container/Stocks.js";
+//STOCK-TRACKER
+import StockTracker from "./components/simple-stock-tracker/";
 
-import { DataProvider } from './components/quotes-ninja/WithDataContext';
-import Header from './components/openStock/Header.js';
-import Home from './components/containers/Home.js';
-import Stocks from './components/containers/Stocks.js';
-import NotFound from './components/containers/NotFound.js';
-import Orb from './components/openStock/Orb';
+//TRADING-DAY
+import TradingDay from "./components/TradingDay/";
+//TREND-TICKER
+// import TickerTrends from './routes/TickerTrends'
+//---------------------------------------------------
+//ROUTES
+import Login from "./routes/Login";
+import NotFoundPage from "./routes/NotFoundPage";
 
-import QuotesHomepage from './routes/HomePage';
-import QuotePage from './routes/QuotePage';
-import NotFoundPage from './routes/NotFoundPage';
+//---------------------------------------------------
+//CONTAINERS
 
+//---------------------------------------------------
+//ASSETS
+import logo from "./assets/orange-wheel-art-800x800.png";
+import marketHeader from "./assets/design/market-header.png";
+//---------------------------------------------------
 
-import StockTracker from './components/simple-stock-tracker/'
+//---------------------------------------------------
+//Cool Look
+import Mosaic from "./components/coolook/Mosaic";
 
-import logo from './assets/orange-wheel-art-800x800.png';
-
-const AppWrapper = styled.div`
-  text-align: center;
-  margin: 25px;
-`;
-const rotate360 = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-const AppLogo = styled.img`
-  animation: ${rotate360} infinite 120s linear;
-  height: 80px;
-  &:hover {
-    animation: ${rotate360} infinite 1.5s linear;
-  }
-`;
-const AppHeader = styled.div`
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-`;
-const AppTitle = styled.h1`
-  font-size: 1.3em;
-`;
-
+//---------------------------------------------------
 export default class App extends React.Component {
   render() {
     return (
-      <div>
-        <AppWrapper>
-          <AppHeader>
-            <Orb />
-            <AppLogo src={logo} alt="logo" />
-            <AppTitle>Welcome to React</AppTitle>
-          </AppHeader>
-        </AppWrapper>
-        <Header />
-        <div>
-        <DataProvider>
+      <AppWrapper>
+        {/* <DataProvider> */}
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/Homepage" render={props => <QuotesHomepage {...props} />} />
-            <Route exact path="/Stocks" component={Stocks} />
-            <Route exact path="/StockTracker" component={StockTracker} />
-            <Route exact path="/:id" render={props => 
-            (<QuotePage symbol={props.match.params.id} {...props} />)}/>
-            <Route component={NotFound}        />
+            {/* ROOT */}
+            <Route exact path='/' component={OpenStockHome} />
+            {/* QUOTES HOME */}
+
+            {/* LOGIN */}
+            <Route exact path='/Login' component={Login} />
+            {/* OPENSTOCK */}
+            <Route exact path='/Stocks' component={Stocks} />
+            <Route exact path='/TradingDay' component={TradingDay} />
+            <Route exact path='/StockTracker' component={StockTracker} />
+            <Route exact path='/Mosaic' component={Mosaic} />
+            {/* <Route
+                exact
+                path='GoogleTrends/:id'
+                render={props => (
+                  <TickerTrends symbol={props.match.params.id} {...props} />
+                )}
+              /> */}
+            {/*  QUOTES */}
+            <Route
+              exact
+              path='/Homepage'
+              render={props => <QuotesHome {...props} />}
+            />
+
+            <Route
+              exact
+              path='/:id'
+              render={props => (
+                <QuotePage symbol={props.match.params.id} {...props} />
+              )}
+            />
             <Route component={NotFoundPage} />
           </Switch>
-           </DataProvider> 
-        </div>
-      </div>
+        {/* </DataProvider> */}
+      </AppWrapper>
     );
   }
 }
+
+//-------------------------------------------------
+const AppWrapper = styled.div`
+  text-align: center;
+`;
+// const rotate360 = keyframes`
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// `;
+// const AppLogo = styled.img`
+//   animation: ${rotate360} infinite 120s linear;
+//   height: 80px;
+//   &:hover {
+//     animation: ${rotate360} infinite 1.5s linear;
+//   }
+// `;
+// const AppHeader = styled.div`
+//   background-color: #222;
+//   height: 150px;
+//   padding: 20px;
+//   color: white;
+// `;
+// const AppTitle = styled.h1`
+//   font-size: 1.3em;
+// `;
+//-----------------------------------------------------
+// <AppWrapper>
+//   <AppHeader>
+//     <AppLogo src={logo} alt='logo' />
+//     <AppTitle>Welcome to React</AppTitle>
+//   </AppHeader>
+// </AppWrapper>;

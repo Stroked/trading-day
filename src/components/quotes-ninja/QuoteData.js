@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Segment, Header, Image } from 'semantic-ui-react';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Grid, Segment, Header, Image } from "semantic-ui-react";
 
-import StatsPrice from './StatsPrice';
-import StatsDetails from './StatsDetails';
-import Chart from './Chart';
-import NewsItems from './NewsItems';
+import StatsPrice from "./StatsPrice";
+import StatsDetails from "./StatsDetails";
+import Chart from "./Chart";
+import NewsItems from "./NewsItems";
 
-import NotFound from './NotFound';
+import NotFound from "./NotFound";
 
-import { quoteFormatting } from '../../utils/format';
-import setTitle from '../../utils/title';
+import { quoteFormatting } from "../../utils/format";
+import setTitle from "../../utils/title";
 
-import placeholder from '../../assets/iex-logo.png';
+import placeholder from "../../assets/iex-logo.png";
+import HeikinAshi from "../simple-stock-tracker/HeikinAshi";
 
 const QuoteData = props => {
   if (props.data && props.charts) {
@@ -24,21 +25,18 @@ const QuoteData = props => {
 
     // set img
     const [imgSrc, setImgSrc] = useState(logo.url);
-    useEffect(
-      () => {
-        setImgSrc(logo.url);
-      },
-      [logo.url]
-    );
+    useEffect(() => {
+      setImgSrc(logo.url);
+    }, [logo.url]);
 
     const handleErr = e => {
       setImgSrc(placeholder);
     };
-
+    console.log(props.charts);
     return (
       <div>
-        <Image src={imgSrc} size="tiny" centered onError={handleErr} />
-        <Header size="huge" textAlign="center">
+        <Image src={imgSrc} size='tiny' centered onError={handleErr} />
+        <Header size='huge' textAlign='center'>
           {display.symbol}
           <Header.Subheader>{display.companyName}</Header.Subheader>
         </Header>
@@ -51,7 +49,15 @@ const QuoteData = props => {
         <Segment basic>
           <Grid stackable>
             <StatsDetails data={display} />
-            <Chart charts={props.charts} display={display} />
+            <HeikinAshi
+              height={600}
+              data={props.charts["m1"]}
+              type='hybrid'
+              ticker={display.symbol}
+              xAxis='date'
+              yAxis='volume'
+            />
+            {/* <Chart charts={props.charts} display={display} /> */}
             <NewsItems news={news} />
           </Grid>
         </Segment>

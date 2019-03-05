@@ -4,9 +4,8 @@ import  {DataContext}  from '../components/quotes-ninja/WithDataContext';
 import NewsItems from '../components/quotes-ninja/NewsItems';
 import setTitle from '../utils/title';
 
-const QuotesHomepage = props => {
+const QuotesHome = props => {
   const  context  = useContext(DataContext);
-  debugger;
   setTitle(null, null);
   return (
     <Segment>
@@ -22,4 +21,4 @@ const QuotesHomepage = props => {
   );
 };
 
-export default QuotesHomepage;
+export default QuotesHome;

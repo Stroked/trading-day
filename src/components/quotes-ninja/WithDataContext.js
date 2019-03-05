@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Loading from './Loading';
-import { fetchQuoteData, fetchIndiciesData } from '../../utils/fetch';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import Loading from "./Loading";
+import { fetchQuoteData, fetchIndiciesData } from "../../utils/fetch";
 
-const COLLECTION = ['SPY', 'QQQ', 'TLT', 'VXX'];
+const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
 const INTERVAL = 60000;
 
 export const DataContext = React.createContext();
@@ -11,19 +11,19 @@ export const DataContext = React.createContext();
 export const DataProvider = props => {
   const [fetchingIncidies, setFetchingIndicies] = useState({
     loading: true,
-    error: null,
+    error: null
   });
 
   const [fetchingQuote, setFetchingQuote] = useState({
     loading: true,
-    error: null,
+    error: null
   });
 
   const [symbol, setSymbol] = useState(null);
 
   const [quoteData, setQuoteData] = useState(null);
 
-  const [refresh, setRefresh] = useState(null)
+  const [refresh, setRefresh] = useState(null);
 
   const [indiciesData, setIndiciesData] = useState({
     quotes: {},
@@ -71,9 +71,9 @@ export const DataProvider = props => {
 
       // set new refresh interval
       const interval = setInterval(() => {
-        fetchQuoteInterval(symbol)
-      }, INTERVAL)
-      setRefresh(interval)
+        fetchQuoteInterval(symbol);
+      }, INTERVAL);
+      setRefresh(interval);
     } catch (error) {
       setFetchingQuote({ loading: false, error });
     }
@@ -92,9 +92,8 @@ export const DataProvider = props => {
         quoteData,
         indiciesData,
         handleSymbolChange,
-        ...props,
-      }}
-    >
+        ...props
+      }}>
       {fetchingIncidies.loading && <Loading />}
       {props.children}
     </DataContext.Provider>
@@ -102,9 +101,9 @@ export const DataProvider = props => {
 };
 
 DataProvider.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 DataProvider.defaultProps = {
-  children: null,
+  children: null
 };
