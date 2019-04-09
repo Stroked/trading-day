@@ -1,13 +1,21 @@
-import React from 'react';
-import * as d3 from 'd3';
+import React from "react";
+import * as d3 from "d3";
+import Company from "../Company.js";
+import CardGraph from "../CardGraph.js";
+import Graph from "../Graph.js";
+import Statistics from "../Statistics.js";
+import Spinner from "../Spinner.js";
+import NewsCard from "../NewsCard.js";
+import CandleStickChart from "../../TradingDay/Charts/CandleStick";
+import styled from 'styled-components';
 
-import Company from '../Company.js';
-import CardGraph from '../CardGraph.js';
-import Graph from '../Graph.js';
-import Statistics from '../Statistics.js';
-import Spinner from '../Spinner.js';
-import NewsCard from '../NewsCard.js';
+const StyledWrapper = styled.div`
 
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+`;
 class Info extends React.Component {
   state = {
     fetched: false,
@@ -15,9 +23,9 @@ class Info extends React.Component {
     newsFetched: false,
     peersFetched: false,
     hasError: false,
-    companyInfo: '',
-    companyName: '',
-    interval: '',
+    companyInfo: "",
+    companyName: "",
+    interval: "",
     times: [],
     prices: [],
     d: [],
@@ -39,9 +47,9 @@ class Info extends React.Component {
         companyFetched: false,
         peersFetched: false,
         hasError: false,
-        companyInfo: '',
-        companyName: '',
-        interval: '',
+        companyInfo: "",
+        companyName: "",
+        interval: "",
         times: [],
         prices: [],
         d: [],
@@ -49,175 +57,104 @@ class Info extends React.Component {
         peerData: {}
       });
       this.makeApiCall();
-      this.changeActive('1d');
+      this.changeActive("1d");
       this.getCompanyInfo();
       this.getPeers();
       this.getNews();
     }
   }
 
-  componentWillUnmount() {}
-
-  getPeers = () => {
-    let parent = this;
-    let symbols;
-    // API CALL
-    // Seperate symbols with a,b,c
-    // https://api.iextrading.com/1.0/stock/market/batch?symbols=aapl,fb&types=quote,chart&range=1d
-    // Get Rivals and batch call.
-    fetch(
-      'https://api.iextrading.com/1.0/stock/' + this.props.symbol + '/peers',
-      {
-        method: 'GET'
-      }
-    )
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        let s = '';
-        symbols = json;
-
-        json.forEach(symbol => {
-          s += symbol + ',';
-        });
-
-        fetch(
-          'https://api.iextrading.com/1.0/stock/market/batch?symbols=' +
-            s +
-            '&types=quote,chart&range=1d',
-          {
-            method: 'GET'
-          }
-        )
-          .then(function(data) {
-            return data.json();
-          })
-          .then(function(json) {
-            parent.setState({
-              peersFetched: true,
-              peers: symbols,
-              peerData: json
-            });
-          });
-      })
-      .catch(function() {
-        this.getPeers();
-      });
+  getPeers = async () => {
+    // Get peers and batch request trading-day quote
+    const peers = await d3.json(
+      `https://api.iextrading.com/1.0/stock/${this.props.symbol}/peers`
+    );
+    const quotePeers = await d3.json(
+      `https://api.iextrading.com/1.0/stock/market/batch?symbols=${peers.join()}&types=quote,chart&range=1d`
+    );
+    this.setState({
+      peersFetched: true,
+      peers: peers,
+      peerData: quotePeers
+    });
   };
 
-  getCompanyInfo = () => {
-    let parent = this;
-    fetch(
-      'https://api.iextrading.com/1.0/stock/' + this.props.symbol + '/company',
-      {
-        method: 'GET'
-      }
-    )
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        parent.setState({
-          companyFetched: true,
-          companyInfo: json['description'],
-          companyName: json['companyName']
-        });
-      });
+  getCompanyInfo = async () => {
+    const companyInfo = await d3.json(
+      `https://api.iextrading.com/1.0/stock/${this.props.symbol}/company`
+    );
+    this.setState({
+      companyFetched: true,
+      companyInfo: companyInfo["description"],
+      companyName: companyInfo["companyName"]
+    });
   };
 
-  getNews = () => {
-    // API CALL
-    // https://api.iextrading.com/1.0/stock/market/news
-    let parent = this;
-    fetch(
-      'https://api.iextrading.com/1.0/stock/' + this.props.symbol + '/news',
-      {
-        method: 'GET'
-      }
-    )
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        parent.setState({
-          newsFetched: true,
-          newsData: json
-        });
-      })
-      .catch(function() {});
+  getNews = async () => {
+    const news = await d3.json(
+      `https://api.iextrading.com/1.0/stock/${this.props.symbol}/news`
+    );
+    this.setState({
+      newsFetched: true,
+      newsData: news
+    });
   };
 
-  makeApiCall = (frequency = '1d') => {
-    let url =
-      'https://api.iextrading.com/1.0/stock/' +
-      this.props.symbol +
-      '/chart/' +
-      frequency;
-    let timeParser = d3.timeParse('%Y-%m-%d');
+  makeApiCall = async (frequency = "1y") => {
+    let url = `https://api.iextrading.com/1.0/stock/${
+      this.props.symbol
+    }/chart/${frequency}`;
+    let timeParser = d3.timeParse("%Y-%m-%d");
 
-    if (frequency === '1d') {
-      timeParser = d3.timeParse('%Y%m%d%H:%M');
+    if (frequency === "1d") {
+      timeParser = d3.timeParse("%Y%m%d%H:%M");
     }
 
-    let parent = this;
     let prices = [];
     let times = [];
+    const d = await d3.json(url);
 
-    d3.json(url)
-      .then(function(d) {
-        // Check for failure to retry.
-        if (d[0]['date'] == null) {
-          this.makeApiCall(frequency);
-          return;
-        }
+    // Check for failure to retry.
+    if (d[0]["date"] == null) {
+      this.makeApiCall(frequency);
+      return;
+    }
 
-        for (let i = 0; i < d.length; i++) {
-          if (
-            d[i]['marketNumberOfTrades'] === 0 ||
-            d[i]['marketAverage'] === -1
-          ) {
-            d.splice(i, 1);
-            i--;
-            continue;
-          }
+    for (let i = 0; i < d.length; i++) {
+      if (d[i]["marketNumberOfTrades"] === 0 || d[i]["marketAverage"] === -1) {
+        d.splice(i, 1);
+        i--;
+        continue;
+      }
 
-          if (frequency === '1d') {
-            d[i]['close'] = d[i]['marketAverage'];
-            d[i]['date'] = timeParser(d[i]['date'] + d[i]['minute']);
-          } else {
-            d[i]['date'] = timeParser(d[i]['date']);
-          }
+      if (frequency === "1d") {
+        d[i]["close"] = d[i]["marketAverage"];
+        d[i]["date"] = timeParser(d[i]["date"] + d[i]["minute"]);
+      } else {
+        d[i]["date"] = timeParser(d[i]["date"]);
+      }
 
-          times.push(d[i]['date']);
-          prices.push(d[i]['close']);
-        }
+      times.push(d[i]["date"]);
+      prices.push(d[i]["close"]);
+    }
 
-        parent.setState({
-          fetched: true,
-          times: times,
-          prices: prices,
-          interval: frequency,
-          d: d
-        });
-      })
-      .catch(error => {
-        console.error('error: ', error);
-        parent.setState({
-          hasError: true
-        });
-        return;
-      });
+    this.setState({
+      fetched: true,
+      times: times,
+      prices: prices,
+      interval: frequency,
+      d: d
+    });
   };
 
   changeActive = id => {
-    let buttons = document.getElementsByTagName('button');
+    let buttons = document.getElementsByTagName("button");
 
     for (let i = 0; i < buttons.length; i++) {
-      buttons.item(i).classList.remove('active');
+      buttons.item(i).classList.remove("active");
     }
 
-    document.getElementById(id).classList.add('active');
+    document.getElementById(id).classList.add("active");
     // Change graph to different one.
     this.makeApiCall(id);
   };
@@ -230,10 +167,10 @@ class Info extends React.Component {
 
     const peerGraphs =
       peers > 0 ? (
-        <div className="col peers-card"> No Peers </div>
+        <div className='col peers-card'> No Peers </div>
       ) : (
         peers.map((peer, i) => (
-          <div className="col-4 card-stock card-peer" key={i}>
+          <div className='col-4 card-stock card-peer' key={i}>
             <CardGraph
               name={peer}
               companyName={peer}
@@ -241,8 +178,8 @@ class Info extends React.Component {
               latestPrice={this.state.peerData[peer].quote.latestPrice}
               changePercent={this.state.peerData[peer].quote.changePercent}
               volume={this.state.peerData[peer].quote.latestVolume}
-              width="150"
-              height="75"
+              width='150'
+              height='75'
             />
           </div>
         ))
@@ -250,67 +187,67 @@ class Info extends React.Component {
 
     if (this.state.hasError) {
       return (
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col" />
-            <div className="col Stock">
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col' />
+            <div className='col Stock'>
               <h2>{this.props.symbol.toUpperCase()}</h2>
               <p> Failed to Load </p>
             </div>
-            <div className="col" />
+            <div className='col' />
           </div>
         </div>
       );
     } else {
       return (
-        <div>
-          <div className="row">
-            <div className="col-sm-3" />
-            <div className="col Stock">
-              <div className="">
+       <StyledWrapper>
+          <div className='row'>
+            <div className='col-sm-3' />
+            <div className='col Stock'>
+              <div className=''>
                 <h2>
                   {this.state.companyName} ({this.props.symbol.toUpperCase()})
                 </h2>
                 <h3>
                   <button
-                    onClick={() => this.changeActive('1d')}
-                    id="1d"
-                    className="active"
-                  >
+                    onClick={() => this.changeActive("1d")}
+                    id='1d'
+                    className='active'>
                     1D
                   </button>
-                  <button onClick={() => this.changeActive('1m')} id="1m">
+                  <button onClick={() => this.changeActive("1m")} id='1m'>
                     1M
                   </button>
-                  <button onClick={() => this.changeActive('3m')} id="3m">
+                  <button onClick={() => this.changeActive("3m")} id='3m'>
                     3M
                   </button>
-                  <button onClick={() => this.changeActive('6m')} id="6m">
+                  <button onClick={() => this.changeActive("6m")} id='6m'>
                     6M
                   </button>
-                  <button onClick={() => this.changeActive('1y')} id="1y">
+                  <button onClick={() => this.changeActive("1y")} id='1y'>
                     1Y
                   </button>
-                  <button onClick={() => this.changeActive('5y')} id="5y">
+                  <button onClick={() => this.changeActive("5y")} id='5y'>
                     5Y
                   </button>
                 </h3>
                 {this.state.fetched ? (
-                  <Graph
-                    times={this.state.times}
-                    prices={this.state.prices}
-                    d={this.state.d}
-                  />
+                  <div style={{alignContent:"center",margin:"500 500"}}>
+                    <CandleStickChart width={900} height={500} data={this.state.d}
+                      symbol={this.props.symbol.toUpperCase()}
+                    />
+                
+                  </div>
                 ) : (
                   <Spinner />
                 )}
               </div>
             </div>
-            <div className="col-sm-3" />
+            <div className='col-sm-3' />
           </div>
-          <div className="row">
-            <div className="col-sm-3" />
-            <div className="col-sm-3 company">
+          <div className='row'>
+            <div className='col-sm-3' />
+            <div className='col-sm-3 company'>
               {this.state.companyFetched ? (
                 <Company
                   name={this.state.companyName}
@@ -320,7 +257,7 @@ class Info extends React.Component {
                 <Spinner />
               )}
             </div>
-            <div className="col-sm-2 statistics">
+            <div className='col-sm-2 statistics'>
               {this.state.fetched ? (
                 <Statistics
                   prices={this.state.prices}
@@ -330,33 +267,33 @@ class Info extends React.Component {
                 <Spinner />
               )}
             </div>
-            <div className="col-sm-4" />
+            <div className='col-sm-4' />
           </div>
-          <div className="row">
-            <div className="col-3" />
+          <div className='row'>
+            <div className='col-3' />
             {this.state.peersFetched ? (
-              <div className="col-6">
-                <div className="row">{peerGraphs}</div>
+              <div className='col-6'>
+                <div className='row'>{peerGraphs}</div>
               </div>
             ) : (
-              <div className="col-6">
+              <div className='col-6'>
                 <Spinner />
               </div>
             )}
-            <div className="col-3" />
+            <div className='col-3' />
           </div>
-          <div className="row">
-            <div className="col-3" />
-            <div className="col-6">
+          <div className='row'>
+            <div className='col-3' />
+            <div className='col-6'>
               {this.state.newsFetched ? (
                 <NewsCard data={this.state.newsData} />
               ) : (
                 <Spinner />
               )}
             </div>
-            <div className="col-3" />
+            <div className='col-3' />
           </div>
-        </div>
+        </StyledWrapper>
       );
     }
   }

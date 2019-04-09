@@ -1,15 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import {} from "semantic-ui-react";
 
-class Company extends React.Component {
-  render() {
-    return (
-      <div>
-        <h2> {this.props.name} </h2>
-        <p> {this.props.info} </p>
-      </div>
-    );
-  }
+export default function({ name, info }) {
+  return (
+    <>
+      <h2> {name} </h2>
+      <p> {info} </p>
+    </>
+  );
 }
-
-export default Company;

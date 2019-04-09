@@ -8,7 +8,6 @@ import { DataProvider } from "./components/quotes-ninja/WithDataContext";
 import QuotesHome from "./routes/QuotesHome";
 import QuotePage from "./routes/QuotePage";
 //OPEN-STOCK
-import Header from "./components/openStock/Header.js";
 import OpenStockHome from "./routes/OpenStockHome.js";
 import Stocks from "./components/openStock/container/Stocks.js";
 //STOCK-TRACKER
@@ -41,7 +40,7 @@ export default class App extends React.Component {
   render() {
     return (
       <AppWrapper>
-        {/* <DataProvider> */}
+         <DataProvider> 
           <Switch>
             {/* ROOT */}
             <Route exact path='/' component={OpenStockHome} />
@@ -77,7 +76,7 @@ export default class App extends React.Component {
             />
             <Route component={NotFoundPage} />
           </Switch>
-        {/* </DataProvider> */}
+         </DataProvider>
       </AppWrapper>
     );
   }
@@ -85,7 +84,13 @@ export default class App extends React.Component {
 
 //-------------------------------------------------
 const AppWrapper = styled.div`
-  text-align: center;
+  /* text-align: center; */
+  /* body > div,
+  body > div > div ,
+  body > div > div > div,
+  body > div > div > div > div.login-form {
+    height: 100%;
+  } */
 `;
 // const rotate360 = keyframes`
 //   from {

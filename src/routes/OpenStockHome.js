@@ -7,8 +7,9 @@ import StackedBarGraph from "../components/openStock/StackedBarGraph.js";
 import CardGraph from "../components/openStock/CardGraph.js";
 import NewsCard from "../components/openStock/NewsCard.js";
 import Spinner from "../components/openStock/Spinner.js";
+import Header from "../components/openStock/Header.js";
 
-const Header = Styled.div`
+const StyledHeader = Styled.div`
 background-color: #282c34;
 min-height: 100vh;
 display: flex;
@@ -105,6 +106,9 @@ class OpenStockHome extends React.Component {
 
     return (
       <div className='container-fluid'>
+      <StyledHeader>
+      <Header/>
+      </StyledHeader>
         <div className='row'>
           {/* <div className="col-3"></div> */}
           <div className='d-none d-sm-block col-6 market card'>

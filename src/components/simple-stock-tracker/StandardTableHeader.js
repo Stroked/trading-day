@@ -1,22 +1,32 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {Table} from 'semantic-ui-react'
 
 function StandardTableHeader(props) {
+
+
+
   const columnHeaders = props.columns.map((col) => {
     let sortClass = "";
+    let column ='';
+    let direction=''
     if (col.key === props.columnOnSort.column) {
       sortClass = props.columnOnSort.order === "asc" ? "ascend" : "descend";
+      column=col.key;
+direction= props.columnOnSort.order === "asc" ? "ascending" : "descending";
     }
-    return <th key={col.key} className={sortClass + (col.alignRight ? " alignRight" : "")} >
+    console.table(col)
+    console.table(sortClass);
+    return <Table.HeaderCell sorted={column===col.Key?direction:null}  key={col.key} className={sortClass + (col.alignRight ? " alignRight" : "")} >
             {col.name}
-           </th>
+           </Table.HeaderCell>
   });
-  columnHeaders.unshift(<th key="no">no</th>);
+  columnHeaders.unshift(<Table.HeaderCell key='no'>no</Table.HeaderCell>);
 
   return (
-    <thead>
-      <tr>{columnHeaders}</tr>
-    </thead>
+    <Table.Header>
+      <Table.Row>{columnHeaders}</Table.Row>
+    </Table.Header>
   );
 }
 

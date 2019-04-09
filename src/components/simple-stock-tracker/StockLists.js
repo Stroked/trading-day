@@ -5,7 +5,7 @@ import images from './icons/'
 import { SectionHeader } from "./SectionHeader";
 import { ToggleButtons } from "./ToggleButtons";
 import { StandardTable } from "./StandardTable";
-
+// import SpotLightTable from "./SpotLightTable"
 export class StockLists extends React.Component {
  state = {
       activeType: EnumsManager.StockListTypes[0].type,
@@ -71,20 +71,31 @@ export class StockLists extends React.Component {
     headerButtons.push(refreshButton);
 
     return (
-      <div className="floatPanel">
-        <SectionHeader title="Stock List" buttons={headerButtons} />
-        <StandardTable columns={EnumsManager.StockListColumns}
-                       data={this.state.stockData}
-                       onClick={this.props.handleCellClick}
-                       activeType={this.state.activeType} />
-        <div className="updatedTime">
-          updated on {this.state.updatedTime ? this.state.updatedTime.toLocaleString() : "--"}
-          <img src={images.info_grey}
-               className="iconInfo"
-               title={`The stock list table will automatically update every 10 seconds to make sure you have up-to-date data.
-If you want to retrieve real-time data, please click refresh button.`} alt="" />
+      <>
+        <div className='floatPanel'>
+          <SectionHeader title='Stock List' buttons={headerButtons} />
+          <StandardTable
+            columns={EnumsManager.StockListColumns}
+            data={this.state.stockData}
+            onClick={this.props.handleCellClick}
+            activeType={this.state.activeType}
+          />
+          <div className='updatedTime'>
+            updated on{" "}
+            {this.state.updatedTime
+              ? this.state.updatedTime.toLocaleString()
+              : "--"}
+            <img
+              src={images.info_grey}
+              className='iconInfo'
+              title={`The stock list table will automatically update every 10 seconds to make sure you have up-to-date data.
+If you want to retrieve real-time data, please click refresh button.`}
+              alt=''
+            />
+          </div>
         </div>
-      </div>
+        {/* <SpotLightTable data={this.state.stockData} /> */}
+      </>
     );
   }
 }

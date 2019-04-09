@@ -1,3 +1,9 @@
+2019-april
+---
+- these building blocks to the bigger ideas
+- it's sorta messy but lots of things work here 
+
+
 <div id="StockSpotlight" class="columnGroup">
   <div class="row">
     <div class="col-xs-12 stock-spotlight-header">

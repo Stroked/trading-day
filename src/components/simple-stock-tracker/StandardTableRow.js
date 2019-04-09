@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {Table} from 'semantic-ui-react'
 
 function StandardTableRow(props) {
   let symbol;
@@ -14,15 +15,17 @@ function StandardTableRow(props) {
       value = value.toLocaleString();
     }
 
-    return <td key={col.key} className={col.alignRight ? "alignRight" : null} >
-            {col.numOfPrecision ? value.toFixed(col.numOfPrecision) : value}
-           </td>;
+    return (
+      <Table.Cell
+        key={col.key}
+        className={col.alignRight ? "alignRight" : null}>
+        {col.numOfPrecision ? value.toFixed(col.numOfPrecision) : value}
+      </Table.Cell>
+    );
   });
-  row.unshift(<td key="no">{props.index + 1}</td>);
+  row.unshift(<Table.Cell key='no'>{props.index + 1}</Table.Cell>);
 
-  return (
-    <tr data-symbol={symbol}>{row}</tr>
-  );
+  return <Table.Row data-symbol={symbol}>{row}</Table.Row>;
 }
 
 StandardTableRow.propTypes = {

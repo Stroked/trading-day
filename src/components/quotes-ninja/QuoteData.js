@@ -9,7 +9,7 @@ import NewsItems from "./NewsItems";
 
 import NotFound from "./NotFound";
 
-import { quoteFormatting } from "../../utils/format";
+import {quoteFormatting} from "../../utils/format";
 import setTitle from "../../utils/title";
 
 import placeholder from "../../assets/iex-logo.png";

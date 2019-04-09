@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { utcDays } from "d3-time";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 
@@ -29,11 +29,15 @@ import { ema, heikinAshi, sma } from "react-stockcharts/lib/indicator";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last } from "react-stockcharts/lib/utils";
 import { timeParse } from "d3-time-format";
+import styled from "styled-components";
 
-const timeParser = timeParse("%Y-%m-%d");
+const ChartStyles = styled.div`
+  /* background: #666; */
+`;
 
 class HeikinAshi extends React.Component {
-  parseData = days => days.map(day => {
+  parseData = days =>
+    days.map(day => {
       day.date = new Date(day.date);
       day.open = +day.open;
       day.high = +day.high;
@@ -41,17 +45,16 @@ class HeikinAshi extends React.Component {
       day.close = +day.close;
       day.volume = +day.volume;
       return day;
-    })
+    });
 
   render() {
-   
-  //   console.log(typeof days);
-  //   daysArray = Array.from(days);
-  //   const parsedData = [];
-  //   console.log(days);
-  //   daysArray.forEach((day, index) => {});
-  //   return parsedData;
-  // };
+    //   console.log(typeof days);
+    //   daysArray = Array.from(days);
+    //   const parsedData = [];
+    //   console.log(days);
+    //   daysArray.forEach((day, index) => {});
+    //   return parsedData;
+    // };
     const ha = heikinAshi();
     const ema20 = ema()
       .id(0)
@@ -78,201 +81,168 @@ class HeikinAshi extends React.Component {
       .accessor(d => d.smaVolume50);
 
     const { type, data: initialData, width, ratio } = this.props;
-const parsedData = initialData.map(day => {
-                                              day.date = new Date(day.date);
-                                              day.open = +day.open;
-                                              day.high = +day.high;
-                                              day.low = +day.low;
-                                              day.close = +day.close;
-                                              day.volume = +day.volume;
-                                              return day;
-});
+    const parsedData = initialData.map(day => {
+      day.date = new Date(day.date);
+      day.open = +day.open;
+      day.high = +day.high;
+      day.low = +day.low;
+      day.close = +day.close;
+      day.volume = +day.volume;
+      return day;
+    });
     const calculatedData = smaVolume50(ema50(ema20(ha(parsedData))));
-    const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date);
-    const {data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData);
+    const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
+      d => d.date
+    );
+    const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(
+      calculatedData
+    );
 
     const start = xAccessor(last(data));
     const end = xAccessor(data[Math.max(0, data.length - 150)]);
     const xExtents = [start, end];
-    debugger;
 
     return (
-      <ChartCanvas
-        height={this.props.height}
-        ratio={ratio}
-        width={+width}
-        margin={{ left: 80, right: 80, top: 10, bottom: 30 }}
-        seriesName={this.props.ticker}
-		type={type}
-        data={data}
-        xScale={xScale}
-        xAccessor={xAccessor}
-        displayXAccessor={displayXAccessor}
-        xExtents={xExtents}
-      >
-        <Chart
-          id={1}
-          yExtents={[d => [d.high, d.low], ema20.accessor(), ema50.accessor()]}
-          padding={{ top: 10, bottom: 20 }}
-        >
-          <XAxis axisAt="bottom" orient="bottom" />
-          <YAxis axisAt="right" orient="right" ticks={5} />
-          <MouseCoordinateY
-            at="right"
-            orient="right"
-            displayFormat={format(".1f")}
-          />
-
-          <CandlestickSeries />
-          <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()} />
-          <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()} />
-
-          <CurrentCoordinate
-            yAccessor={ema20.accessor()}
-            fill={ema20.stroke()}
-          />
-          <CurrentCoordinate
-            yAccessor={ema50.accessor()}
-            fill={ema50.stroke()}
-          />
-
-          <EdgeIndicator
-            itemType="last"
-            orient="right"
-            edgeAt="right"
-            yAccessor={ema20.accessor()}
-            fill={ema20.fill()}
-          />
-          <EdgeIndicator
-            itemType="last"
-            orient="right"
-            edgeAt="right"
-            yAccessor={ema50.accessor()}
-            fill={ema50.fill()}
-          />
-          <EdgeIndicator
-            itemType="last"
-            orient="right"
-            edgeAt="right"
-            yAccessor={d => d.close}
-            fill={d => (d.close > d.open ? "#6BA583" : "#FF0000")}
-          />
-          <EdgeIndicator
-            itemType="first"
-            orient="left"
-            edgeAt="left"
-            yAccessor={ema20.accessor()}
-            fill={ema20.fill()}
-          />
-          <EdgeIndicator
-            itemType="first"
-            orient="left"
-            edgeAt="left"
-            yAccessor={ema50.accessor()}
-            fill={ema50.fill()}
-          />
-          <EdgeIndicator
-            itemType="first"
-            orient="left"
-            edgeAt="left"
-            yAccessor={d => d.close}
-            fill={d => (d.close > d.open ? "#6BA583" : "#FF0000")}
-          />
-
-          <OHLCTooltip origin={[-40, 0]} />
-          <MovingAverageTooltip
-            onClick={e => console.log(e)}
-            origin={[-38, 15]}
-            options={[
-              {
-                yAccessor: ema20.accessor(),
-                type: "EMA",
-                stroke: ema20.stroke(),
-                windowSize: ema20.options().windowSize
-              },
-              {
-                yAccessor: ema50.accessor(),
-                type: "EMA",
-                stroke: ema50.stroke(),
-                windowSize: ema50.options().windowSize
-              }
+      <ChartStyles>
+        <ChartCanvas
+          height={this.props.height}
+          ratio={1}
+          width={+width}
+          margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
+          seriesName={this.props.ticker}
+          type={type}
+          data={data}
+          xScale={xScale}
+          xAccessor={xAccessor}
+          displayXAccessor={displayXAccessor}
+          xExtents={xExtents}
+          clamp='both'>
+          <Chart
+            id={1}
+            height={this.props.height * 0.7}
+            yExtents={[
+              d => [d.high, d.low],
+              ema20.accessor(),
+              ema50.accessor()
             ]}
-          />
-        </Chart>
-        <Chart
-          id={2}
-          yExtents={[d => d.volume, smaVolume50.accessor()]}
-          height={this.props.height*0.25}
-          origin={(w, h) => [0, h - this.props.height*0.25]}
-        >
-          <YAxis
-            axisAt="left"
-            orient="left"
-            ticks={5}
-            tickFormat={format(".2s")}
-          />
-          <MouseCoordinateX
-            at="bottom"
-            orient="bottom"
-            displayFormat={timeFormat("%Y-%m-%d")}
-          />
-          <MouseCoordinateY
-            at="left"
-            orient="left"
-            displayFormat={format(".4s")}
-          />
+            padding={{ top: 10, bottom: 20 }}>
+            <YAxis axisAt='right' orient='right' ticks={5} />
+            <MouseCoordinateY
+              at='right'
+              orient='right'
+              displayFormat={format(".1f")}
+            />
 
-          <BarSeries
-            yAccessor={d => d.volume}
-            fill={d => (d.close > d.open ? "#6BA583" : "#FF0000")}
-          />
-          <AreaSeries
-            yAccessor={smaVolume50.accessor()}
-            stroke={smaVolume50.stroke()}
-            fill={smaVolume50.fill()}
-          />
+            <CandlestickSeries />
+            <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()} />
+            <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()} />
 
-          <CurrentCoordinate
-            yAccessor={smaVolume50.accessor()}
-            fill={smaVolume50.stroke()}
-          />
-          <CurrentCoordinate yAccessor={d => d.volume} fill="#9B0A47" />
+            <CurrentCoordinate
+              yAccessor={ema20.accessor()}
+              fill={ema20.stroke()}
+            />
+            <CurrentCoordinate
+              yAccessor={ema50.accessor()}
+              fill={ema50.stroke()}
+            />
 
-          <EdgeIndicator
-            itemType="first"
-            orient="left"
-            edgeAt="left"
-            yAccessor={d => d.volume}
-            displayFormat={format(".4s")}
-            fill="#0F0F0F"
-          />
-          <EdgeIndicator
-            itemType="last"
-            orient="right"
-            edgeAt="right"
-            yAccessor={d => d.volume}
-            displayFormat={format(".4s")}
-            fill="#0F0F0F"
-          />
-          <EdgeIndicator
-            itemType="first"
-            orient="left"
-            edgeAt="left"
-            yAccessor={smaVolume50.accessor()}
-            displayFormat={format(".4s")}
-            fill={smaVolume50.fill()}
-          />
-          <EdgeIndicator
-            itemType="last"
-            orient="right"
-            edgeAt="right"
-            yAccessor={smaVolume50.accessor()}
-            displayFormat={format(".4s")}
-            fill={smaVolume50.fill()}
-          />
-        </Chart>
-        <CrossHairCursor />
-      </ChartCanvas>
+            <EdgeIndicator
+              itemType='last'
+              orient='right'
+              edgeAt='right'
+              yAccessor={ema20.accessor()}
+              fill={ema20.fill()}
+            />
+            <EdgeIndicator
+              itemType='last'
+              orient='right'
+              edgeAt='right'
+              yAccessor={ema50.accessor()}
+              fill={ema50.fill()}
+            />
+            <EdgeIndicator
+              itemType='last'
+              orient='right'
+              edgeAt='right'
+              yAccessor={d => d.close}
+              fill={d => (d.close > d.open ? "#6BA583" : "#FF0000")}
+            />
+            <EdgeIndicator
+              itemType='first'
+              orient='left'
+              edgeAt='left'
+              yAccessor={ema20.accessor()}
+              fill={ema20.fill()}
+            />
+            <EdgeIndicator
+              itemType='first'
+              orient='left'
+              edgeAt='left'
+              yAccessor={ema50.accessor()}
+              fill={ema50.fill()}
+            />
+            <EdgeIndicator
+              itemType='first'
+              orient='left'
+              edgeAt='left'
+              yAccessor={d => d.close}
+              fill={d => (d.close > d.open ? "#6BA583" : "#FF0000")}
+            />
+
+            <OHLCTooltip origin={[-40, 0]} />
+            <MovingAverageTooltip
+              onClick={e => console.log(e)}
+              origin={[-38, 15]}
+              options={[
+                {
+                  yAccessor: ema20.accessor(),
+                  type: "EMA",
+                  stroke: ema20.stroke(),
+                  windowSize: ema20.options().windowSize
+                },
+                {
+                  yAccessor: ema50.accessor(),
+                  type: "EMA",
+                  stroke: ema50.stroke(),
+                  windowSize: ema50.options().windowSize
+                }
+              ]}
+            />
+          </Chart>
+          <Chart
+            id={2}
+            yExtents={[d => d.volume, smaVolume50.accessor()]}
+            height={this.props.height * 0.2}
+            margin={{ top: 10, bottom: 20 }}
+            origin={(w, h) => [0, h - this.props.height * 0.2]}>
+            <XAxis axisAt='bottom' orient='bottom' />
+
+            <YAxis
+              axisAt='left'
+              orient='left'
+              ticks={5}
+              tickFormat={format(".2s")}
+            />
+            <MouseCoordinateX
+              at='bottom'
+              orient='bottom'
+              displayFormat={timeFormat("%Y-%m-%d")}
+            />
+            <MouseCoordinateY
+              at='left'
+              orient='left'
+              displayFormat={format(".2s")}
+            />
+            <BarSeries
+              yAccessor={d => d.volume}
+              fill={d => (d.close > d.open ? "#6BA583" : "#FF0000")}
+            />
+
+            <CurrentCoordinate yAccessor={d => d.volume} fill='#9B0A47' />
+          </Chart>
+          <CrossHairCursor />
+        </ChartCanvas>
+      </ChartStyles>
     );
   }
 }
@@ -288,5 +258,5 @@ const parsedData = initialData.map(day => {
 //   type: "svg"
 // };
 
-HeikinAshi=fitWidth(HeikinAshi)
+HeikinAshi = fitWidth(HeikinAshi);
 export default HeikinAshi;

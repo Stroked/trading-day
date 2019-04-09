@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-// import Media from 'react-media';
 import _ from "lodash";
 import { Grid, Segment, List, Icon, Header } from "semantic-ui-react";
-// import {
-//   ResponsiveContainer,
-//   Area,
-//   XAxis,
-//   YAxis,
-//   Tooltip,
-//   ComposedChart,
-//   Bar
-// } from 'recharts';
+
 import ChartMenu from "./ChartMenu";
 import {
   price,

@@ -3,17 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@vx/axis": "0.0.184",
-    "@vx/event": "0.0.182",
-    "@vx/gradient": "0.0.183",
-    "@vx/grid": "0.0.184",
-    "@vx/group": "0.0.183",
-    "@vx/mock-data": "0.0.182",
-    "@vx/pattern": "0.0.183",
-    "@vx/responsive": "0.0.184",
-    "@vx/scale": "0.0.182",
-    "@vx/shape": "0.0.184",
-    "@vx/tooltip": "0.0.184",
+    "@vx/vx": "^0.0.188",
+    "algotrader": "^2.4.9",
     "axios": "^0.18.0",
     "d3": "^5.8.2",
     "d3-array": "^2.0.3",
@@ -52,6 +43,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/react": "^4.1.11"
+    "@storybook/react": "^5.0.6"
   }
 }

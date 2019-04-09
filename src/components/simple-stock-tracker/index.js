@@ -1,210 +1,211 @@
 import React from "react";
 import { StockLists } from "./StockLists";
 import { RightPanel } from "./RightPanel";
-import styled from 'styled-components'
-import images from './icons'
+import styled from "styled-components";
+import images from "./icons";
 const StockTrackerWrapper = styled.div`
-* {
+  * {
     box-sizing: border-box;
     line-height: 1.4;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
-}
+  }
 
-body {
+  body {
     margin: 0;
-}
+  }
 
-/* Table */
-table {
+  /* Table */
+  table {
     width: 100%;
     border-collapse: collapse;
-}
+  }
 
-th, td {
+  th,
+  td {
     font-size: 12px;
     padding: 0 10px;
-}
+  }
 
-td {
+  td {
     height: 40px;
-}
+  }
 
-th {
+  th {
     font-weight: bold;
     text-transform: uppercase;
     text-align: left;
     padding: 2px 10px;
     height: 35px;
-}
+  }
 
-tr {
+  tr {
     border-width: 1px;
     border-style: solid;
     border-color: #ccc;
-}
+  }
 
-tr:hover td {
+  tr:hover td {
     cursor: pointer;
     background-color: rgba(0, 150, 136, 0.1);
     border: 1px solid rgba(0, 150, 136, 1);
     border-width: 1px 0;
-}
+  }
 
-li {
+  li {
     list-style: none;
-}
+  }
 
-/* Stock Details Panel */
-/* 
+  /* Stock Details Panel */
+  /* 
  * Details 
  */
-.quoteSummary {
+  .quoteSummary {
     font-size: 21px;
     border-style: solid;
     border-color: #ccc;
     border-width: 1px 1px 0;
     padding: 10px;
-}
+  }
 
-.quoteSummary .stockChanges .latestPrice {
+  .quoteSummary .stockChanges .latestPrice {
     font-size: 48px;
     margin-right: 50px;
-}
+  }
 
-.quoteSummary .stockChanges span {
+  .quoteSummary .stockChanges span {
     font-size: 28px;
-}
+  }
 
-.timeStamp {
+  .timeStamp {
     text-transform: capitalize;
     font-size: 18px;
-}
+  }
 
-.timeStamp .latestSource {
+  .timeStamp .latestSource {
     display: inline-block;
     border: 2px solid;
     margin-left: 20px;
     padding: 3px 6px;
     border-radius: 4px;
-}
+  }
 
-.timeStamp .latestSource.closed {
+  .timeStamp .latestSource.closed {
     color: red;
-}
+  }
 
-.additionalInfo {
+  .additionalInfo {
     width: 100%;
-}
+  }
 
-.additionalInfo td {
+  .additionalInfo td {
     font-size: 14px;
     padding: 10px;
-}
+  }
 
-.cellTitle {
+  .cellTitle {
     text-transform: uppercase;
     color: #999;
-}
+  }
 
-/* News */
-.newsHeader h2,
-.newsHeader button {
+  /* News */
+  .newsHeader h2,
+  .newsHeader button {
     display: inline-block;
-}
+  }
 
-.newsHeader h2 {
+  .newsHeader h2 {
     margin: 0 10px 0 0;
-}
+  }
 
-.newsHeader button {
+  .newsHeader button {
     font-size: 12px;
     padding: 3px 10px;
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 2px;
     cursor: pointer;
-}
+  }
 
-.newsList {
+  .newsList {
     margin: 0px;
     list-style: none;
     padding: 20px 20px 20px 40px;
     border: 1px solid #ccc;
     border-width: 0 1px;
-}
+  }
 
-.newsList .releaseDate,
-.newsList .newsOrder,
-.newsList .newsLink {
+  .newsList .releaseDate,
+  .newsList .newsOrder,
+  .newsList .newsLink {
     padding: 0 10px 0 0;
     font-size: 12px;
     display: inline-block;
     vertical-align: bottom;
-}
+  }
 
-.newsList .newsOrder {
+  .newsList .newsOrder {
     width: 35px;
-}
+  }
 
-.newsList .releaseDate,
-.newsList .newsOrder {
+  .newsList .releaseDate,
+  .newsList .newsOrder {
     color: #09c;
-}
+  }
 
-.newsList .newsLink {
+  .newsList .newsLink {
     width: 500px;
     color: #06c;
     text-decoration: none;
-}
-.newsList .newsLink:hover {
+  }
+  .newsList .newsLink:hover {
     text-decoration: underline;
-}
-.newsList .newsLink:visited {
+  }
+  .newsList .newsLink:visited {
     color: #9b42f4;
-}
+  }
 
-/* news complex view */
-.newsList.complexView {
+  /* news complex view */
+  .newsList.complexView {
     font-size: 13px;
     padding: 0;
-}
+  }
 
-.newsList.complexView .newsItem {
+  .newsList.complexView .newsItem {
     border: 1px solid #ccc;
     border-top-color: transparent;
     border-width: 1px 0;
     padding: 10px 20px 10px 40px;
-}
+  }
 
-.newsList.complexView .newsItem:hover {
+  .newsList.complexView .newsItem:hover {
     background-color: rgba(0, 153, 204, 0.1);
     border-color: #09c #ccc;
-}
+  }
 
-.newsList.complexView .newsLink {
+  .newsList.complexView .newsLink {
     width: auto;
     max-width: 100%;
     display: inline-block;
     font-size: 16px;
     line-height: 30px;
-}
+  }
 
-.newsList.complexView .releaseDate {
+  .newsList.complexView .releaseDate {
     display: inline;
     vertical-align: initial;
     padding: 0;
-}
+  }
 
-.newsList.complexView .summary {
+  .newsList.complexView .summary {
     color: #999;
-}
+  }
 
-/* util */
-.hidden {
+  /* util */
+  .hidden {
     display: none !important;
-}
+  }
 
-.headerBtn {
+  .headerBtn {
     position: absolute;
     right: 0;
     top: 0;
@@ -214,40 +215,40 @@ li {
     padding: 10px;
     height: 100%;
     width: 32px;
-}
+  }
 
-.headerBtn:hover {
+  .headerBtn:hover {
     background-color: rgba(255, 102, 102, 0.87);
-}
+  }
 
-.btnSettings {
+  .btnSettings {
     background: url(${images.settings}) center/cover no-repeat;
-}
+  }
 
-.truncate {
+  .truncate {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-}
+  }
 
-.clearfix:after {
+  .clearfix:after {
     content: "";
     display: table;
     clear: both;
-}
+  }
 
-.dropdownBtnContainer {
+  .dropdownBtnContainer {
     position: relative;
     display: inline-block;
     margin-left: 10px;
-}
+  }
 
-.dropdownBtnContainer button {
+  .dropdownBtnContainer button {
     min-width: 50px;
     cursor: pointer;
-}
+  }
 
-.optionList {
+  .optionList {
     margin: 0;
     border: 1px solid #ccc;
     position: absolute;
@@ -257,195 +258,197 @@ li {
     top: 24px;
     left: 0;
     background: #fff;
-}
+  }
 
-.optionList.hidden {
+  .optionList.hidden {
     display: none;
-}
+  }
 
-.optionList li {
+  .optionList li {
     font-size: 14px;
     text-align: center;
-}
+  }
 
-.optionList li:hover {
+  .optionList li:hover {
     background: #ddd;
     cursor: pointer;
-}
+  }
 
-.optionList li.selected {
+  .optionList li.selected {
     background: #09c;
     color: #fff;
-}
+  }
 
-.alignRight {
+  .alignRight {
     text-align: right;
-}
+  }
 
-th.alignRight {
+  th.alignRight {
     width: 85px;
-}
+  }
 
-th.descend.alignRight,
-th.ascend.alignRight {
+  th.descend.alignRight,
+  th.ascend.alignRight {
     background-image: url(${images.sort_asc});
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: center right 5px;
     width: 110px;
     padding-right: 35px;
-}
+  }
 
-th.descend.alignRight {
+  th.descend.alignRight {
     background-image: url(${images.sort_desc});
-}
+  }
 
-/* dnd */
-.dndContainer {
+  /* dnd */
+  .dndContainer {
     padding: 0;
     display: flex;
     border: 1px solid #ccc;
-}
+  }
 
-.dndItemsContainer {
+  .dndItemsContainer {
     width: 50%;
     padding: 0;
     margin: 0;
-}
+  }
 
-.dndItemsContainerHeader {
+  .dndItemsContainerHeader {
     padding: 5px 10px;
     background: #67daff;
     color: #fff;
-}
+  }
 
-.dndItemsContainer.rightContainer {
+  .dndItemsContainer.rightContainer {
     border-left: 1px solid #ccc;
-}
+  }
 
-.dndItem {
+  .dndItem {
     line-height: 25px;
     font-size: 13px;
     border-bottom: 1px solid #ccc;
     padding: 0 10px;
-}
+  }
 
-/* Slide button */
-.slideButtonContainer {
+  /* Slide button */
+  .slideButtonContainer {
     position: absolute;
     right: 10px;
     top: 9px;
-}
+  }
 
-.slideButtonContainer span {
+  .slideButtonContainer span {
     font-size: 12px;
     font-weight: normal;
-}
+  }
 
-/* The switch - the box around the slider */
-.switch {
+  /* The switch - the box around the slider */
+  .switch {
     position: relative;
     display: inline-block;
     width: 40px;
     height: 10px;
     margin-left: 10px;
-}
+  }
 
-/* Hide default HTML checkbox */
-.switch input {display:none;}
+  /* Hide default HTML checkbox */
+  .switch input {
+    display: none;
+  }
 
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #FF8A65;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ff8a65;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 19px;
-  width: 19px;
-  left: -2px;
-  top: -4px;
-  background-color: #FF5722;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: -2px;
+    top: -4px;
+    background-color: #ff5722;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
 
-input:checked + .slider {
-  background-color: #ccc;
-}
+  input:checked + .slider {
+    background-color: #ccc;
+  }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #ccc;
-}
+  input:focus + .slider {
+    box-shadow: 0 0 1px #ccc;
+  }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(24px);
-  -ms-transform: translateX(24px);
-  transform: translateX(24px);
-  background-color: #aaa;
-}
+  input:checked + .slider:before {
+    -webkit-transform: translateX(24px);
+    -ms-transform: translateX(24px);
+    transform: translateX(24px);
+    background-color: #aaa;
+  }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
 
-.slider.round:before {
-  border-radius: 50%;
-}
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
-/* Exceptions */
-.noData {
+  /* Exceptions */
+  .noData {
     font-size: 13px;
     color: #666;
     margin-top: 5px;
-}
+  }
 
-/* 20171018 */
-/* common - overrides default styles */
-.floatPanel {
+  /* 20171018 */
+  /* common - overrides default styles */
+  .floatPanel {
     float: left;
     width: 50%;
-}
+  }
 
-.rightPanel {
+  .rightPanel {
     margin-left: -1px;
-}
+  }
 
-button {
+  button {
     height: 25px;
     min-width: 25px;
     border: none;
     background-color: #fff;
     cursor: pointer;
     padding: 0 10px;
-}
+  }
 
-button:hover {
-    opacity: .6;
-}
+  button:hover {
+    opacity: 0.6;
+  }
 
-.btnRefresh {
+  .btnRefresh {
     background: url(${images.refresh}) center/cover no-repeat;
-    transition: .5s all;
-}
+    transition: 0.5s all;
+  }
 
-.btnRefresh:hover {
+  .btnRefresh:hover {
     transform: rotate(180deg);
     opacity: 1;
-}
+  }
 
-.updatedTime {
-    background-color: #80CBC4;
+  .updatedTime {
+    background-color: #80cbc4;
     border-width: 0 1px;
     font-size: 10px;
     text-align: right;
@@ -453,18 +456,18 @@ button:hover {
     padding: 0 10px;
     font-weight: bold;
     text-transform: capitalize;
-}
+  }
 
-.updatedTime .iconInfo {
+  .updatedTime .iconInfo {
     width: 20px;
     height: 20px;
     margin: 5px 2px 6px 12px;
     vertical-align: middle;
-}
+  }
 
-/* section */
-/* section header */
-.sectionHeader {
+  /* section */
+  /* section header */
+  .sectionHeader {
     background: #009688;
     color: #fff;
     padding: 7px 10px;
@@ -474,54 +477,54 @@ button:hover {
     line-height: 26px;
     cursor: pointer;
     position: relative;
-}
+  }
 
-.rightPanel .sectionHeader {
-    border-left: 1px solid #ccc; 
-}
+  .rightPanel .sectionHeader {
+    border-left: 1px solid #ccc;
+  }
 
-.rightPanel > div:first-child .sectionHeader {
+  .rightPanel > div:first-child .sectionHeader {
     border-left-color: #fff;
-}
+  }
 
-.sectionHeader .btnsContainer {
+  .sectionHeader .btnsContainer {
     float: right;
-}
+  }
 
-.sectionHeader .btnsContainer button {
+  .sectionHeader .btnsContainer button {
     margin-left: 10px;
-}
+  }
 
-.sectionHeader .btnsContainer .toggleButtonsContainer {
+  .sectionHeader .btnsContainer .toggleButtonsContainer {
     float: left;
-}
+  }
 
-.sectionHeader .btnsContainer .toggleButtonsContainer button {
+  .sectionHeader .btnsContainer .toggleButtonsContainer button {
     margin: 0 0 0 -1px;
     border: 1px solid #ccc;
     border-radius: 2px;
     font-size: 12px;
-}
+  }
 
-.sectionHeader .btnsContainer .toggleButtonsContainer button:hover {
+  .sectionHeader .btnsContainer .toggleButtonsContainer button:hover {
     opacity: 1;
     background-color: #999;
     border-color: transparent;
     color: #fff;
-}
+  }
 
-.sectionHeader .btnsContainer .toggleButtonsContainer button.active {
-    background: #FF9800;
+  .sectionHeader .btnsContainer .toggleButtonsContainer button.active {
+    background: #ff9800;
     color: #fff;
     border-color: transparent;
     font-weight: bold;
-}
+  }
 
-.sectionHeader.collapsible {
+  .sectionHeader.collapsible {
     padding-left: 40px;
-}
+  }
 
-.sectionHeader.collapsible:before {
+  .sectionHeader.collapsible:before {
     content: "";
     position: absolute;
     height: 20px;
@@ -531,70 +534,70 @@ button:hover {
     background: #009688 url(${images.arrow}) center/cover no-repeat;
     transform: rotate(90deg);
     transition: 0.5s all;
-}
+  }
 
-.sectionHeader.collapsed:before {
+  .sectionHeader.collapsed:before {
     transform: rotate(0);
-}
+  }
 
-.sectionHeader.collapsed {
+  .sectionHeader.collapsed {
     border-bottom: 1px solid;
-}
+  }
 
-#stockChart {
+  #stockChart {
     border: 1px solid #ccc;
     border-top-width: 0;
-}
+  }
 
-.modalWrapper {
+  .modalWrapper {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 1000;
-}
+  }
 
-.modal {
+  .modal {
     width: 400px;
     height: 300px;
     margin: 0 auto;
     background-color: #fff;
-}
+  }
 
-.modalHeader {
+  .modalHeader {
     background-color: #009688;
     height: 40px;
     color: #fff;
-}
+  }
 
-.modalBody {
+  .modalBody {
     height: calc(100% - 80px);
-}
+  }
 
-.modalFooter {
+  .modalFooter {
     height: 40px;
     border-top: 1px solid #ccc;
     background-color: #e4e4e4;
-}`;
+  }
+`;
 class StockTracker extends React.Component {
- state = {
-      stockSymbol: null,
-    }
-  
+  state = {
+    stockSymbol: null
+  };
 
-  handleCellClick=(e)=> {
+  handleCellClick = e => {
     const currentSymbol = e.target.parentNode.dataset.symbol;
     if (currentSymbol) {
       this.setState({ stockSymbol: currentSymbol });
     }
-  }
+  };
 
   render() {
     return (
-      <StockTrackerWrapper className="clearfix">
-        <StockLists handleCellClick={(e)=>this.handleCellClick(e)} />
+      <StockTrackerWrapper className='clearfix'>
+        <StockLists handleCellClick={e => this.handleCellClick(e)} />
         {this.state.stockSymbol ? (
           <RightPanel stockSymbol={this.state.stockSymbol} />
         ) : null}

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import EnumsManager from "./enumsManager";
+import {Table} from 'semantic-ui-react'
 
 import { StandardTableHeader } from "./StandardTableHeader";
 import { StandardTableRow } from "./StandardTableRow";
@@ -11,16 +12,25 @@ function StandardTable(props) {
   const orderedData = sortData(props.data, columnOnSort);
 
   const rows = orderedData.map((rowData, index) => {
-    return <StandardTableRow key={index}
-                             columns={props.columns}
-                             rowData={rowData}
-                             index={index} />;
+    console.table(rowData)
+    return (
+        <StandardTableRow
+          key={index}
+          columns={props.columns}
+          rowData={rowData}
+          index={index}
+        />
+    );
   });
+
   return (
-    <table onClick={props.onClick}>
-      <StandardTableHeader columns={props.columns} columnOnSort={columnOnSort} />
-      <tbody>{rows}</tbody>
-    </table>
+    <Table sortable onClick={props.onClick}>
+      <StandardTableHeader
+        columns={props.columns}
+        columnOnSort={columnOnSort}
+      />
+      <Table.Body>{rows}</Table.Body>
+    </Table>
   );
 }
 
