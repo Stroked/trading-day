@@ -1,13 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import Styled from "styled-components";
-
-import StackedBarGraph from "../components/openStock/StackedBarGraph.js";
-import CardGraph from "../components/openStock/CardGraph.js";
+import * as d3 from "d3";
+import LineChart from "../components/openStock/LineChart";
 import NewsCard from "../components/openStock/NewsCard.js";
 import Spinner from "../components/openStock/Spinner.js";
 import Header from "../components/openStock/Header.js";
+import { } from "@vx/vx";
 
 const StyledHeader = Styled.div`
 background-color: #282c34;
@@ -22,169 +20,78 @@ color: white;
 
 class OpenStockHome extends React.Component {
   state = {
-    stocksFetched: false,
-    marketFetched: false,
+    indicesFetched: false,
     newsFetched: false,
-    stocks: [],
-    stocksData: {},
-    marketData: {},
+    indicesData: {},
     newsData: {}
   };
 
   componentDidMount() {
-    this.getExchanges();
-    this.getMarket();
+    this.getIndices();
     this.getNews();
   }
 
-  getExchanges = () => {
-    // API CALL
-    // https://api.iextrading.com/1.0/stock/market/batch?symbols=aapl,fb&types=quote,chart&range=1d
-    // Get Exchanges and batch call.
-    let parent = this;
-    fetch(
-      "https://api.iextrading.com/1.0/stock/market/batch?symbols=NDAQ,SPY,DIA&types=quote,chart&range=1d",
-      {
-        method: "GET"
-      }
-    )
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        parent.setState({
-          stocksFetched: true,
-          stocks: ["NDAQ", "SPY", "DIA"],
-          stocksData: json
-        });
-      })
-      .catch(function() {});
+  getIndices = async () => {
+    let data = await d3.json(
+      `https://api.iextrading.com/1.0/stock/market/batch?symbols=QQQ,SPY,DIA&types=quote,chart&range=1d`
+    );
+    this.setState({
+      indicesFetched: true,
+      indicesData: data
+    });
   };
 
-  getMarket = () => {
-    // API CALL
-    // https://api.iextrading.com/1.0/market
-    let parent = this;
-    fetch("https://api.iextrading.com/1.0/market", {
-      method: "GET"
-    })
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        parent.setState({
-          marketFetched: true,
-          marketData: json
-        });
-      })
-      .catch(function() {});
-  };
 
-  getNews = () => {
-    // API CALL
-    // https://api.iextrading.com/1.0/stock/market/news
-    let parent = this;
-    fetch("https://api.iextrading.com/1.0/stock/market/news", {
-      method: "GET"
-    })
-      .then(function(data) {
-        return data.json();
-      })
-      .then(function(json) {
-        parent.setState({
-          newsFetched: true,
-          newsData: json
-        });
-      })
-      .catch(function() {});
+  getNews = async () => {
+    let data = await d3.json(
+      `https://api.iextrading.com/1.0/stock/market/news`
+    );
+    this.setState({
+      newsFetched: true,
+      newsData: data
+    });
   };
 
   render() {
-    const NDAQ = this.state.stocksData["NDAQ"];
-    const DIA = this.state.stocksData["DIA"];
-    const SPY = this.state.stocksData["SPY"];
 
+let i=0;
     return (
-      <div className='container-fluid'>
-      <StyledHeader>
-      <Header/>
-      </StyledHeader>
-        <div className='row'>
-          {/* <div className="col-3"></div> */}
-          <div className='d-none d-sm-block col-6 market card'>
-            <h2 className='large'> Market Trading Volume (24h) </h2>
-            {this.state.marketFetched ? (
-              <StackedBarGraph name='market' d={this.state.marketData} />
-            ) : (
-              <Spinner />
-            )}
-          </div>
-          {/* <div className="col-3"></div> */}
+      <div>
+        <StyledHeader>
+          <Header />
+        </StyledHeader>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexBasis: "1fr 1fr 1fr"
+          }}>
+          {this.state.indicesFetched ? (
+            Object.keys(this.state.indicesData).map(key => (
+              <LineChart
+                key={`${i++}-${this.state.indicesData[key].quote.symbol}`}
+                data={this.state.indicesData[key].chart}
+                name={this.state.indicesData[key].quote.symbol}
+                companyName={this.state.indicesData[key].quote.companyName}
+                latestPrice={this.state.indicesData[key].quote.latestPrice}
+                changePercent={
+                  this.state.indicesData[key].quote.changePercent
+                }
+                volume={this.state.indicesData[key].quote.latestVolume}
+              />
+            ))
+          ) : (
+            <Spinner />
+          )}
         </div>
-        <div className='row'>
-          <div className='d-none d-lg-block col' />
-          <div className='d-none d-lg-block col' />
-          <div className='col card-stock'>
-            {this.state.stocksFetched ? (
-              <CardGraph
-                name='NDAQ'
-                d={NDAQ.chart}
-                companyName='Nasdaq Inc.'
-                latestPrice={NDAQ.quote.latestPrice}
-                changePercent={NDAQ.quote.changePercent}
-                volume={NDAQ.quote.latestVolume}
-                width='250'
-                height='75'
-              />
-            ) : (
-              <Spinner />
-            )}
-          </div>
-          <div className='col card-stock'>
-            {this.state.stocksFetched ? (
-              <CardGraph
-                name='SPY'
-                d={SPY.chart}
-                companyName='S&P 500'
-                latestPrice={SPY.quote.latestPrice}
-                changePercent={SPY.quote.changePercent}
-                volume={SPY.quote.latestVolume}
-                width='250'
-                height='75'
-              />
-            ) : (
-              <Spinner />
-            )}
-          </div>
-          <div className='col card-stock'>
-            {this.state.stocksFetched ? (
-              <CardGraph
-                name='DIA'
-                d={DIA.chart}
-                companyName='Dow Jones'
-                latestPrice={DIA.quote.latestPrice}
-                changePercent={DIA.quote.changePercent}
-                volume={DIA.quote.latestVolume}
-                width='250'
-                height='75'
-              />
-            ) : (
-              <Spinner />
-            )}
-          </div>
-          <div className='d-none d-lg-block col' />
-          <div className='d-none d-lg-block col' />
-        </div>
-        <div className='row'>
-          <div className='col-3' />
-          <div className='col-6'>
-            {this.state.newsFetched ? (
-              <NewsCard data={this.state.newsData} />
-            ) : (
-              <Spinner />
-            )}
-          </div>
-          <div className='col-3' />
+
+        <div>
+          {this.state.newsFetched ? (
+            <NewsCard data={this.state.newsData} />
+          ) : (
+            <Spinner />
+          )}
         </div>
       </div>
     );

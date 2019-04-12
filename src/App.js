@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 //---------------------------------------------------
 //QUOTES-NINJA
 import { DataProvider } from "./components/quotes-ninja/WithDataContext";
+import Markets from "./routes/Home";
 import QuotesHome from "./routes/QuotesHome";
 import QuotePage from "./routes/QuotePage";
 //OPEN-STOCK
@@ -15,6 +16,7 @@ import StockTracker from "./components/simple-stock-tracker/";
 
 //TRADING-DAY
 import TradingDay from "./components/TradingDay/";
+import MarketForces from "./routes/MarketForces";
 //TREND-TICKER
 // import TickerTrends from './routes/TickerTrends'
 //---------------------------------------------------
@@ -34,16 +36,20 @@ import marketHeader from "./assets/design/market-header.png";
 //---------------------------------------------------
 //Cool Look
 import Mosaic from "./components/coolook/Mosaic";
+import MenuButtons from "./components/coolook/MenuButtons";
 
 //---------------------------------------------------
 export default class App extends React.Component {
   render() {
     return (
       <AppWrapper>
-         <DataProvider> 
+        <DataProvider>
           <Switch>
             {/* ROOT */}
-            <Route exact path='/' component={OpenStockHome} />
+            <Route exact path='/' component={Markets} />
+
+            <Route exact path='/Home' component={OpenStockHome} />
+            <Route exact path='/Listings' component={MarketForces} />
             {/* QUOTES HOME */}
 
             {/* LOGIN */}
@@ -76,7 +82,7 @@ export default class App extends React.Component {
             />
             <Route component={NotFoundPage} />
           </Switch>
-         </DataProvider>
+        </DataProvider>
       </AppWrapper>
     );
   }

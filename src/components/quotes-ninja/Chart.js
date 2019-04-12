@@ -54,7 +54,6 @@ const Chart = ({ charts, display }) => {
                 onClick={setActiveChart}
               />
               <Segment attached>
-                
                 {/* {!_.isEmpty(charts[activeChart]) ? (
                   <ResponsiveContainer height={300}>
                     <ComposedChart data={charts[activeChart]}>

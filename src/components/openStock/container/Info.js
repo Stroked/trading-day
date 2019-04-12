@@ -1,21 +1,196 @@
+import { Link } from "react-router-dom";
 import React from "react";
 import * as d3 from "d3";
 import Company from "../Company.js";
-import CardGraph from "../CardGraph.js";
-import Graph from "../Graph.js";
+import LineChart from "../LineChart.js";
 import Statistics from "../Statistics.js";
 import Spinner from "../Spinner.js";
 import NewsCard from "../NewsCard.js";
+import NewsItems from "../../quotes-ninja/NewsItems";
 import CandleStickChart from "../../TradingDay/Charts/CandleStick";
-import styled from 'styled-components';
-
+import styled from "styled-components";
+import MenuButtons from "../../coolook/MenuButtons";
 const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* .buttons-container {
+    display:inline;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    width:100%;
+    border-radius: 45px;
+    background: #151515;
+    box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.5);
+  }
+  ul {
+    position: relative;
+    list-style: none;
+    width: inherit;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center; background-clip: padding-box;
 
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+    li { background-clip: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1px;
+      height: 90px;
+      width: 95px;
+      background: #202020;
+      border-top: 1px solid #353535;
+      box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.5);
+      transition: all 0.5s;
+      &:nth-of-type(1) {          border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+        button{
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+      }
+      }
+      &:last-of-type {
+           border-bottom-right-radius: 40px;
+        border-top-right-radius: 40px;
+        button{
+        border-bottom-right-radius: 40px;
+        border-top-right-radius: 40px;
+        }
+      }
+      &:hover {
+        cursor: pointer;
+      }
+      button { 
+        display: inline-block;
+        height:100%;
+        width:100%;
+        color:#fff;
+        background:Transparent;
+        background-color: Transparent;
+        border-style:hidden;
+        text-decoration: none;
+        transition: all 0.5s;
+        font-size:2.5em;          
+        outline:none;
+        background-clip: border-box;
+        &:focus{
+            background-color:red;
+            font-size:3em;
+          outline:none;
+          outline-width:0;
+          border-bottom-width:0px;
+          }  
+        
+      }
+    
+    
+  .active {
+    font-size:3em;
+    color:#000;
+     background-clip: padding-box;
+    background:red;
+    background-color:red;
+    border-top: none;
+    border-bottom: 1px solid #252525;
+    box-shadow: inset 0 0 25px 1px rgba(0, 0, 0, 0.8);
+  } */
 `;
+
+
+const DarkButtons = styled.div`
+  display: inline-block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  border-radius: 45px;
+  background: #151515;
+  box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.5);
+
+  ul {
+    padding: 3px 0px;
+    margin: 0 -2px;
+    list-style: none;
+    width: inherit;
+    height: inherit;
+    display: flex;
+  }
+  ul li {
+    display: flex;
+    margin: 1px 2px;
+    height: 90%;
+    width: 100%;
+    background: #202020;
+    border-top: 1px solid #353535;
+    box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.5);
+    transition: all 0.5s;
+  }
+  ul li:nth-of-type(1) {
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    button {
+      border-top-left-radius: 40px;
+      border-bottom-left-radius: 40px;
+    }
+  }
+  ul li:last-of-type {
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    button {
+      border-bottom-right-radius: 40px;
+      border-top-right-radius: 40px;
+    }
+  }
+  ul li button {
+    height: 100%;
+    width: 100%;
+    color: #999999;
+    background: transparent;
+    background-color: transparent;
+    text-shadow: inset 1px 1px 2px rgba(225, 225, 225, 0.5);
+    background-clip: text;
+    font-size: 2em;
+    transition: all 0.5s;
+    border-style: hidden;
+    border: none;
+    outline: none;
+    &:focus {
+      outline: none;
+      outline-width: 0;
+      border-bottom: 1px solid #252525;
+      border-style: hidden;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+    }
+  }
+
+  .active {
+    border-style: none;
+    background: #151515;
+
+    border-bottom: 1px solid #252525;
+    box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.8);
+  }
+
+  .active-text {
+    color: crimson;
+    text-shadow: 0 0 15px rgba(220, 10, 10, 0.5);
+    background-clip: padding-box;
+  }
+`;
+
+
 class Info extends React.Component {
   state = {
     fetched: false,
@@ -101,18 +276,14 @@ class Info extends React.Component {
   };
 
   makeApiCall = async (frequency = "1y") => {
-    let url = `https://api.iextrading.com/1.0/stock/${
-      this.props.symbol
-    }/chart/${frequency}`;
-    let timeParser = d3.timeParse("%Y-%m-%d");
-
-    if (frequency === "1d") {
-      timeParser = d3.timeParse("%Y%m%d%H:%M");
-    }
+    let timeParser = d3.timeParse('%Y-%m-%d');
+    if (frequency === "1d") timeParser = d3.timeParse('%Y%m%d%H:%M');
 
     let prices = [];
     let times = [];
-    const d = await d3.json(url);
+    const d = await d3.json(
+      `https://api.iextrading.com/1.0/stock/${this.props.symbol}/chart/${frequency}`
+    );
 
     // Check for failure to retry.
     if (d[0]["date"] == null) {
@@ -148,6 +319,20 @@ class Info extends React.Component {
   };
 
   changeActive = id => {
+    const lis = document.querySelectorAll("li");
+    const button = document.querySelectorAll("li button");
+
+    for (let i = 0; i < lis.length; i++) {
+      lis[i].addEventListener("click", function() {
+        for (let i = 0; i < lis.length; i++) {
+          lis[i].classList.remove("active");
+          button[i].classList.remove("active-text");
+        }
+        this.classList.add("active");
+        button[i].classList.add("active-text");
+      });
+    }
+
     let buttons = document.getElementsByTagName("button");
 
     for (let i = 0; i < buttons.length; i++) {
@@ -161,27 +346,26 @@ class Info extends React.Component {
 
   render() {
     let peers = this.state.peers;
-    while (peers.length % 3 !== 0) {
-      peers.pop();
-    }
+    // while (peers.length % 3 !== 0) {
+    //   peers.pop();
+    // }
 
     const peerGraphs =
       peers > 0 ? (
-        <div className='col peers-card'> No Peers </div>
+        <h2> No Peers Data Available </h2>
       ) : (
         peers.map((peer, i) => (
-          <div className='col-4 card-stock card-peer' key={i}>
-            <CardGraph
-              name={peer}
-              companyName={peer}
-              d={this.state.peerData[peer].chart}
-              latestPrice={this.state.peerData[peer].quote.latestPrice}
-              changePercent={this.state.peerData[peer].quote.changePercent}
-              volume={this.state.peerData[peer].quote.latestVolume}
-              width='150'
-              height='75'
-            />
-          </div>
+          <LineChart
+            key={`${i}-${this.state.peerData[peer].quote.symbol}`}
+            name={this.state.peerData[peer].symbol}
+            companyName={this.state.peerData[peer].companyName}
+            data={this.state.peerData[peer].chart}
+            latestPrice={this.state.peerData[peer].quote.latestPrice}
+            changePercent={this.state.peerData[peer].quote.changePercent}
+            volume={this.state.peerData[peer].quote.latestVolume}
+            width='150'
+            height='75'
+          />
         ))
       );
 
@@ -200,43 +384,73 @@ class Info extends React.Component {
       );
     } else {
       return (
-       <StyledWrapper>
+        <StyledWrapper>
           <div className='row'>
             <div className='col-sm-3' />
             <div className='col Stock'>
               <div className=''>
                 <h2>
-                  {this.state.companyName} ({this.props.symbol.toUpperCase()})
+                  {this.state.companyName} (
+                  {this.props.symbol.toUpperCase()})
                 </h2>
-                <h3>
-                  <button
-                    onClick={() => this.changeActive("1d")}
-                    id='1d'
-                    className='active'>
-                    1D
-                  </button>
-                  <button onClick={() => this.changeActive("1m")} id='1m'>
-                    1M
-                  </button>
-                  <button onClick={() => this.changeActive("3m")} id='3m'>
-                    3M
-                  </button>
-                  <button onClick={() => this.changeActive("6m")} id='6m'>
-                    6M
-                  </button>
-                  <button onClick={() => this.changeActive("1y")} id='1y'>
-                    1Y
-                  </button>
-                  <button onClick={() => this.changeActive("5y")} id='5y'>
-                    5Y
-                  </button>
-                </h3>
+
+                <DarkButtons className='buttons-container'>
+                  <ul>
+                    <li>
+                      <button
+                        onClick={() => this.changeActive("1d")}
+                        id='1d'>
+                        1D
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => this.changeActive("1m")}
+                        id='1m'>
+                        1M
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => this.changeActive("3m")}
+                        id='3m'>
+                        3M
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => this.changeActive("6m")}
+                        id='6m'>
+                        6M
+                      </button>
+                    </li>
+                    <li
+className="active"                      ><button
+                      className='active-text'
+                        onClick={() => this.changeActive("1y")}
+                        id='1y'>
+                        1Y
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => this.changeActive("5y")}
+                        id='5y'>
+                        5Y
+                      </button>
+                    </li>
+                  </ul>
+                </DarkButtons>
+
                 {this.state.fetched ? (
-                  <div style={{alignContent:"center",margin:"500 500"}}>
-                    <CandleStickChart width={900} height={500} data={this.state.d}
+                  <div
+                    style={{ alignContent: "center", margin: "500 500" }}>
+                    <CandleStickChart
+                      width={900}
+                      height={500}
+                      data={this.state.d}
                       symbol={this.props.symbol.toUpperCase()}
                     />
-                
                   </div>
                 ) : (
                   <Spinner />
@@ -286,7 +500,7 @@ class Info extends React.Component {
             <div className='col-3' />
             <div className='col-6'>
               {this.state.newsFetched ? (
-                <NewsCard data={this.state.newsData} />
+                <NewsItems news={this.state.newsData} slice={10} />
               ) : (
                 <Spinner />
               )}

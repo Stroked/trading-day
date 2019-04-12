@@ -1,13 +1,9 @@
 import React from "react";
-import {json} from 'd3'
+import { json } from "d3";
 import StatisticsTable from "./StatisticsTable";
-import styled from 'styled-components';
-
-const StyledSpotlight=styled.div`
-flex-basis:1fr 1fr 1fr;
-  display:flex;
-  flex-direction:row;
-  justify-content:space-evenly;
+import styled from "styled-components";
+import {Grid,Divider} from 'semantic-ui-react';
+const StyledSpotlight = styled.div`
 
 `;
 class Spotlight extends React.Component {
@@ -54,37 +50,45 @@ class Spotlight extends React.Component {
   };
   render() {
     return (
-      <StyledSpotlight>
-        {this.state.fetchedLosers ? (
-          <StatisticsTable
-            name='Losers'
-            color='red'
-            inverted
-            data={this.state.losers}
-          />
-        ) : (
-          <h1> Loading</h1>
-        )}
-        {this.state.fetchedActive ? (
-          <StatisticsTable
-            name='Most Active'
-            color='black'
-            inverted
-            data={this.state.active}
-          />
-        ) : (
-          <h1> Loading</h1>
-        )}
-        {this.state.fetchedGainers ? (
-          <StatisticsTable
-            name='Gainers'
-            color='green'
-            data={this.state.gainers}
-          />
-        ) : (
-             <h1> Loading</h1>
-        )}
-      </StyledSpotlight>
+      <Grid columns={3} relaxed='very' divided stackable>
+        <Grid.Column>
+          {this.state.fetchedLosers ? (
+            <StatisticsTable
+              name='Top Losers'
+              color='red'
+              data={this.state.losers}
+              icon='arrow down'
+            />
+          ) : (
+            <h1> Loading</h1>
+          )}
+        </Grid.Column>
+        <Grid.Column>
+          {this.state.fetchedActive ? (
+            <StatisticsTable
+              name='Most Active'
+              color='black'
+              inverted
+              data={this.state.active}
+              icon='bolt'
+            />
+          ) : (
+            <h1> Loading</h1>
+          )}
+        </Grid.Column>
+        <Grid.Column>
+          {this.state.fetchedGainers ? (
+            <StatisticsTable
+              name='Top Gainers'
+              color='green'
+              data={this.state.gainers}
+              icon='arrow up'
+            />
+          ) : (
+            <h1> Loading</h1>
+          )}
+        </Grid.Column>
+      </Grid>
     );
   }
 }
