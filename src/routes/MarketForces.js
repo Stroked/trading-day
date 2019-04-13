@@ -20,40 +20,37 @@ class MarketForces extends React.Component {
 
   componentWillMount() {
     this.container = d3.select(this.state.svgRef.Current);
+    this.renderCircles();
     simulation.on("tick", this.forceTick);
   }
 
   componentDidMount() {
     this.getData();
-    // console.table(sp500);
-    if (this.state.sp500) {
-        console.log("sp500 data loaded")
-        simulation
-        .nodes(this.state.sp500)
-        .alpha(1)
-        .restart();
-    }
     this.renderCircles();
-}
+  }
 
   componentDidUpdate() {
+    simulation
+      .nodes(this.state.data)
+      .alpha(1)
+      .restart();
     this.renderCircles();
   }
 
   renderCircles() {
-    if (this.state.sp500) {
-      this.circles = this.container
-        .selectAll("circle")
-        .data(this.state.sp500, data => data.symbol)
-        .join("circle")
-        .attr("r", d => this.state.marketCapScale(d["Market Cap"]))
-        .attr("opacity", 0.5)
-        .attr("fill", d => this.state.sectorScale(d.Sector));
-    }
+    const circles = this.container
+      .selectAll("circle")
+      .data(this.state.data, data => data.symbol);
+
     // exit
-    //this.circles.exit().remove();
+    circles.exit().remove();
     // enter+update
-    //this.circles = this.circles
+    this.circles = circles
+      .enter()
+      .append("circle")
+      .attr("r", d => this.state.marketCapScale(d["Market Cap"]))
+      .attr("opacity", 0.5)
+      .attr("fill", d => this.state.sectorScale(d.Sector));
   }
   forceTick = () => {
     this.circles.attr("cx", d => d.x).attr("cy", d => d.y);
@@ -61,10 +58,11 @@ class MarketForces extends React.Component {
 
   getData = async () => {
     const sp500 = await d3.json(
-      `https://datahub.io/core/s-and-p-500-companies-financials/r/constituents-financials.json`
+      `https://cors-anywhere.herokuapp.com/datahub.io/core/s-and-p-500-companies-financials/r/constituents-financials.json`
     );
+
     this.setState({
-      sp500: sp500,
+      data: sp500,
       sectorScale: d3
         .scaleOrdinal()
         .domain([...new Set(sp500.map(item => item.Sector))])
@@ -77,13 +75,9 @@ class MarketForces extends React.Component {
   };
 
   render() {
-    return (
-      <svg
-        ref={this.state.svgRef}
-        height={height}
-        width={width}
-      />
-    );
+    return this.state.data ? (
+      <svg ref={this.state.svgRef} height={height} width={width} />
+    ) : null;
   }
 }
 

@@ -1,6 +1,6 @@
 2019-april
 ---
-- these building blocks to the bigger ideas
+- these are the building blocks to bigger ideas
 - it's sorta messy but lots of things work here 
 
 ---

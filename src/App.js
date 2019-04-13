@@ -6,7 +6,6 @@ import { Switch, Route } from "react-router-dom";
 //QUOTES-NINJA
 import { DataProvider } from "./components/quotes-ninja/WithDataContext";
 import Markets from "./routes/Home";
-import QuotesHome from "./routes/QuotesHome";
 import QuotePage from "./routes/QuotePage";
 //OPEN-STOCK
 import OpenStockHome from "./routes/OpenStockHome.js";
@@ -67,11 +66,7 @@ export default class App extends React.Component {
                 )}
               /> */}
             {/*  QUOTES */}
-            <Route
-              exact
-              path='/Homepage'
-              render={props => <QuotesHome {...props} />}
-            />
+      
 
             <Route
               exact

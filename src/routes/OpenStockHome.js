@@ -1,10 +1,10 @@
+import { Link } from "react-router-dom";
 import React from "react";
 import Styled from "styled-components";
 import * as d3 from "d3";
 import LineChart from "../components/openStock/LineChart";
 import NewsCard from "../components/openStock/NewsCard.js";
 import Spinner from "../components/openStock/Spinner.js";
-import Header from "../components/openStock/Header.js";
 import { } from "@vx/vx";
 
 const StyledHeader = Styled.div`
@@ -58,7 +58,21 @@ let i=0;
     return (
       <div>
         <StyledHeader>
-          <Header />
+          <Link to='/'>TradingDay</Link>
+          <Link to='/Stocks'> Daily Report </Link>
+          <div className="search">
+      <form action="./Stocks" method="get">
+        <input
+          type="text"
+          name="symbol"
+          placeholder="Enter Ticker.."
+          id="submit"
+        />
+        <button>
+          <i className="fas fa-search" />
+        </button>
+      </form>
+    </div> 
         </StyledHeader>
 
         <div
