@@ -43,13 +43,13 @@ const QuoteData = props => {
     return (
       <Segment>
         <Grid columns={2}>
-          <Grid.Column>
+          <Grid.Column width={4}>
             <Image bottom src={imgSrc} size='small' />
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width={9}>
             <Header
               top
-              style={{ fontFamily: "Dancing Script", fontSize: "4em" }}
+              style={{ fontFamily: "Dancing Script", fontSize: "8em" }}
               textAlign='center'>
               {display.companyName} ({display.symbol})
             </Header>
