@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Grid, Segment, Header, Image } from "semantic-ui-react";
+import {
+  Rail,
+  Grid,
+  Segment,
+  Header,
+  Image,
+  Container
+} from "semantic-ui-react";
 
 import StatsPrice from "./StatsPrice";
 import StatsDetails from "./StatsDetails";
-import Chart from "./Chart";
+import DarkButtons from "../coolook/DarkButtons";
 import NewsItems from "./NewsItems";
 
 import NotFound from "./NotFound";
 
-import {quoteFormatting} from "../../utils/format";
+import { quoteFormatting } from "../../utils/format";
 import setTitle from "../../utils/title";
 
 import placeholder from "../../assets/iex-logo.png";
@@ -22,7 +29,7 @@ const QuoteData = props => {
 
     const display = quoteFormatting(quote, stats);
     setTitle(display.symbol, display.latestPrice);
-
+    const [activePeriod, setActivePeriod] = useState("1Y");
     // set img
     const [imgSrc, setImgSrc] = useState(logo.url);
     useEffect(() => {
@@ -34,12 +41,21 @@ const QuoteData = props => {
     };
     console.log(props.charts);
     return (
-      <div>
-        <Image src={imgSrc} size='tiny' centered onError={handleErr} />
-        <Header size='huge' textAlign='center'>
-          {display.symbol}
-          <Header.Subheader>{display.companyName}</Header.Subheader>
-        </Header>
+      <Segment>
+        <Grid columns={2}>
+          <Grid.Column>
+            <Image bottom src={imgSrc} size='small' />
+          </Grid.Column>
+          <Grid.Column>
+            <Header
+              top
+              style={{ fontFamily: "Dancing Script", fontSize: "4em" }}
+              textAlign='center'>
+              {display.companyName} ({display.symbol})
+            </Header>
+          </Grid.Column>
+        </Grid>
+
         <StatsPrice
           last={display.latestPriceSimple}
           change={display.change}
@@ -49,9 +65,14 @@ const QuoteData = props => {
         <Segment basic>
           <Grid stackable>
             <StatsDetails data={display} />
+            <DarkButtons
+              default={"ytd"}
+              timeRangeArray={["d1", "m1", "m3", "m6", "y1", "ytd"]}
+              clickEffect={setActivePeriod}
+            />
             <HeikinAshi
               height={600}
-              data={props.charts["m1"]}
+              data={props.charts[activePeriod]}
               type='hybrid'
               ticker={display.symbol}
               xAxis='date'
@@ -61,7 +82,7 @@ const QuoteData = props => {
             <NewsItems news={news} />
           </Grid>
         </Segment>
-      </div>
+      </Segment>
     );
   }
 

@@ -9,7 +9,7 @@ import NewsCard from "../NewsCard.js";
 import NewsItems from "../../quotes-ninja/NewsItems";
 import CandleStickChart from "../../TradingDay/Charts/CandleStick";
 import styled from "styled-components";
-import MenuButtons from "../../coolook/MenuButtons";
+import DarkButtons from "../../coolook/DarkButtons";
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -103,92 +103,6 @@ const StyledWrapper = styled.div`
 `;
 
 
-const DarkButtons = styled.div`
-  display: inline-block;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  border-radius: 45px;
-  background: #151515;
-  box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.5);
-
-  ul {
-    padding: 3px 0px;
-    margin: 0 -2px;
-    list-style: none;
-    width: inherit;
-    height: inherit;
-    display: flex;
-  }
-  ul li {
-    display: flex;
-    margin: 1px 2px;
-    height: 90%;
-    width: 100%;
-    background: #202020;
-    border-top: 1px solid #353535;
-    box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.5);
-    transition: all 0.5s;
-  }
-  ul li:nth-of-type(1) {
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
-    button {
-      border-top-left-radius: 40px;
-      border-bottom-left-radius: 40px;
-    }
-  }
-  ul li:last-of-type {
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-    button {
-      border-bottom-right-radius: 40px;
-      border-top-right-radius: 40px;
-    }
-  }
-  ul li button {
-    height: 100%;
-    width: 100%;
-    color: #999999;
-    background: transparent;
-    background-color: transparent;
-    text-shadow: inset 1px 1px 2px rgba(225, 225, 225, 0.5);
-    background-clip: text;
-    font-size: 2em;
-    transition: all 0.5s;
-    border-style: hidden;
-    border: none;
-    outline: none;
-    &:focus {
-      outline: none;
-      outline-width: 0;
-      border-bottom: 1px solid #252525;
-      border-style: hidden;
-    }
-    &:hover {
-      cursor: pointer;
-    }
-    &:active {
-    }
-  }
-
-  .active {
-    border-style: none;
-    background: #151515;
-
-    border-bottom: 1px solid #252525;
-    box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.8);
-  }
-
-  .active-text {
-    color: crimson;
-    text-shadow: 0 0 15px rgba(220, 10, 10, 0.5);
-    background-clip: padding-box;
-  }
-`;
 
 
 class Info extends React.Component {
@@ -332,15 +246,6 @@ class Info extends React.Component {
         button[i].classList.add("active-text");
       });
     }
-
-    let buttons = document.getElementsByTagName("button");
-
-    for (let i = 0; i < buttons.length; i++) {
-      buttons.item(i).classList.remove("active");
-    }
-
-    document.getElementById(id).classList.add("active");
-    // Change graph to different one.
     this.makeApiCall(id);
   };
 
@@ -394,53 +299,11 @@ class Info extends React.Component {
                   {this.props.symbol.toUpperCase()})
                 </h2>
 
-                <DarkButtons className='buttons-container'>
-                  <ul>
-                    <li>
-                      <button
-                        onClick={() => this.changeActive("1d")}
-                        id='1d'>
-                        1D
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => this.changeActive("1m")}
-                        id='1m'>
-                        1M
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => this.changeActive("3m")}
-                        id='3m'>
-                        3M
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => this.changeActive("6m")}
-                        id='6m'>
-                        6M
-                      </button>
-                    </li>
-                    <li
-className="active"                      ><button
-                      className='active-text'
-                        onClick={() => this.changeActive("1y")}
-                        id='1y'>
-                        1Y
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => this.changeActive("5y")}
-                        id='5y'>
-                        5Y
-                      </button>
-                    </li>
-                  </ul>
-                </DarkButtons>
+                <DarkButtons
+                default={'1Y'}
+                  timeRangeArray={["1D", "2W", "3M", "1Y", "5Y"]}
+                  clickEffect={this.makeApiCall}
+                />
 
                 {this.state.fetched ? (
                   <div
