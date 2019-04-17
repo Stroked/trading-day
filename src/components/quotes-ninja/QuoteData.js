@@ -6,8 +6,10 @@ import {
   Segment,
   Header,
   Image,
-  Container
+  Container,Label
 } from "semantic-ui-react";
+
+import Clock, {ReactFitText} from 'react-live-clock';
 
 import StatsPrice from "./StatsPrice";
 import StatsDetails from "./StatsDetails";
@@ -43,25 +45,43 @@ const QuoteData = props => {
     return (
       <Segment>
         <Grid columns={2}>
-          <Grid.Column width={4}>
-            <Image bottom src={imgSrc} size='small' />
+          <Grid.Column width={3}>
+            {imgSrc ? <Image bottom src={imgSrc} size='small' /> : null}
           </Grid.Column>
-          <Grid.Column width={9}>
+          <Grid.Column width={12}>
             <Header
-              top
-              style={{ fontFamily: "Dancing Script", fontSize: "8em" }}
+              style={{
+                fontFamily: "Dancing Script",
+                fontSize: "4vw",
+                fontWeight: "800"
+              }}
               textAlign='center'>
               {display.companyName} ({display.symbol})
             </Header>
+            <StatsPrice
+              last={display.latestPriceSimple}
+              change={display.change}
+              percent={display.changePercent}
+              color={display.status}
+            />
+            {/* <svg viewBox='0 0 200 25' style={{ width: "100%" }}>
+                <text x='0' y='15'>
+                  {display.companyName} ({display.symbol})
+                </text>
+              </svg> */}
+            <Rail attached  position='right'>
+              <Label>
+                <Clock
+                  format={"HH:mm:ss"}
+                  ticking={true}
+                  timezone={"America/New_York"}
+                  interval={1000}
+                />
+              </Label>
+            </Rail>
           </Grid.Column>
         </Grid>
 
-        <StatsPrice
-          last={display.latestPriceSimple}
-          change={display.change}
-          percent={display.changePercent}
-          color={display.status}
-        />
         <Segment basic>
           <Grid stackable>
             <StatsDetails data={display} />

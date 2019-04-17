@@ -13,6 +13,7 @@ const DarkButtonStyles = styled.div`
   box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.5);
 
   ul {
+    display:inline-block;
     padding: 3px 0px;
     margin: 0 -2px;
     list-style: none;
@@ -54,7 +55,7 @@ const DarkButtonStyles = styled.div`
     background-color: transparent;
     text-shadow: inset 1px 1px 2px rgba(225, 225, 225, 0.5);
     background-clip: text;
-    font-size: 2em;
+    font-size: 2rem;
     transition: all 0.5s;
     border-style: hidden;
     border: none;

@@ -14,7 +14,7 @@ const SearchWrap = styled.div`
 const formatHits = hits => {
   return _.chain(hits)
     .map(h => {
-      return { title: h.symbol, description: h.name };
+      return { title: h.Symbol, description: h.CompanyName };
     })
     .slice(0, 10)
     .value();
@@ -30,6 +30,8 @@ const SearchInput = props => {
 
   const onSelect = (e, { result }) => {
     setVal('');
+    console.log(result)
+    debugger;
     props.history.push({
       pathname: `${result.title.toLowerCase()}`
     });
@@ -41,7 +43,7 @@ const SearchInput = props => {
         style={{ width: '90%' }}
         fluid
         input={{ style: { width: '90%' } }}
-        size="small"
+        size="large"
         placeholder="Enter Company or Symbol"
         value={val}
         onSearchChange={onChange}

@@ -5,6 +5,8 @@ import { Switch, Route } from "react-router-dom";
 //---------------------------------------------------
 //QUOTES-NINJA
 import { DataProvider } from "./components/quotes-ninja/WithDataContext";
+import WithInstantSearch  from "./components/quotes-ninja/WithInstantSearch";
+import SearchInput from "./components/quotes-ninja/SearchInput";
 import Markets from "./routes/Home";
 import QuotePage from "./routes/QuotePage";
 //OPEN-STOCK
@@ -42,7 +44,9 @@ export default class App extends React.Component {
   render() {
     return (
       <AppWrapper>
+      <WithInstantSearch>
         <DataProvider>
+        <SearchInput/>
           <Switch>
             {/* ROOT */}
             <Route exact path='/' component={Markets} />
@@ -78,6 +82,7 @@ export default class App extends React.Component {
             <Route component={NotFoundPage} />
           </Switch>
         </DataProvider>
+        </WithInstantSearch>
       </AppWrapper>
     );
   }

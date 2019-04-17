@@ -3,13 +3,19 @@ import { Segment, Header } from "semantic-ui-react";
 import { DataContext } from "../components/quotes-ninja/WithDataContext";
 import NewsItems from "../components/quotes-ninja/NewsItems";
 import StocksSpotlight from "../components/TradingDay/DailySpotlight";
+import TickerScroll from "../components/TradingDay/TickerScroll";
 import setTitle from "../utils/title";
 
 const Markets = props => {
   const context = useContext(DataContext);
   setTitle(null, null);
   return (
-    <Segment>
+    <Segment><Header>
+
+
+    <TickerScroll/>
+
+    </Header>
       <StocksSpotlight />
       {!context.fetchingIncidies.loading && (
         <React.Fragment>

@@ -7,7 +7,7 @@ class StatisticsTable extends React.Component {
     const stats = this.props.data.map((e, i) => (
       <Table.Row key={i} selectable>
         <Table.Cell textAlign='center' selectable>
-          <Link to={"/Stocks?symbol=" + e["symbol"]}>{e["symbol"]}</Link>
+          <Link to={"/" + e["symbol"]}>{e["symbol"]}</Link>
         </Table.Cell>
 
         <Table.Cell textAlign='right'>
