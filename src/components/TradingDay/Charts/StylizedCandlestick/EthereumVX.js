@@ -1,7 +1,7 @@
-import { TopCorner, Banner, Chart } from "./ethereum";
-import React from "react";
-import styled from "styled-components";
-import ethereumData from "./ethereum-180d";
+import { TopCorner, Banner, Chart } from './ethereum';
+import React from 'react';
+import styled from 'styled-components';
+import ethereumData from './ethereum-180d'
 const EthereumChartWrapper = styled.div`
   @import url("https://fonts.googleapis.com/css?family=Droid+Sans+Mono");
 
@@ -32,11 +32,12 @@ const EthereumChartWrapper = styled.div`
     bottom: 0;
     cursor: crosshair;
   }
-
+ 
   .controls {
   }
 `;
 class Ethereum extends React.Component {
+ 
   state = { numItems: 180 };
   // componentDidMount() {
   //   fetch("https://api.cryptowat.ch/markets/gdax/ethusd/ohlc?period=180")
@@ -100,7 +101,7 @@ class Ethereum extends React.Component {
 
     const start = sortedBuckets[0].closeTime;
     const end = sortedBuckets[sortedBuckets.length - 1].closeTime;
-    return !data ? (
+  return !data ? (
       <h1>NO DATA</h1>
     ) : (
       <EthereumChartWrapper>
@@ -118,11 +119,7 @@ class Ethereum extends React.Component {
                 }}
               />
             </div>
-            <TopCorner
-              width={150}
-              height={150}
-              tickerSymbol={this.props.tickerSymbol}
-            />
+            <TopCorner width={150} height={150} tickerSymbol={this.props.tickerSymbol} />
             <Banner
               numItems={this.state.numItems}
               increaseNumItems={this.increaseNumItems}
