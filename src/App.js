@@ -7,42 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import { DataProvider } from "./components/quotes-ninja/WithDataContext";
 import WithInstantSearch from "./components/quotes-ninja/WithInstantSearch";
 import SearchInput from "./components/quotes-ninja/SearchInput";
-import Markets from "./routes/Home";
-import QuotePage from "./routes/QuotePage";
-//OPEN-STOCK
-import OpenStockHome from "./routes/OpenStockHome.js";
-import Stocks from "./components/openStock/container/Stocks.js";
-//STOCK-TRACKER
-import StockTracker from "./components/simple-stock-tracker/";
-
-//TRADING-DAY
-import TradingDay from "./components/TradingDay/";
-import EthereumChart from "./components/TradingDay/Charts/StylizedCandlestick/EthereumVX";
-import StylizedCandlestickChart from "./components/TradingDay/Charts/StylizedCandlestick";
-
-import MarketForces from "./routes/MarketForces";
-//TREND-TICKER
-// import TickerTrends from './routes/TickerTrends'
-//---------------------------------------------------
-//ROUTES
-import Login from "./routes/Login";
-import NotFoundPage from "./routes/NotFoundPage";
-
-//---------------------------------------------------
-//CONTAINERS
-
-//---------------------------------------------------
-//ASSETS
-import logo from "./assets/orange-wheel-art-800x800.png";
-import marketHeader from "./assets/design/market-header.png";
-//---------------------------------------------------
-
-//---------------------------------------------------
-//Cool Look
-import Mosaic from "./components/coolook/Mosaic";
-import MenuButtons from "./components/coolook/MenuButtons";
-
-//---------------------------------------------------
+import Routes from './routes'
 export default class App extends React.Component {
   render() {
     return (
@@ -50,43 +15,7 @@ export default class App extends React.Component {
         <WithInstantSearch>
           <DataProvider>
             <SearchInput />
-            <Switch>
-              {/* ROOT */}
-              <Route exact path='/' component={Markets} />
-              <Route exact path='/Home' component={OpenStockHome} />
-              <Route exact path='/Listings' component={MarketForces} />
-              {/* QUOTES HOME */}
-
-              {/* LOGIN */}
-              <Route exact path='/Login' component={Login} />
-              {/* OPENSTOCK */}
-              <Route exact path='/Stocks' component={Stocks} />
-              <Route exact path='/TradingDay' component={TradingDay} />
-              <Route exact path='/StockTracker' component={StockTracker} />
-              <Route exact path='/Mosaic' component={Mosaic} />
-              <Route
-                exact
-                path='/styled-candlesticks'
-                component={StylizedCandlestickChart}
-              />
-              {/* <Route
-                 exact
-                 path='GoogleTrends/:id'
-                 render={props => (
-                   <TickerTrends symbol={props.match.params.id} {...props} />
-                 )}
-               />  
-              QUOTES */}
-
-              <Route
-                exact
-                path='/:id'
-                render={props => (
-                  <QuotePage symbol={props.match.params.id} {...props} />
-                )}
-              />
-              <Route component={NotFoundPage} />
-            </Switch>
+           <Routes/>
           </DataProvider>
         </WithInstantSearch>
       </AppWrapper>
