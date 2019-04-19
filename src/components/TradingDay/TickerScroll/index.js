@@ -27,12 +27,10 @@ const GetSectorPerformance = () => {
   return sectors ? (
     <p style={{ whiteSpace: "nowrap" }}>
       {Object.keys(sectors).map(sector => {
-        const sectorName = sector;
-        let sectorPerformance = sectors[sector];
-        sectorPerformance = +sectorPerformance.substring(
+        let sectorPerformance = sectors[sector].substring(
           0,
-          sectorPerformance.length - 1
-        );
+          sectors[sector].length - 1
+        );;
         const isUp = sectorPerformance > 0 ? true : false;
 
         return (
@@ -73,7 +71,7 @@ const GetSectorPerformance = () => {
 
 function StockTicker() {
   return (
-    <Ticker offset='run-in' speed={5}>
+    <Ticker offset='0' speed={5}>
       {() => <GetSectorPerformance />}
     </Ticker>
   );

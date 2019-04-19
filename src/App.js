@@ -8,14 +8,16 @@ import { DataProvider } from "./components/quotes-ninja/WithDataContext";
 import WithInstantSearch from "./components/quotes-ninja/WithInstantSearch";
 import SearchInput from "./components/quotes-ninja/SearchInput";
 import Routes from './routes'
+import Header from './components/TradingDay/Header'
 export default class App extends React.Component {
   render() {
     return (
       <AppWrapper>
         <WithInstantSearch>
           <DataProvider>
+            <Header/>
             <SearchInput />
-           <Routes/>
+            <Routes/>
           </DataProvider>
         </WithInstantSearch>
       </AppWrapper>
@@ -25,6 +27,7 @@ export default class App extends React.Component {
 
 //-------------------------------------------------
 const AppWrapper = styled.div`
+
   /* text-align: center; */
   /* body > div,
   body > div > div ,

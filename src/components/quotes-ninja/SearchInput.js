@@ -4,17 +4,13 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { connectAutoComplete } from 'react-instantsearch-dom';
 import { withRouter } from 'react-router-dom';
-import { Search, Image } from 'semantic-ui-react';
+import { Segment,Search, Image } from 'semantic-ui-react';
 
-const SearchWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const formatHits = hits => {
   return _.chain(hits)
     .map(h => {
-      return { title: h.Symbol, description: h.CompanyName };
+      return { title: h.Symbol, description: h.Description };
     })
     .slice(0, 10)
     .value();
@@ -29,20 +25,19 @@ const SearchInput = props => {
   };
 
   const onSelect = (e, { result }) => {
-    setVal('');
-    console.log(result)
-    debugger;
+    setVal(result.title);
     props.history.push({
       pathname: `${result.title.toLowerCase()}`
     });
   };
 
   return (
-    <SearchWrap>
-      <Search
-        style={{ width: '90%' }}
+    <Search transparent
+    icon="search"
+    iconPosition="left"
+        style={{ width: '100%' }}
         fluid
-        input={{ style: { width: '90%' } }}
+        input={{ style: { width: '100%' } }}
         size="large"
         placeholder="Enter Company or Symbol"
         value={val}
@@ -50,10 +45,9 @@ const SearchInput = props => {
         onResultSelect={onSelect}
         results={formatHits(props.hits)}
       />
-      {/* <Image src={algolia} size="mini" title="Search by Algolia" /> */}
-    </SearchWrap>
   );
 };
+      {/* <Image src={algolia} size="mini" title="Search by Algolia" /> */}
 
 SearchInput.propTypes = {
   refine: PropTypes.func.isRequired,

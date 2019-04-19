@@ -7,7 +7,7 @@ const WithInstantSearch = ({ children }) => {
     <InstantSearch
       appId='33EO0JJW59'
       apiKey='82086de1fc1c9cc49784f09a485074ba'
-      indexName='LISTINGS'>
+      indexName='exchange-listings'>
       {children}
     </InstantSearch>
   );
