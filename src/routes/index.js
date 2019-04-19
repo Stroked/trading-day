@@ -36,7 +36,6 @@ import marketHeader from "../assets/design/market-header.png";
 //---------------------------------------------------
 //Cool Look
 import Mosaic from "../components/coolook/Mosaic";
-import MenuButtons from "../components/coolook/MenuButtons";
 
 //---------------------------------------------------
 const Router = props => (

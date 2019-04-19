@@ -2,22 +2,31 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Switch, Route } from "react-router-dom";
+import { Grid, Segment, Button } from "semantic-ui-react";
 //---------------------------------------------------
-//QUOTES-NINJA
-import { DataProvider } from "./components/quotes-ninja/WithDataContext";
-import WithInstantSearch from "./components/quotes-ninja/WithInstantSearch";
-import SearchInput from "./components/quotes-ninja/SearchInput";
-import Routes from './routes'
-import Header from './components/TradingDay/Header'
+import Routes from "./routes";
+import { DataProvider } from "./components/TradingDay/WithDataContext";
+import WithInstantSearch from "./components/TradingDay/WithInstantSearch";
+import SearchInput from "./components/TradingDay/SearchInput";
+import Header from "./components/TradingDay/Header";
+import RoundButtons from "./components/coolook/RoundButtons";
 export default class App extends React.Component {
   render() {
     return (
       <AppWrapper>
         <WithInstantSearch>
           <DataProvider>
-            <Header/>
+            <Header />
             <SearchInput />
-            <Routes/>
+                <RoundButtons />
+            {/* <Grid columns={2}>
+              <Grid.Column> 
+               <SquareButtons /> 
+             </Grid.Column>
+              <Grid.Column>
+             </Grid.Column>
+            </Grid> */}
+            <Routes />
           </DataProvider>
         </WithInstantSearch>
       </AppWrapper>
@@ -27,7 +36,6 @@ export default class App extends React.Component {
 
 //-------------------------------------------------
 const AppWrapper = styled.div`
-
   /* text-align: center; */
   /* body > div,
   body > div > div ,

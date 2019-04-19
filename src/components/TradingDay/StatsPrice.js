@@ -28,7 +28,7 @@ const Dollar = styled.span`
 const StatsPrice = ({ last, change, percent, color }) => {
   return (
     <StatWrap>
-      <Statistic style={{ marginBottom: 0 }}>
+      <Statistic style={{ position: 0 }}>
         <Statistic.Value><Dollar>$</Dollar>{last}</Statistic.Value>
       </Statistic>
       <ChangeWrap>

@@ -1,33 +1,20 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import SquareButtons from './SquareButtons';
 const RoundButtonStyles = styled.div`
-
-  body {
+  main {
     background-color: #e6e6e6;
   }
 
-  main {
-    max-width: 960px;
-    margin: auto;
-  }
-
-  svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+ 
 
   .button-test {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
   }
 
-  button {
+  .round {
     background-color: #e6e6e6;
     border: none;
     border-radius: 99999px;
@@ -42,7 +29,7 @@ const RoundButtonStyles = styled.div`
     margin: 1rem;
   }
 
-  button:active {
+  .round:active {
     box-shadow: 0px 2px 2px 0px white, 0px -2px 2px 0px rgba(0, 0, 0, 0.15),
       0px 1px 2px 0px rgba(255, 255, 255, 0.5),
       inset 0px -5px 2px 1px rgba(255, 255, 255, 0.25);
@@ -104,18 +91,19 @@ button:active circle {
 `;
 
 export default function RoundButtons(props) {
-  const [active, setActive] = useState(props.default);
+  const [active, setActive] = useState("play");
 
-  useEffect(() => {
-    props.clickEffect(active);
-  }, [active]);
+  // useEffect(() => {
+  //   props.clickEffect(active);
+  // }, [active]);
 
   return (
     <RoundButtonStyles className='buttons-container'>
       <main>
         <div className='button-test'>
+          <SquareButtons />
           <button
-            className={`play${active === "play" ? " active" : ""}`}
+            className={`round play${active === "play" ? " active" : ""}`}
             onClick={() => setActive("play")}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -139,7 +127,7 @@ export default function RoundButtons(props) {
             </svg>
           </button>
           <button
-            className={`pause${active === "pause" ? " active" : ""}`}
+            className={`round pause${active === "pause" ? " active" : ""}`}
             onClick={() => setActive("pause")}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -174,9 +162,8 @@ export default function RoundButtons(props) {
             </svg>
           </button>
           <button
-            className={`stop${active === "stop" ? " active" : ""}`}
+            className={`round stop${active === "stop" ? " active" : ""}`}
             onClick={() => setActive("stop")}>
-            >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               x='0px'
@@ -201,6 +188,7 @@ export default function RoundButtons(props) {
               </g>
             </svg>
           </button>
+          <SquareButtons />
         </div>
       </main>
     </RoundButtonStyles>

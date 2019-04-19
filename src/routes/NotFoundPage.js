@@ -1,5 +1,5 @@
 import React from 'react';
-import NotFound from '../components/quotes-ninja/NotFound';
+import NotFound from "../components/TradingDay/NotFound";
 import setTitle from '../utils/title';
 
 const NotFoundPage = () => {

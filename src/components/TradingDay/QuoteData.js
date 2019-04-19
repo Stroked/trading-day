@@ -16,7 +16,7 @@ import StatsDetails from "./StatsDetails";
 import DarkButtons from "../coolook/DarkButtons";
 import NewsItems from "./NewsItems";
 
-import NotFound from "./NotFound";
+import NotFound from "../TradingDay/NotFound";
 
 import { quoteFormatting } from "../../utils/format";
 import setTitle from "../../utils/title";

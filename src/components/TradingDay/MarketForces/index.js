@@ -1,7 +1,7 @@
 import { withScreenSize } from "@vx/vx";
 import React, { useContext } from "react";
 import * as d3 from "d3";
-import { DataContext } from "../../quotes-ninja/WithDataContext";
+import { DataContext } from "../../TradingDay/WithDataContext";
 import sp500 from "./sp500-constituents-financials.json";
 
 const height = 900,

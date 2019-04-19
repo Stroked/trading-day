@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Segment } from "semantic-ui-react";
-import QuoteData from "../components/quotes-ninja/QuoteData";
-import { DataContext } from "../components/quotes-ninja/WithDataContext";
+import QuoteData from "../components/TradingDay/QuoteData";
+import { DataContext } from "../components/TradingDay/WithDataContext";
 
 const QuotePage = props => {
   const {

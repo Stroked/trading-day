@@ -55,7 +55,8 @@ const DarkButtonStyles = styled.div`
     background-color: transparent;
     text-shadow: inset 1px 1px 2px rgba(225, 225, 225, 0.5);
     background-clip: text;
-    font-size: 2rem;
+    font-size: 1rem;
+    font-weight:500;
     transition: all 0.5s;
     border-style: hidden;
     border: none;

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, List } from 'semantic-ui-react';
-import { DisclaimerPop } from './Disclaimer';
 
 const Item = ({ title, value }) => {
   return (
@@ -47,11 +46,7 @@ const StatsDetails = ({ data }) => {
           </List>
         </Grid.Column>
       </Grid.Row>
-      <Grid.Row style={{ padding: 0 }}>
-        <Grid.Column floated="right" width={16}>
-          <DisclaimerPop session={false} />
-        </Grid.Column>
-      </Grid.Row>
+     
     </React.Fragment>
   );
 };
