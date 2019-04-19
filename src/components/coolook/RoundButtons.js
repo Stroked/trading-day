@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import {Grid} from 'semantic-ui-react';
 import SquareButtons from './SquareButtons';
+
 const RoundButtonStyles = styled.div`
   main {
     background-color: #e6e6e6;
@@ -101,94 +103,114 @@ export default function RoundButtons(props) {
     <RoundButtonStyles className='buttons-container'>
       <main>
         <div className='button-test'>
-          <SquareButtons />
-          <button
-            className={`round play${active === "play" ? " active" : ""}`}
-            onClick={() => setActive("play")}>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              x='0px'
-              y='0px'
-              viewBox='0 0 400 400'>
-              <g class='icon icon-play'>
-                <circle
-                  class='icon-border'
-                  stroke-miterlimit='10'
-                  cx='200'
-                  cy='200'
-                  r='198'
-                />
-                <polygon
-                  class='icon-actual'
-                  stroke-miterlimit='10'
-                  points='280,200 160,280 160,120'
-                />
-              </g>
-            </svg>
-          </button>
-          <button
-            className={`round pause${active === "pause" ? " active" : ""}`}
-            onClick={() => setActive("pause")}>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              x='0px'
-              y='0px'
-              viewBox='0 0 400 400'>
-              <g class='icon icon-pause'>
-                <circle
-                  class='icon-border'
-                  stroke-miterlimit='10'
-                  cx='200'
-                  cy='200'
-                  r='198'
-                />
-                <rect
-                  class='icon-actual'
-                  x='130'
-                  y='120'
-                  stroke-miterlimit='10'
-                  width='60'
-                  height='160'
-                />
-                <rect
-                  class='icon-actual'
-                  x='210'
-                  y='120'
-                  stroke-miterlimit='10'
-                  width='60'
-                  height='160'
-                />
-              </g>
-            </svg>
-          </button>
-          <button
-            className={`round stop${active === "stop" ? " active" : ""}`}
-            onClick={() => setActive("stop")}>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              x='0px'
-              y='0px'
-              viewBox='0 0 400 400'>
-              <g class='icon icon-stop'>
-                <circle
-                  class='icon-border'
-                  stroke-miterlimit='10'
-                  cx='200'
-                  cy='200'
-                  r='198'
-                />
-                <rect
-                  class='icon-actual'
-                  x='120'
-                  y='120'
-                  stroke-miterlimit='10'
-                  width='160'
-                  height='160'
-                />
-              </g>
-            </svg>
-          </button>
-          <SquareButtons />
+          <Grid centered stackable verticalAlign='middle' columns={3}>
+            <Grid.Column>
+              <SquareButtons
+                timeRangeArray={[
+                  "Stocks",
+                  "ETFs",
+                  "Options",
+                  "Futures",
+                  "Forex"
+                ]}
+              />
+            </Grid.Column>
+            <Grid.Column>
+              <button
+                className={`round play${active === "play" ? " active" : ""}`}
+                onClick={() => setActive("play")}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  x='0px'
+                  y='0px'
+                  viewBox='0 0 400 400'>
+                  <g class='icon icon-play'>
+                    <circle
+                      class='icon-border'
+                      stroke-miterlimit='10'
+                      cx='200'
+                      cy='200'
+                      r='198'
+                    />
+                    <polygon
+                      class='icon-actual'
+                      stroke-miterlimit='10'
+                      points='280,200 160,280 160,120'
+                    />
+                  </g>
+                </svg>
+              </button>
+              <button
+                className={`round pause${
+                  active === "pause" ? " active" : ""
+                }`}
+                onClick={() => setActive("pause")}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  x='0px'
+                  y='0px'
+                  viewBox='0 0 400 400'>
+                  <g class='icon icon-pause'>
+                    <circle
+                      class='icon-border'
+                      stroke-miterlimit='10'
+                      cx='200'
+                      cy='200'
+                      r='198'
+                    />
+                    <rect
+                      class='icon-actual'
+                      x='130'
+                      y='120'
+                      stroke-miterlimit='10'
+                      width='60'
+                      height='160'
+                    />
+                    <rect
+                      class='icon-actual'
+                      x='210'
+                      y='120'
+                      stroke-miterlimit='10'
+                      width='60'
+                      height='160'
+                    />
+                  </g>
+                </svg>
+              </button>
+              <button
+                className={`round stop${active === "stop" ? " active" : ""}`}
+                onClick={() => setActive("stop")}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  x='0px'
+                  y='0px'
+                  viewBox='0 0 400 400'>
+                  <g class='icon icon-stop'>
+                    <circle
+                      class='icon-border'
+                      stroke-miterlimit='10'
+                      cx='200'
+                      cy='200'
+                      r='198'
+                    />
+                    <rect
+                      class='icon-actual'
+                      x='120'
+                      y='120'
+                      stroke-miterlimit='10'
+                      width='160'
+                      height='160'
+                    />
+                  </g>
+                </svg>
+              </button>
+            </Grid.Column>
+            <Grid.Column>
+              <SquareButtons
+                timeRangeArray={["NYSE", "Nasdaq", "ARCA", "AMEX", "CBOE"]}
+              />
+            </Grid.Column>
+          </Grid>
         </div>
       </main>
     </RoundButtonStyles>

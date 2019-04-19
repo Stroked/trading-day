@@ -3,7 +3,6 @@ import React from "react";
 import Styled from "styled-components";
 import * as d3 from "d3";
 import LineChart from "../components/openStock/LineChart";
-import NewsCard from "../components/openStock/NewsCard.js";
 import Spinner from "../components/openStock/Spinner.js";
 import { } from "@vx/vx";
 
@@ -100,13 +99,7 @@ let i=0;
           )}
         </div>
 
-        <div>
-          {this.state.newsFetched ? (
-            <NewsCard data={this.state.newsData} />
-          ) : (
-            <Spinner />
-          )}
-        </div>
+      
       </div>
     );
   }

@@ -23,7 +23,7 @@ const TradingDayStyles = styled.div`
   .titleTop {
     color: white;
     background: white;
-    font-size: .5rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #000;
     text-align: center;
@@ -33,12 +33,11 @@ const TradingDayStyles = styled.div`
   }
   .title {
     color: rgba(255, 255, 255, 0);
-
     border: 4px double rgba(255, 255, 255, 0.25);
     text-transform: uppercase;
     text-align: center;
     background: #090d00;
-    font: 700 3rem/1 "Alfa Slab One", sans-serif;
+    font: 700 4em/1 "Alfa Slab One", sans-serif;
     letter-spacing: 0;
     padding: 0.25rem 0;
     display: block;

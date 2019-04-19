@@ -1,14 +1,16 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const StylesWrapper = styled.div`
   width: 22.5em;
-  height: 4.5em;
+  height: 4.25em;
   border-radius: 0.25em;
   background: #c4cac8;
   box-shadow: 0 -1px 0.3em rgba(0, 0, 34, 0.2) inset,
     0 -1px 1px rgba(0, 0, 34, 0.03) inset, 2px 2px 3px rgba(0, 0, 34, 0.2);
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .mm-item {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -17,7 +19,6 @@ const StylesWrapper = styled.div`
     display: block;
     position: relative;
     top: -0.25em;
-    float: left;
     width: 4.5em;
     height: 4.5em;
     text-decoration: none;
@@ -78,33 +79,18 @@ export default function SquareButtons(props) {
 
   return (
     <StylesWrapper>
-      <button id='1D' onClick={() => setActive("1D")} className='mm-item'>
-        1D
-      </button>
-      <button
-        id='1M'
-        onClick={() => setActive("1M")}
-        className={`mm-item${active === "1M" ? " active" : ""}`}>
-        1M
-      </button>
-      <button
-        id='3M'
-        onClick={() => setActive("3M")}
-        className={`mm-item${active === "3M" ? " active" : ""}`}>
-        3M
-      </button>
-      <button
-        id='1Y'
-        onClick={() => setActive("1Y")}
-        className={`mm-item${active === "1Y" ? " active" : ""}`}>
-        1Y
-      </button>
-      <button
-        id='5Y'
-        onClick={() => setActive("5Y")}
-        className={`mm-item${active === "5Y" ? " active" : ""}`}>
-        5Y
-      </button>
+      {props.timeRangeArray.map(period => {
+        return (
+          <button
+            id={period}
+            onClick={() => setActive(period)}
+            className={`mm-item ${active === period ? " active" : ''}`}
+            
+            >
+            {period}
+          </button>
+        );
+      })}
     </StylesWrapper>
   );
 }

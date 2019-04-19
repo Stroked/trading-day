@@ -5,7 +5,6 @@ import Company from "../Company.js";
 import LineChart from "../LineChart.js";
 import Statistics from "../Statistics.js";
 import Spinner from "../Spinner.js";
-import NewsCard from "../NewsCard.js";
 import NewsItems from "../../TradingDay/NewsItems";
 import CandleStickChart from "../../TradingDay/Charts/CandleStick";
 import styled from "styled-components";
