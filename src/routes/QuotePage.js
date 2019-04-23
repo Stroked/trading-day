@@ -7,17 +7,24 @@ import { DataContext } from "../components/TradingDay/WithDataContext";
 const QuotePage = props => {
   const {
     symbol,
+    peers,
     fetchingQuote,
     fetchingIncidies,
     handleSymbolChange,
+    getPeers,
     quoteData
   } = useContext(DataContext);
 
   // fetch new data every symbol changes
   useEffect(() => {
     if (props.symbol && props.symbol !== symbol)
-      handleSymbolChange(props.symbol);
+      {
+        handleSymbolChange(props.symbol);
+        getPeers(props.symbol);
+      }
   }, [props.symbol, symbol]);
+
+
 
   return (
     <Segment
@@ -28,6 +35,7 @@ const QuotePage = props => {
           symbol={symbol}
           data={quoteData.quote}
           charts={quoteData.charts}
+          peers={peers}
         />
       )}
     </Segment>

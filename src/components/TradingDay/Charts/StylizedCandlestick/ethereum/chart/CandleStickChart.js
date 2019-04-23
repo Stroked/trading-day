@@ -103,7 +103,7 @@ class Chart extends React.Component {
 
     const xScale = scaleBand({
       range: [0, width - margin.right],
-      domain: buckets.map(b => b.closeTime),
+      domain: buckets.map(b => b.date),
       padding: 0.3
     });
     const timeScale = scaleTime({
@@ -149,13 +149,13 @@ class Chart extends React.Component {
           </Group>
           {buckets.map(b => {
             return (
-              <g key={`b-${b.closeTime}`}>
+              <g key={`b-${b.date}`}>
                 <line
                   //CANDLESTICK BOTTOM WICK
-                  x1={xScale(b.closeTime) + xScale.bandwidth() / 2}
-                  x2={xScale(b.closeTime) + xScale.bandwidth() / 2}
-                  y1={yScale(b.highPrice)}
-                  y2={b.hollow ? yScale(b.closePrice) : yScale(b.lowPrice)}
+                  x1={xScale(b.date) + xScale.bandwidth() / 2}
+                  x2={xScale(b.date) + xScale.bandwidth() / 2}
+                  y1={yScale(b.high)}
+                  y2={b.hollow ? yScale(b.close) : yScale(b.low)}
                   stroke='white'
                   strokeWidth={1}
                 />
@@ -165,21 +165,21 @@ class Chart extends React.Component {
                   width={xScale.bandwidth()}
                   height={
                     b.hollow
-                      ? yScale(b.openPrice) - yScale(b.closePrice)
-                      : yScale(b.closePrice) - yScale(b.openPrice)
+                      ? yScale(b.open) - yScale(b.close)
+                      : yScale(b.close) - yScale(b.open)
                   }
                   fill={b.hollow ? "transparent" : "white"}
                   stroke={b.hollow ? "white" : "transparent"}
                   strokeWidth={1}
-                  x={xScale(b.closeTime)}
-                  y={b.hollow ? yScale(b.closePrice) : yScale(b.openPrice)}
+                  x={xScale(b.date)}
+                  y={b.hollow ? yScale(b.close) : yScale(b.open)}
                 />
                 <Group top={height - margin.bottom - volumeHeight}>
                   <Bar
                     data={b}
                     width={xScale.bandwidth()}
                     height={volumeHeight - yVolumeScale(b.volume)}
-                    x={xScale(b.closeTime)}
+                    x={xScale(b.date)}
                     y={yVolumeScale(b.volume)}
                     fill={b.hollow ? "transparent" : "white"}
                     stroke={b.hollow ? "white" : "transparent"}
@@ -240,7 +240,7 @@ class Chart extends React.Component {
               height={height}
               width={width}
               margin={margin}
-              time={activeBucket.closeTime}
+              time={activeBucket.date}
               yPoint={yPoint}
               formatPrice={formatPrice}
             />
@@ -307,7 +307,7 @@ class Chart extends React.Component {
               top={height - margin.bottom + 3}
               xScale={xScale}
               formatTime={formatTime}
-              time={activeBucket.closeTime}
+              time={activeBucket.date}
             />
             <Details
               yScale={yScale}

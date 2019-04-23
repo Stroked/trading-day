@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import * as d3 from "d3";
 import {
   Rail,
   Grid,
   Segment,
   Header,
   Image,
-  Container,Label
+  Container,
+  Label
 } from "semantic-ui-react";
 
-import Clock, {ReactFitText} from 'react-live-clock';
+import Clock, { ReactFitText } from "react-live-clock";
 
 import StatsPrice from "./StatsPrice";
 import StatsDetails from "./StatsDetails";
@@ -17,12 +19,31 @@ import DarkButtons from "../coolook/DarkButtons";
 import NewsItems from "./NewsItems";
 
 import NotFound from "../TradingDay/NotFound";
+import LineChart from "../TradingDay/Charts/LineChart";
 
 import { quoteFormatting } from "../../utils/format";
 import setTitle from "../../utils/title";
 
 import placeholder from "../../assets/iex-logo.png";
 import HeikinAshi from "../simple-stock-tracker/HeikinAshi";
+import { StylizedCandleStickChart } from "./Charts/StylizedCandlestick";
+
+const PeerPerformance = ({ peers, peerData }) => {
+  return peers.map((peer, i) => (
+    <LineChart
+      style={{ display: "inlineBlock" }}
+      key={`${i}-${peerData[peer].quote.symbol}`}
+      name={peerData[peer].quote.symbol}
+      companyName={peerData[peer].quote.companyName}
+      data={peerData[peer].chart}
+      latestPrice={peerData[peer].quote.latestPrice}
+      changePercent={peerData[peer].quote.changePercent}
+      volume={peerData[peer].quote.latestVolume}
+      width='150'
+      height='75'
+    />
+  ));
+};
 
 const QuoteData = props => {
   if (props.data && props.charts) {
@@ -42,6 +63,7 @@ const QuoteData = props => {
       setImgSrc(placeholder);
     };
     console.log(props.charts);
+
     return (
       <Segment>
         <Grid columns={2}>
@@ -69,7 +91,7 @@ const QuoteData = props => {
                   {display.companyName} ({display.symbol})
                 </text>
               </svg> */}
-            <Rail attached  position='right'>
+            <Rail attached position='right'>
               <Label>
                 <Clock
                   format={"HH:mm:ss"}
@@ -98,7 +120,25 @@ const QuoteData = props => {
               xAxis='date'
               yAxis='volume'
             />
-            {/* <Chart charts={props.charts} display={display} /> */}
+            <Segment>
+              <StylizedCandleStickChart
+                height={600}
+                width={900}
+                data={props.charts[activePeriod]}
+                ticker={display.symbol}
+                logo={imgSrc}
+              />
+            </Segment>
+            <Segment>
+              {props.peers ? (
+                <PeerPerformance
+                  peers={props.peers.peers}
+                  peerData={props.peers.peerData}
+                />
+              ) : (
+                <h1>NO PEERS</h1>
+              )}
+            </Segment>
             <NewsItems news={news} />
           </Grid>
         </Segment>

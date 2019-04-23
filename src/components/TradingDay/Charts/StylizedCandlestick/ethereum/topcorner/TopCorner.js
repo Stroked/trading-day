@@ -23,7 +23,7 @@ export default function Banner({ width, height, tickerSymbol }) {
           fill='#ff6a88'
           fontSize={14}
           transform='translate(40,60)rotate(-40)'>
-          {tickerSymbol || "ETHEREUM"}
+          {tickerSymbol}
 
         </text>
       </svg>

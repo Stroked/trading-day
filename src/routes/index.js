@@ -1,12 +1,10 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import HomePage from "./Home";
+import Home from "./Home";
 import QuotePage from "./QuotePage";
-import NotFoundPage from "./NotFoundPage";
-import Markets from "../routes/Home";
+import NotFound from "../components/TradingDay/NotFound";
 //OPEN-STOCK
-import OpenStockHome from "../routes/OpenStockHome.js";
 import Stocks from "../components/openStock/container/Stocks.js";
 //STOCK-TRACKER
 import StockTracker from "../components/simple-stock-tracker/";
@@ -41,15 +39,13 @@ import Mosaic from "../components/coolook/Mosaic";
 const Router = props => (
   <Switch>
     {/* ROOT */}
-    <Route exact path='/' component={Markets} />
-    {/* LOGIN */}
-    <Route exact path='/Login' component={Login} />
     {/* HOME */}
-    <Route exact path='/Home' component={OpenStockHome} />
-    <Route exact path='/home-page' render={props => <HomePage {...props} />} />
+    <Route exact path='/' render={props => <Home {...props} />} />
+    {/* LOGIN */}
+    <Route exact path='/login' component={Login} />
     {/* LISTINGS */}
-    <Route exact path='/sp500' component={SP500} />
     <Route exact path='/Listings' component={MarketForces} />
+    <Route exact path='/sp500' component={SP500} />
 
     {/* OPENSTOCK */}
     <Route exact path='/Stocks' component={Stocks} />
@@ -66,7 +62,7 @@ const Router = props => (
       path='/:id'
       render={props => <QuotePage symbol={props.match.params.id} {...props} />}
     />
-    <Route component={NotFoundPage} />
+    <Route component={NotFound} />
   </Switch>
 );
 

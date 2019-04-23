@@ -8,7 +8,7 @@ export default function Volume({ top, scale, xScale, height, data }) {
         data={data}
         width={xScale.bandwidth()}
         height={height - scale(data.volume)}
-        x={xScale(data.closeTime)}
+        x={xScale(data.date)}
         y={scale(data.volume)}
         fill={data.hollow ? 'transparent' : 'white'}
         stroke={data.hollow ? 'white' : 'transparent'}

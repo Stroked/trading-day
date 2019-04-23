@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import * as d3 from "d3";
 import PropTypes from "prop-types";
 import Loading from "./Loading";
 import { fetchQuoteData, fetchIndiciesData } from "../../utils/fetch";
@@ -22,7 +23,7 @@ export const DataProvider = props => {
   const [symbol, setSymbol] = useState(null);
 
   const [quoteData, setQuoteData] = useState(null);
-
+  const [peers, setPeers] = useState(null);
   const [refresh, setRefresh] = useState(null);
 
   const [indiciesData, setIndiciesData] = useState({
@@ -56,6 +57,23 @@ export const DataProvider = props => {
       setFetchingIndicies({ loading: false, error });
     }
   };
+  const getPeers = async symbol => {
+    // Get peers and batch request trading-day quote
+    let peers = await d3.json(
+      `https://api.iextrading.com/1.0/stock/${symbol}/peers`
+    );
+    if (Object.keys(peers).length > 0) {
+      const quotePeers = await d3.json(
+        `https://api.iextrading.com/1.0/stock/market/batch?symbols=${peers.join()}&types=quote,chart&range=1d`
+      );
+
+      setPeers({
+        peersFetched: true,
+        peers: peers,
+        peerData: quotePeers
+      });
+    }
+  };
 
   const handleSymbolChange = async symbol => {
     try {
@@ -87,11 +105,13 @@ export const DataProvider = props => {
     <DataContext.Provider
       value={{
         symbol,
+        peers,
         fetchingIncidies,
         fetchingQuote,
         quoteData,
         indiciesData,
         handleSymbolChange,
+        getPeers,
         ...props
       }}>
       {fetchingIncidies.loading && <Loading />}

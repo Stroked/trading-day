@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import * as d3 from "d3";
 import _ from "lodash";
+import {
+  Label,
+  Header,
+  Container,
+  Statistic,
+  Segment,
+  Grid
+} from "semantic-ui-react";
 // !VX
 import { Bar, RadialGradient } from "@vx/vx";
 const width = 400;
@@ -67,33 +75,43 @@ class LineChart extends Component {
     const { highs } = this.state;
     console.log(highs);
     return (
-      <Link
-        to={"/Stocks?symbol=" + this.props.name}
-        className={this.props.name}
-        onClick={window.scrollTo(0, 0)}>
-        <h2> {this.props.companyName} </h2>
-        <p className='tiny gray'> 24h </p>
-        <svg width={width} height={height}>
-          <path d={highs} fill='none' stroke='green' strokeWidth='2' />
-          {/* <path d={lows} fill='none' stroke={red} strokeWidth='2' /> */}
-          <g>
-            <g
-              ref={this.state.xAxisRef}
-              transform={`translate(0, ${height - margin.bottom})`}
-            />
-            <g
-              ref={this.state.yAxisRef}
-              transform={`translate(${margin.left}, 0)`}
-            />
-          </g>
-        </svg>
-        <span className='small left'> ${latestPrice} </span>
-        {changePercent >= 0 ? (
-          <span className='small right green'> +{changePercent}% </span>
-        ) : (
-          <span className='small right red'> {changePercent}% </span>
-        )}
-      </Link>
+      <Segment>
+        <Link
+          to={"/" + this.props.name}
+          className={this.props.name}
+          onClick={window.scrollTo(0, 0)}>
+          <Grid columns={3}>
+            <Grid.Column width={10}>
+              <Header>
+                {this.props.companyName} ({this.props.name})
+              </Header>
+            </Grid.Column>
+            <Grid.Column textAlign='right' width={3}>
+              <Statistic > ${latestPrice} </Statistic>
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={2}>
+                        <Label color={changePercent > 0 ? "green" : "red"}>
+                  {changePercent}%
+                </Label>           
+            </Grid.Column>
+          </Grid>
+    
+          <svg width={width} height={height}>
+            <path d={highs} fill='none' stroke='green' strokeWidth='2' />
+            {/* <path d={lows} fill='none' stroke={red} strokeWidth='2' /> */}
+            <g>
+              <g
+                ref={this.state.xAxisRef}
+                transform={`translate(0, ${height - margin.bottom})`}
+              />
+              <g
+                ref={this.state.yAxisRef}
+                transform={`translate(${margin.left}, 0)`}
+              />
+            </g>
+          </svg>
+        </Link>
+      </Segment>
     );
   }
 }

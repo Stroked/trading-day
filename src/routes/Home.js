@@ -10,12 +10,10 @@ const Markets = props => {
   const context = useContext(DataContext);
   setTitle(null, null);
   return (
-    <Segment><Header>
-
-
-    <TickerScroll/>
-
-    </Header>
+    <Segment>
+      <Header>
+        <TickerScroll />
+      </Header>
       <StocksSpotlight />
       {!context.fetchingIncidies.loading && (
         <React.Fragment>

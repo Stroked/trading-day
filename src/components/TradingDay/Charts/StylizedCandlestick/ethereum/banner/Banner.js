@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { withParentSize } from "@vx/vx";
 import React from "react";
-
+import {Image} from 'semantic-ui-react'
 const Logo = withParentSize(function({ parentWidth, parentHeight }) {
   const margin = {
     top: 5,
@@ -109,7 +109,7 @@ const StyledBanner = styled.div`
 `;
 
 export default function Banner({
-  increaseNumItems,
+  logo,increaseNumItems,
   decreaseNumItems,
   numItems
 }) {
@@ -118,6 +118,7 @@ export default function Banner({
       <div className='banner'>
         <div className='logo'>
           <Logo />
+          <Image src={logo}/>
         </div>
         <div className='controls'>
           <button onClick={increaseNumItems}>+</button>

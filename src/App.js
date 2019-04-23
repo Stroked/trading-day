@@ -36,6 +36,8 @@ export default class App extends React.Component {
 
 //-------------------------------------------------
 const AppWrapper = styled.div`
+  
+
   /* text-align: center; */
   /* body > div,
   body > div > div ,
