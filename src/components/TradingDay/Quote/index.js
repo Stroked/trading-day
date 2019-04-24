@@ -1,10 +1,10 @@
 import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Segment } from "semantic-ui-react";
-import QuoteData from "../components/TradingDay/QuoteData";
-import { DataContext } from "../components/TradingDay/WithDataContext";
+import QuoteData from "./QuoteData";
+import { DataContext } from "../WithDataContext";
 
-const QuotePage = props => {
+export default (props) => {
   const {
     symbol,
     peers,
@@ -17,14 +17,11 @@ const QuotePage = props => {
 
   // fetch new data every symbol changes
   useEffect(() => {
-    if (props.symbol && props.symbol !== symbol)
-      {
-        handleSymbolChange(props.symbol);
-        getPeers(props.symbol);
-      }
+    if (props.symbol && props.symbol !== symbol) {
+      handleSymbolChange(props.symbol);
+      getPeers(props.symbol);
+    }
   }, [props.symbol, symbol]);
-
-
 
   return (
     <Segment
@@ -42,8 +39,7 @@ const QuotePage = props => {
   );
 };
 
-QuotePage.propTypes = {
-  symbol: PropTypes.string.isRequired
-};
+// QuotePage.propTypes = {
+//   symbol: PropTypes.string.isRequired
+// };
 
-export default QuotePage;

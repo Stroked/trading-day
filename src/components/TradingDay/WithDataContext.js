@@ -75,6 +75,55 @@ export const DataProvider = props => {
     }
   };
 
+ const makeApiCall = async (frequency = "1y") => {
+    let timeParser = d3.timeParse("%Y-%m-%d");
+    if (frequency === "1d") timeParser = d3.timeParse("%Y%m%d%H:%M");
+
+    let prices = [];
+    let times = [];
+    const d = await d3.json(
+      `https://api.iextrading.com/1.0/stock/${
+        this.props.symbol
+      }/chart/${frequency}`
+    );
+
+    // Check for failure to retry.
+    if (d[0]["date"] == null) {
+      this.makeApiCall(frequency);
+      return;
+    }
+
+    for (let i = 0; i < d.length; i++) {
+      if (
+        d[i]["marketNumberOfTrades"] === 0 ||
+        d[i]["marketAverage"] === -1
+      ) {
+        d.splice(i, 1);
+        i--;
+        continue;
+      }
+
+      if (frequency === "1d") {
+        d[i]["close"] = d[i]["marketAverage"];
+        d[i]["date"] = timeParser(d[i]["date"] + d[i]["minute"]);
+      } else {
+        d[i]["date"] = timeParser(d[i]["date"]);
+      }
+
+      times.push(d[i]["date"]);
+      prices.push(d[i]["close"]);
+    }
+
+    return {times,prices}
+
+    // this.setState({
+    //   fetched: true,
+    //   times: times,
+    //   prices: prices,
+    //   interval: frequency,
+    //   d: d
+    // });
+  };
   const handleSymbolChange = async symbol => {
     try {
       // clear previous refresh interval

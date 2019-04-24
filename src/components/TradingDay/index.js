@@ -4,42 +4,17 @@ import styled from "styled-components";
 
 import LookUp from "./LookUp";
 import ListingInfo from "./ListingInfo";
-import Spotlight from "./Spotlight";
-import { DataContext } from "../TradingDay/WithDataContext";
-import QuoteData  from "./QuoteData";
-import {Segment} from 'semantic-ui-react';
-import { quoteFormatting } from "../../utils/format";
-import setTitle from "../../utils/title";
-import placeholder from "../../assets/orange-wheel-art-800x800.png";
+import BubblePack from "./Visualizations/BubblePack";
+import TreeMap from "./Visualizations/TreeMap";
+import HeatMap from "./Visualizations/HeatMap";
 const TradingDay = props => {
-  const {
-    symbol,
-    fetchingQuote,
-    fetchingIncidies,
-    handleSymbolChange,
-    quoteData
-  } = useContext(DataContext);
-
-  useEffect(() => {
-    if (props.symbol && props.symbol !== symbol)
-      handleSymbolChange(props.symbol);
-  }, [props.symbol, symbol]);
   return (
     <>
-      <Segment
-        loading={fetchingQuote.loading && !fetchingIncidies.loading}
-        style={{ minHeight: "300px" }}>
-        {!fetchingQuote.loading && (
-          <QuoteData
-            symbol={symbol}
-            data={quoteData.quote}
-            charts={quoteData.charts}
-          />
-        )}
-      </Segment>{" "}
       <LookUp />
       <ListingInfo />
-      <Spotlight />
+      <BubblePack height={600} width={900} />
+      <TreeMap height={600} width={900} />
+      <HeatMap height={600} width={900} />
     </>
   );
 };

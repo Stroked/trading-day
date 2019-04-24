@@ -23,7 +23,8 @@ const ChangeWrap = styled.div`
 
 const Dollar = styled.span`
   font-size: 2rem;
-`
+  text-align: center;
+`;
 
 const StatsPrice = ({ last, change, percent, color }) => {
   return (

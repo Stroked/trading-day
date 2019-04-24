@@ -13,20 +13,20 @@ import {
 
 import Clock, { ReactFitText } from "react-live-clock";
 
-import StatsPrice from "./StatsPrice";
-import StatsDetails from "./StatsDetails";
-import DarkButtons from "../coolook/DarkButtons";
-import NewsItems from "./NewsItems";
+import StatsPrice from "../StatsPrice";
+import StatsDetails from "../StatsDetails";
+import DarkButtons from "../../coolook/DarkButtons";
+import NewsItems from "../NewsItems";
 
-import NotFound from "../TradingDay/NotFound";
-import LineChart from "../TradingDay/Charts/LineChart";
+import NotFound from "../NotFound";
+import LineChart from "../Charts/LineChart";
 
-import { quoteFormatting } from "../../utils/format";
-import setTitle from "../../utils/title";
+import { quoteFormatting } from "../../../utils/format";
+import setTitle from "../../../utils/title";
 
-import placeholder from "../../assets/iex-logo.png";
-import HeikinAshi from "../simple-stock-tracker/HeikinAshi";
-import { StylizedCandleStickChart } from "./Charts/StylizedCandlestick";
+import placeholder from "../../../assets/iex-logo.png";
+import HeikinAshi from "../../simple-stock-tracker/HeikinAshi";
+import { StylizedCandleStickChart } from "../Charts/StylizedCandlestick";
 
 const PeerPerformance = ({ peers, peerData }) => {
   return peers.map((peer, i) => (
@@ -112,14 +112,15 @@ const QuoteData = props => {
               timeRangeArray={["d1", "m1", "m3", "m6", "y1", "ytd"]}
               clickEffect={setActivePeriod}
             />
-            <HeikinAshi
-              height={600}
-              data={props.charts[activePeriod]}
-              type='hybrid'
-              ticker={display.symbol}
-              xAxis='date'
-              yAxis='volume'
-            />
+              <HeikinAshi
+                height={500}
+                data={props.charts[activePeriod]}
+                type='hybrid'
+                ticker={display.symbol}
+                xAxis='date'
+                yAxis='volume'
+              />
+
             <Segment>
               <StylizedCandleStickChart
                 height={600}

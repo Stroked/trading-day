@@ -203,6 +203,23 @@ class MarketForces extends React.Component {
     feMerge.append("feMergeNode").attr("in", "coloredBlur");
     feMerge.append("feMergeNode").attr("in", "SourceGraphic");
   };
+  getData = async () => {
+    const sp500 = await d3.json(
+      `https://cors-anywhere.herokuapp.com/datahub.io/core/s-and-p-500-companies-financials/r/constituents-financials.json`
+    );
+
+    this.setState({
+      data: sp500,
+      sectorScale: d3
+        .scaleOrdinal()
+        .domain([...new Set(sp500.map(item => item.Sector))])
+        .range([...d3.schemeCategory10]),
+      marketCapScale: d3
+        .scaleLinear()
+        .domain(d3.extent(sp500, d => d["Market Cap"]))
+        .range([1, 50])
+    });
+  };
   render() {
     return (
       <div>
