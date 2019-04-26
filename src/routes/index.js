@@ -8,6 +8,7 @@ import NotFound from "../components/TradingDay/NotFound";
 import StockTracker from "../components/simple-stock-tracker/";
 
 //TRADING-DAY
+import StockMarketExchanges from '../components/exchanges'
 import TradingDay from "../components/TradingDay/";
 import EthereumChart from "../components/TradingDay/Charts/StylizedCandlestick/EthereumVX";
 import StylizedCandlestickChart from "../components/TradingDay/Charts/StylizedCandlestick";
@@ -43,6 +44,7 @@ const Router = props => (
     <Route exact path='/login' component={Login} />
     {/* LISTINGS */}
     <Route exact path='/sp500' component={SP500} />
+    <Route exact path='/exchanges' component={StockMarketExchanges} />
     <Route exact path='/SlideShow' component={FisheyeSlideshow} />
     <Route exact path='/TradingDay' component={TradingDay} />
     <Route exact path='/StockTracker' component={StockTracker} />

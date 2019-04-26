@@ -18,9 +18,7 @@ const TradingDayStyles = styled.div`
   user-select: none;
   Segment {
     width: 100vw;
-  }
-  header {
-    height:100%;
+    width:100vh;
   }
   
   .titleTop {
@@ -88,7 +86,7 @@ const TradingDayHeader = () => {
               <Header.Content  className='title' size='huge'>
             <Segment>
 
-               <SlideShow>
+               <SlideShow style={{width:'100%'}}>
 
 
                </SlideShow> 
