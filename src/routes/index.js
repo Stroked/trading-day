@@ -31,6 +31,7 @@ import marketHeader from "../assets/design/market-header.png";
 //---------------------------------------------------
 //Cool Look
 import Mosaic from "../components/coolook/Mosaic";
+import FisheyeSlideshow from "../components/TradingDay/Visualizations/SlideShow";
 
 //---------------------------------------------------
 const Router = props => (
@@ -42,7 +43,7 @@ const Router = props => (
     <Route exact path='/login' component={Login} />
     {/* LISTINGS */}
     <Route exact path='/sp500' component={SP500} />
-
+    <Route exact path='/SlideShow' component={FisheyeSlideshow} />
     <Route exact path='/TradingDay' component={TradingDay} />
     <Route exact path='/StockTracker' component={StockTracker} />
     <Route exact path='/Mosaic' component={Mosaic} />

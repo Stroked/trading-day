@@ -44,26 +44,77 @@ const PeerPerformance = ({ peers, peerData }) => {
     />
   ));
 };
+export const makeApiCall = async (symbol, period = "1y") => {
+  let timeParser = d3.timeParse("%Y-%m-%d");
+  if (period === "1d") timeParser = d3.timeParse("%Y%m%d%H:%M");
+
+  let prices = [];
+  let times = [];
+  const d = await d3.json(
+    `https://api.iextrading.com/1.0/stock/${symbol}/chart/${period}`
+  );
+  console.log(symbol, period);
+  console.log(d);
+  debugger;
+  // Check for failure to retry.
+  if (d[0]["date"] == null) {
+    makeApiCall(symbol, period);
+    return;
+  }
+
+  for (let i = 0; i < d.length; i++) {
+    if (d[i]["marketNumberOfTrades"] === 0 || d[i]["marketAverage"] === -1) {
+      d.splice(i, 1);
+      i--;
+      continue;
+    }
+
+    if (period === "1d") {
+      d[i]["close"] = d[i]["marketAverage"];
+      d[i]["date"] = timeParser(d[i]["date"] + d[i]["minute"]);
+    } else {
+      d[i]["date"] = timeParser(d[i]["date"]);
+    }
+
+    times.push(d[i]["date"]);
+    prices.push(d[i]["close"]);
+  }
+
+  return { times, prices, d };
+
+  // this.setState({
+  //   fetched: true,
+  //   times: times,
+  //   prices: prices,
+  //   interval: frequency,
+  //   d: d
+  // });
+};
 
 const QuoteData = props => {
-  if (props.data && props.charts) {
+  if (props.data) {
     // format quote data
     const { quote, stats, logo, news } = props.data;
 
     const display = quoteFormatting(quote, stats);
     setTitle(display.symbol, display.latestPrice);
+    const [ohlcData, setOhlc] = useState(null);
+
     const [activePeriod, setActivePeriod] = useState("1Y");
-    // set img
     const [imgSrc, setImgSrc] = useState(logo.url);
     useEffect(() => {
       setImgSrc(logo.url);
     }, [logo.url]);
+    useEffect(() => {
+      const fetchData = async (symbol, range) => {
+        const data = await makeApiCall(symbol, range);
 
-    const handleErr = e => {
-      setImgSrc(placeholder);
-    };
-    console.log(props.charts);
-
+        setOhlc(data);
+      };
+      fetchData(display.symbol, activePeriod);
+    }, [activePeriod]);
+    console.log(ohlcData);
+    debugger;
     return (
       <Segment>
         <Grid columns={2}>
@@ -109,27 +160,30 @@ const QuoteData = props => {
             <StatsDetails data={display} />
             <DarkButtons
               default={"ytd"}
-              timeRangeArray={["d1", "m1", "m3", "m6", "y1", "ytd"]}
+              timeRangeArray={["d1", "m1", "m3", "m6", "y1", "y5", "ytd"]}
               clickEffect={setActivePeriod}
             />
+            {ohlcData ? (<>
               <HeikinAshi
                 height={500}
-                data={props.charts[activePeriod]}
+                data={ohlcData.d}
                 type='hybrid'
                 ticker={display.symbol}
                 xAxis='date'
                 yAxis='volume'
               />
-
             <Segment>
               <StylizedCandleStickChart
                 height={600}
                 width={900}
-                data={props.charts[activePeriod]}
+                data={ohlcData.d}
                 ticker={display.symbol}
                 logo={imgSrc}
               />
             </Segment>
+         </>   ) : (
+              "NO OHLC DATA"
+            )}
             <Segment>
               {props.peers ? (
                 <PeerPerformance

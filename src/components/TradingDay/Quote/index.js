@@ -12,7 +12,8 @@ export default (props) => {
     fetchingIncidies,
     handleSymbolChange,
     getPeers,
-    quoteData
+    quoteData,
+    requestedRangeData
   } = useContext(DataContext);
 
   // fetch new data every symbol changes
@@ -31,7 +32,8 @@ export default (props) => {
         <QuoteData
           symbol={symbol}
           data={quoteData.quote}
-          charts={quoteData.charts}
+          rangeData={requestedRangeData}
+          // charts={quoteData.charts}
           peers={peers}
         />
       )}
