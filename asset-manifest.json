@@ -1,14 +1,14 @@
 {
   "main.css": "/trading-day/static/css/main.58344eb5.chunk.css",
-  "main.js": "/trading-day/static/js/main.c949f294.chunk.js",
-  "main.js.map": "/trading-day/static/js/main.c949f294.chunk.js.map",
-  "static/js/1.3206b8f9.chunk.js": "/trading-day/static/js/1.3206b8f9.chunk.js",
-  "static/js/1.3206b8f9.chunk.js.map": "/trading-day/static/js/1.3206b8f9.chunk.js.map",
+  "main.js": "/trading-day/static/js/main.e06f5c11.chunk.js",
+  "main.js.map": "/trading-day/static/js/main.e06f5c11.chunk.js.map",
+  "static/js/1.60fc581e.chunk.js": "/trading-day/static/js/1.60fc581e.chunk.js",
+  "static/js/1.60fc581e.chunk.js.map": "/trading-day/static/js/1.60fc581e.chunk.js.map",
   "runtime~main.js": "/trading-day/static/js/runtime~main.3738374c.js",
   "runtime~main.js.map": "/trading-day/static/js/runtime~main.3738374c.js.map",
   "static/media/orange-wheel-art-800x800.png": "/trading-day/static/media/orange-wheel-art-800x800.09aa87ab.png",
   "static/css/main.58344eb5.chunk.css.map": "/trading-day/static/css/main.58344eb5.chunk.css.map",
   "index.html": "/trading-day/index.html",
-  "precache-manifest.9e7a17f281cc73871ba68ad1229ada71.js": "/trading-day/precache-manifest.9e7a17f281cc73871ba68ad1229ada71.js",
+  "precache-manifest.b6693ec20b462342c8d9ed6c6f99e8ea.js": "/trading-day/precache-manifest.b6693ec20b462342c8d9ed6c6f99e8ea.js",
   "service-worker.js": "/trading-day/service-worker.js"
 }
