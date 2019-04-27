@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import PropTypes from "prop-types";
 import { Segment } from "semantic-ui-react";
 import QuoteData from "./QuoteData";
 import { DataContext } from "../WithDataContext";
@@ -15,7 +14,8 @@ export default (props) => {
     quoteData,
     requestedRangeData
   } = useContext(DataContext);
-
+  console.log(requestedRangeData);
+  debugger;
   // fetch new data every symbol changes
   useEffect(() => {
     if (props.symbol && props.symbol !== symbol) {

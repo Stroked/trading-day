@@ -21,7 +21,7 @@ export const DataProvider = props => {
   });
 
   const [symbol, setSymbol] = useState(null);
-const [requestedRangeData, setRequestedRangeData] =useState(null)
+  const [requestedRangeData, setRequestedRangeData] =useState(null)
   const [quoteData, setQuoteData] = useState(null);
   const [peers, setPeers] = useState(null);
   const [refresh, setRefresh] = useState(null);
@@ -113,7 +113,7 @@ const [requestedRangeData, setRequestedRangeData] =useState(null)
         indiciesData,
         handleSymbolChange,
         getPeers,
-        requestedPeriodData: requestedRangeData,
+        requestedRangeData,
         ...props
       }}>
       {fetchingIncidies.loading && <Loading />}

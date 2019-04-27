@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 
 
-import LookUp from "./LookUp";
-import ListingInfo from "./ListingInfo";
+import LookUp from "./Search/LookUp";
+import ListingInfo from "./ListingSnapshot";
 import BubblePack from "./Visualizations/BubblePack";
 import TreeMap from "./Visualizations/TreeMap";
 import HeatMap from "./Visualizations/HeatMap";

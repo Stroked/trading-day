@@ -5,18 +5,15 @@ import _ from "lodash";
 import {
   Label,
   Header,
-  Container,
   Statistic,
   Segment,
   Grid
 } from "semantic-ui-react";
 // !VX
-import { Bar, RadialGradient } from "@vx/vx";
+import {  } from "@vx/vx";
 const width = 400;
 const height = 300;
 const margin = { top: 20, right: 5, bottom: 20, left: 35 };
-const red = "#eb6a5b";
-const blue = "#52b6ca";
 let timeParser = d3.timeParse("%Y%m%d%H:%M");
 class LineChart extends Component {
   state = {
@@ -73,7 +70,6 @@ class LineChart extends Component {
     let latestPrice = Math.round(this.props.latestPrice * 100) / 100;
     let changePercent = Math.round(this.props.changePercent * 10000) / 100;
     const { highs } = this.state;
-    console.log(highs);
     return (
       <Segment>
         <Link

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import RoundButtons from '../coolook/RoundButtons'
-import { Header, Segment, Container } from "semantic-ui-react";
-import SlideShow from './Visualizations/SlideShow/';
+import { Header, Segment } from "semantic-ui-react";
+// TRADING-DAY COMPONENTS
+import SlideShow from '../Visualizations/SlideShow';
 
 
 const TradingDayStyles = styled.div`

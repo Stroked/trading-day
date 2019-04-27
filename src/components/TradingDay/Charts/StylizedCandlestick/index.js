@@ -90,7 +90,6 @@ export const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
       <h1>NO DATA</h1>
     ) : (
       <EthereumChartWrapper>
-       
         <div className='ethereum'>
           <div className='container'>
             <div className='chart-container'>
@@ -108,7 +107,7 @@ export const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
             <TopCorner width={150} height={150} tickerSymbol={ticker} />
 
             <Banner
-            logo={logo}
+              logo={imgSrc}
               numItems={numItems}
               increaseNumItems={increaseNumItems}
               decreaseNumItems={decreaseNumItems}

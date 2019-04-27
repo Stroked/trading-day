@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 
-export default class ListingInfo extends Component {
+export default class ListingSnapshot extends Component {
   render() {
     return (
       <table

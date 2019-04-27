@@ -6,7 +6,7 @@ import Routes from "./routes";
 //---------------------------------------------------
 import { DataProvider } from "./components/TradingDay/WithDataContext";
 import WithInstantSearch from "./components/TradingDay/WithInstantSearch";
-import SearchInput from "./components/TradingDay/SearchInput";
+import SearchInput from "./components/TradingDay/Search";
 import Header from "./components/TradingDay/Header";
 //---------------------------------------------------
 const AppWrapper = styled.div``;

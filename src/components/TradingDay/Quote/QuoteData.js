@@ -7,16 +7,15 @@ import {
   Segment,
   Header,
   Image,
-  Container,
   Label
 } from "semantic-ui-react";
 
-import Clock, { ReactFitText } from "react-live-clock";
+import Clock from "react-live-clock";
 
-import StatsPrice from "../StatsPrice";
-import StatsDetails from "../StatsDetails";
+import StatsPrice from "./StatsPrice";
+import StatsDetails from "./StatsDetails";
 import DarkButtons from "../../coolook/DarkButtons";
-import NewsItems from "../NewsItems";
+import NewsItems from "../News";
 
 import NotFound from "../NotFound";
 import LineChart from "../Charts/LineChart";
@@ -24,8 +23,7 @@ import LineChart from "../Charts/LineChart";
 import { quoteFormatting } from "../../../utils/format";
 import setTitle from "../../../utils/title";
 
-import placeholder from "../../../assets/iex-logo.png";
-import HeikinAshi from "../../simple-stock-tracker/HeikinAshi";
+import HeikinAshi from "../Charts/HeikinAshi";
 import { StylizedCandleStickChart } from "../Charts/StylizedCandlestick";
 
 const PeerPerformance = ({ peers, peerData }) => {
@@ -113,92 +111,94 @@ const QuoteData = props => {
       };
       fetchData(display.symbol, activePeriod);
     }, [activePeriod]);
-    console.log(ohlcData);
-    debugger;
-    return (
-      <Segment>
-        <Grid columns={2}>
-          <Grid.Column width={3}>
-            {imgSrc ? <Image bottom src={imgSrc} size='small' /> : null}
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <Header
-              style={{
-                fontFamily: "Dancing Script",
-                fontSize: "4vw",
-                fontWeight: "800"
-              }}
-              textAlign='center'>
-              {display.companyName} ({display.symbol})
-            </Header>
-            <StatsPrice
-              last={display.latestPriceSimple}
-              change={display.change}
-              percent={display.changePercent}
-              color={display.status}
-            />
-            {/* <svg viewBox='0 0 200 25' style={{ width: "100%" }}>
-                <text x='0' y='15'>
-                  {display.companyName} ({display.symbol})
-                </text>
-              </svg> */}
-            <Rail attached position='right'>
-              <Label>
-                <Clock
-                  format={"HH:mm:ss"}
-                  ticking={true}
-                  timezone={"America/New_York"}
-                  interval={1000}
-                />
-              </Label>
-            </Rail>
-          </Grid.Column>
-        </Grid>
 
-        <Segment basic>
-          <Grid stackable>
-            <StatsDetails data={display} />
-            <DarkButtons
-              default={"ytd"}
-              timeRangeArray={["d1", "m1", "m3", "m6", "y1", "y5", "ytd"]}
-              clickEffect={setActivePeriod}
-            />
-            {ohlcData ? (<>
-              <HeikinAshi
-                height={500}
-                data={ohlcData.d}
-                type='hybrid'
-                ticker={display.symbol}
-                xAxis='date'
-                yAxis='volume'
+    if (props.requestedRangeData)
+    {
+      console.log("THIS IS THE REQUESTED DATA")
+      console.log(props.requestedRangeData);
+      debugger;
+    }
+      return (
+        <Segment>
+          <Grid columns={2}>
+            <Grid.Column width={3}>
+              {imgSrc ? <Image bottom src={imgSrc} size='small' /> : null}
+            </Grid.Column>
+            <Grid.Column width={12}>
+              <Header
+                style={{
+                  fontFamily: "Dancing Script",
+                  fontSize: "4vw",
+                  fontWeight: "800"
+                }}
+                textAlign='center'>
+                {display.companyName} ({display.symbol})
+              </Header>
+              <StatsPrice
+                last={display.latestPriceSimple}
+                change={display.change}
+                percent={display.changePercent}
+                color={display.status}
               />
-            <Segment>
-              <StylizedCandleStickChart
-                height={600}
-                width={900}
-                data={ohlcData.d}
-                ticker={display.symbol}
-                logo={imgSrc}
-              />
-            </Segment>
-         </>   ) : (
-              "NO OHLC DATA"
-            )}
-            <Segment>
-              {props.peers ? (
-                <PeerPerformance
-                  peers={props.peers.peers}
-                  peerData={props.peers.peerData}
-                />
-              ) : (
-                <h1>NO PEERS</h1>
-              )}
-            </Segment>
-            <NewsItems news={news} />
+              <Rail attached position='right'>
+                <Label>
+                  <Clock
+                    format={"HH:mm:ss"}
+                    ticking={true}
+                    timezone={"America/New_York"}
+                    interval={1000}
+                  />
+                </Label>
+              </Rail>
+            </Grid.Column>
           </Grid>
+
+          <Segment basic>
+            <Grid stackable>
+              <StatsDetails data={display} />
+              <DarkButtons
+                default={"ytd"}
+                timeRangeArray={["d1", "m1", "m3", "m6", "y1", "y5", "ytd"]}
+                clickEffect={setActivePeriod}
+              />
+              {ohlcData ? (
+                <>
+                  <HeikinAshi
+                    height={500}
+                    data={ohlcData.d}
+                    type='hybrid'
+                    ticker={display.symbol}
+                    xAxis='date'
+                    yAxis='volume'
+                  />
+                  <Segment>
+                    <StylizedCandleStickChart
+                      height={600}
+                      width={900}
+                      data={ohlcData.d}
+                      ticker={display.symbol}
+                      logo={imgSrc}
+                    />
+                  </Segment>
+                </>
+              ) : (
+                "NO OHLC DATA"
+              )}
+              <Segment>
+                {props.peers ? (
+                  <PeerPerformance
+                    peers={props.peers.peers}
+                    peerData={props.peers.peerData}
+                  />
+                ) : (
+                  <h1>NO PEERS</h1>
+                )}
+              </Segment>
+              <NewsItems news={news} />
+            </Grid>
+          </Segment>
         </Segment>
-      </Segment>
-    );
+      );
   }
 
   return <NotFound />;
