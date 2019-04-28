@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Segment } from "semantic-ui-react";
 import ethereumData from "./ethereum-180d";
-import { DataContext } from "../../WithDataContext";
+import { DataContext } from "../../MarketData";
 import DarkButtons from "../../../coolook/DarkButtons";
 
 const EthereumChartWrapper = styled.div`
@@ -40,10 +40,10 @@ const EthereumChartWrapper = styled.div`
 export const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
   if (data) {
     const [numItems, setNumItems] = useState(180);
-    const [imgSrc, setImgSrc] = useState(logo.url);
+    const [imgSrc, setImgSrc] = useState(logo);
     useEffect(() => {
-      setImgSrc(logo.url);
-    }, [logo.url]);
+      setImgSrc(logo);
+    }, [logo]);
 
     const increaseNumItems = () => {
       if (numItems === 500) return;

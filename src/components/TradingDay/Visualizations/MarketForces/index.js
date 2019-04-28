@@ -2,7 +2,7 @@ import React  from "react";
 import * as d3 from "d3";
 import {  } from "@vx/vx";
 // TRADING-DAY COMPONENTS
-import {  } from "../../WithDataContext";
+import {} from "../../MarketData";
 import sp500 from "./sp500-constituents-financials.json";
 
 const height = 900,

@@ -96,8 +96,6 @@ export const fetchQuoteData = async (symbol, frequency) => {
     //await fetchAllCharts(symbol),
     await makeApiCall(symbol, frequency)
   ]);
-  console.log(data[1]);
-  debugger;
   //charts: data[1],
   return {
     quote: data[0],

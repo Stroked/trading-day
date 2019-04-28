@@ -64,7 +64,8 @@ class FisheyeSlideshow extends React.Component {
       .select(this.state.svgRef.current)
       .attr("width", width)
       .attr("height", height)
-      .on("mousemove", this.handleMouseMove)
+      .on("touchmove mousemove", this.getMousePoints)
+      //.on("touchmove", this.getTouchPoints)
       .on("mouseout", this.disableFishlens);
     this.renderSlideDeck();
   }
@@ -131,9 +132,15 @@ class FisheyeSlideshow extends React.Component {
       .attr("fill", "red");
   };
 
-  handleMouseMove = () => {
-    const mouse = d3.clientPoint(d3.event.target, d3.event);
+  getTouchPoints = () =>{
+    console.log(d3.event)
+    this.handleMove([d3.event.x, d3.event.y]);
+  
+  }
 
+  getMousePoints = () => this.handleMove(d3.clientPoint(d3.event.target, d3.event));
+
+  handleMove = mouse => {
     this.state.xFisheye.focus(mouse[0]);
     this.state.yFisheye(mouse[1]);
     this.xLine.attr("x1", this.state.xFisheye).attr("x2", this.state.xFisheye);

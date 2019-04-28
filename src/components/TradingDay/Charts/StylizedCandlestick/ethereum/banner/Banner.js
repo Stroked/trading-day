@@ -117,7 +117,6 @@ export default function Banner({
     <StyledBanner>
       <div className='banner'>
         <div className='logo'>
-          <Logo />
           <Image src={logo}/>
         </div>
         <div className='controls'>

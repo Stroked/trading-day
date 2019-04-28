@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Segment, Header } from "semantic-ui-react";
-import { DataContext } from "../components/TradingDay/WithDataContext";
+import { DataContext } from "../components/TradingDay/MarketData";
 import NewsItems from "../components/TradingDay/News";
 import StocksSpotlight from "../components/TradingDay/DailySpotlight";
 import TickerScroll from "../components/TradingDay/TickerScroll";

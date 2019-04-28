@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import * as d3 from "d3";
 import PropTypes from "prop-types";
 import Loading from "./Loading";
-import { fetchQuoteData, fetchIndiciesData } from "../../utils/fetch";
+import {
+  fetchQuoteData,
+  fetchIndiciesData,
+  makeApiCall
+} from "../../utils/fetch";
 
 const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
 const INTERVAL = 60000;
@@ -21,7 +25,6 @@ export const DataProvider = props => {
   });
 
   const [symbol, setSymbol] = useState(null);
-  const [requestedRangeData, setRequestedRangeData] =useState(null)
   const [quoteData, setQuoteData] = useState(null);
   const [peers, setPeers] = useState(null);
   const [refresh, setRefresh] = useState(null);
@@ -42,7 +45,6 @@ export const DataProvider = props => {
     if (symbol) {
       const data = await fetchQuoteData(symbol);
       setQuoteData(data);
-      setRequestedRangeData(data.requestedRangeData);
     }
   };
 
@@ -73,6 +75,23 @@ export const DataProvider = props => {
         peers: peers,
         peerData: quotePeers
       });
+    }
+  };
+  const [dataRange,setDataRange] = useState('1Y');
+  const [chartData, setChartData] = useState(null);
+  const [fetchingChartData, setFetchingChartData] = useState({
+    loading: true,
+    error: null
+  });
+  const handleChartDataRequest = async (symbol, period) => {
+    try {
+      
+      setFetchingChartData({ loading: true, error: null });
+      const data = await makeApiCall(symbol, period);
+      setFetchingChartData({ loading: false, error: null });
+      setChartData(data);
+    } catch (error) {
+      setFetchingChartData({ loading: false, error });
     }
   };
 
@@ -112,8 +131,11 @@ export const DataProvider = props => {
         quoteData,
         indiciesData,
         handleSymbolChange,
+        handleChartDataRequest,
+        chartData,
+        fetchingChartData,
+        dataRange,
         getPeers,
-        requestedRangeData,
         ...props
       }}>
       {fetchingIncidies.loading && <Loading />}

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Segment } from "semantic-ui-react";
 import QuoteData from "./QuoteData";
-import { DataContext } from "../WithDataContext";
+import { DataContext } from "../MarketData";
 
 export default (props) => {
   const {
@@ -14,8 +14,6 @@ export default (props) => {
     quoteData,
     requestedRangeData
   } = useContext(DataContext);
-  console.log(requestedRangeData);
-  debugger;
   // fetch new data every symbol changes
   useEffect(() => {
     if (props.symbol && props.symbol !== symbol) {
@@ -40,8 +38,3 @@ export default (props) => {
     </Segment>
   );
 };
-
-// QuotePage.propTypes = {
-//   symbol: PropTypes.string.isRequired
-// };
-

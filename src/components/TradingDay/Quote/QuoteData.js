@@ -51,9 +51,7 @@ export const makeApiCall = async (symbol, period = "1y") => {
   const d = await d3.json(
     `https://api.iextrading.com/1.0/stock/${symbol}/chart/${period}`
   );
-  console.log(symbol, period);
-  console.log(d);
-  debugger;
+
   // Check for failure to retry.
   if (d[0]["date"] == null) {
     makeApiCall(symbol, period);
@@ -97,7 +95,7 @@ const QuoteData = props => {
     const display = quoteFormatting(quote, stats);
     setTitle(display.symbol, display.latestPrice);
     const [ohlcData, setOhlc] = useState(null);
-
+    console.log(logo);
     const [activePeriod, setActivePeriod] = useState("1Y");
     const [imgSrc, setImgSrc] = useState(logo.url);
     useEffect(() => {
@@ -112,12 +110,6 @@ const QuoteData = props => {
       fetchData(display.symbol, activePeriod);
     }, [activePeriod]);
 
-    if (props.requestedRangeData)
-    {
-      console.log("THIS IS THE REQUESTED DATA")
-      console.log(props.requestedRangeData);
-      debugger;
-    }
       return (
         <Segment>
           <Grid columns={2}>
@@ -158,13 +150,21 @@ const QuoteData = props => {
               <StatsDetails data={display} />
               <DarkButtons
                 default={"ytd"}
-                timeRangeArray={["d1", "m1", "m3", "m6", "y1", "y5", "ytd"]}
+                timeRangeArray={[
+                  "d1",
+                  "m1",
+                  "m3",
+                  "m6",
+                  "y1",
+                  "y5",
+                  "ytd"
+                ]}
                 clickEffect={setActivePeriod}
               />
               {ohlcData ? (
                 <>
                   <HeikinAshi
-                    height={500}
+                    height={600}
                     data={ohlcData.d}
                     type='hybrid'
                     ticker={display.symbol}

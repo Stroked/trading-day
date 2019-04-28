@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { connectAutoComplete } from 'react-instantsearch-dom';
 import { withRouter } from 'react-router-dom';
-import { Segment,Search, Image,Container } from 'semantic-ui-react';
+import { Search } from 'semantic-ui-react';
 
 
 const formatHits = hits => {
@@ -32,7 +32,6 @@ const SearchInput = props => {
   };
 
   return (
-    // <Segment attached="top" inverted padded="false" color='black'>
       <Search color="black"
         transparent
         icon='search'
@@ -47,10 +46,9 @@ const SearchInput = props => {
         onResultSelect={onSelect}
         results={formatHits(props.hits)}
       />
-    // </Segment>
   );
 };
-      {/* <Image src={algolia} size="mini" title="Search by Algolia" /> */}
+
 
 SearchInput.propTypes = {
   refine: PropTypes.func.isRequired,

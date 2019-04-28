@@ -19,7 +19,7 @@ export default class LookUp extends Component {
   onTickerSearch=(query)=>{
       console.log("The ticker being searched for is...")
       console.log(query);
-     // debugger;
+   
   }
     render() {
     return (

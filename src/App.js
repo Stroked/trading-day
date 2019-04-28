@@ -4,10 +4,10 @@ import styled from "styled-components";
 //---------------------------------------------------
 import Routes from "./routes";
 //---------------------------------------------------
-import { DataProvider } from "./components/TradingDay/WithDataContext";
+import { DataProvider } from "./components/TradingDay/MarketData";
 import WithInstantSearch from "./components/TradingDay/WithInstantSearch";
-import SearchInput from "./components/TradingDay/Search";
 import Header from "./components/TradingDay/Header";
+import Nav from "./components/TradingDay/Nav";
 //---------------------------------------------------
 const AppWrapper = styled.div``;
 export default class App extends React.Component {
@@ -16,8 +16,8 @@ export default class App extends React.Component {
       <AppWrapper>
         <WithInstantSearch>
           <DataProvider>
-            <SearchInput />
             <Header />
+            <Nav /> 
             <Routes />
           </DataProvider>
         </WithInstantSearch>
