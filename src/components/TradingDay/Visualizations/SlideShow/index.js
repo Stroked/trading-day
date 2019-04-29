@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as d3 from "d3";
+import { event as currentEvent } from "d3-selection";
 import _ from "lodash";
 import { Segment } from "semantic-ui-react";
 import {
@@ -19,11 +20,8 @@ import {
   RadialGradient
 } from "@vx/vx";
 import PREMADE_GRADIENTS from "../../../../constants/PREMADE_GRADIENTS";
-const width = document.documentElement.clientWidth,
-  height = '100%',
-  margin = { top: 1, bottom: 1, left: 1, right: 1 },
-  fisheyeScale = scaleType => d3_fisheye_scale(scaleType(), 3, 0),
-  xSteps = d3.range(0, width, width / 15);
+const margin = { top: 0, bottom: 0, left: 0, right: 0 },
+  fisheyeScale = scaleType => d3_fisheye_scale(scaleType(), 3, 0);
 
 const StyleWrapper = styled.div`
   margin-top: ${margin.top};
@@ -45,28 +43,34 @@ const StyleWrapper = styled.div`
     pointer-events: none;
   }
 `;
+const xSteps = (width, length) => d3.range(0, width, width / length);
 class FisheyeSlideshow extends React.Component {
   state = {
     svgRef: React.createRef(),
-    xSteps: d3.range(0, width, width / 15),
+    xSteps: xSteps(this.props.width, 15),
     xFisheye: fisheyeScale(d3.scaleIdentity)
-      .domain([0, width])
-      .focus(width / 2),
-    yFisheye: d3.scaleLinear().domain([0, height]),
-    regularScale: d3
-      .scaleIdentity()
-      .domain(xSteps)
-      .range(0, width)
+      .domain([0, this.props.width])
+      .focus(this.props.width / 2),
+    yFisheye: d3.scaleLinear().domain([0, this.props.height]),
+    regularScale: d3.scaleIdentity().range(0, this.props.width)
   };
-
+  componentWillMount() {
+    this.state.regularScale.domain(this.state.xSteps);
+  }
   componentDidMount() {
     this.svg = d3
       .select(this.state.svgRef.current)
-      .attr("width", width)
-      .attr("height", height)
-      .on("touchmove mousemove", this.getMousePoints)
+      .attr("width", this.props.width)
+      .attr("height", this.props.height)
+      .on("mouseover", () => {
+        this.xLine.transition().delay(500).duration(500);
+        this.textLabels.transition().duration(500);
+        this.gradients.transition().duration(500);
+      })
+      .on("mousemove", () => this.handleMove(this.getMousePoint()))
+      .on("touchmove", () => this.handleMove(this.getTouchPoint()))
       //.on("touchmove", this.getTouchPoints)
-      .on("mouseout", this.disableFishlens);
+      .on("mouseout touchend", this.disableFishlens);
     this.renderSlideDeck();
   }
 
@@ -105,7 +109,7 @@ class FisheyeSlideshow extends React.Component {
       })
       .attr("x", this.state.regularScale.invert)
       .attr("y", 0)
-      .attr("height", height)
+      .attr("height", this.props.height)
       .attr("width", (d, i) =>
         this.calculateWidth(d, i, this.state.regularScale)
       );
@@ -117,7 +121,7 @@ class FisheyeSlideshow extends React.Component {
       .attr("x1", this.state.regularScale)
       .attr("x2", this.state.regularScale)
 
-      .attr("y2", height);
+      .attr("y2", this.props.height);
 
     let text = this.slides
       .selectAll("text")
@@ -125,42 +129,42 @@ class FisheyeSlideshow extends React.Component {
       .join("text");
     this.textLabels = text
       .attr("x", this.state.regularScale)
-      .attr("y", height / 2)
+      .attr("y", this.props.height / 2)
       .text(d => this.state.regularScale(d).toFixed(2))
 
       .attr("font-size", "20px")
       .attr("fill", "red");
   };
 
-  getTouchPoints = () =>{
-    console.log(d3.event)
-    this.handleMove([d3.event.x, d3.event.y]);
-  
-  }
-
-  getMousePoints = () => this.handleMove(d3.clientPoint(d3.event.target, d3.event));
-
+  getTouchPoint = () => d3.touches(this.state.svgRef.current)[0];
+  getMousePoint = () => d3.clientPoint(d3.event.target, d3.event);
   handleMove = mouse => {
     this.state.xFisheye.focus(mouse[0]);
-    this.state.yFisheye(mouse[1]);
+    this.state.yFisheye(mouse[1])
+    ;
     this.xLine.attr("x1", this.state.xFisheye).attr("x2", this.state.xFisheye);
     this.textLabels
+
       .text(d => this.state.xFisheye(d).toFixed(2))
       .attr("x", this.state.xFisheye);
 
     this.gradients
+
       .attr("x", this.state.xFisheye)
       .attr("width", (d, i) => this.calculateWidth(d, i, this.state.xFisheye));
   };
   calculateWidth = (d, i, scale) => {
-    let x1 = scale(xSteps[i + 1]);
-    if (!x1) x1 = width;
+    let x1 = scale(this.state.xSteps[i + 1]);
+    if (!x1) x1 = this.props.width;
     return x1 - scale(d);
   };
   render() {
     return (
       <StyleWrapper className='container'>
-        <svg ref={this.state.svgRef} width={width} height={height}>
+        <svg
+          ref={this.state.svgRef}
+          width={this.props.width}
+          height={this.props.height}>
           <defs>
             <GradientDarkgreenGreen id='DarkgreenGreen' />
             <GradientLightgreenGreen id='LightgreenGreen' />

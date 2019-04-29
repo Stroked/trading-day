@@ -73,7 +73,12 @@ export default props => {
         <Segment center inverted color='black'>
           <Header textAlign='center'>
             <Header.Subheader className='titleTop'>
-              <Rail compact attached internal position='left'>
+              <Rail
+                style={{ pointerEvents: "none" }}
+                compact
+                attached
+                internal
+                position='left'>
                 <Label
                   style={{
                     color: "black",
@@ -92,8 +97,9 @@ export default props => {
 
               <b>&mdash; The Global Financial Markets &mdash;</b>
             </Header.Subheader>
-            <SlideShow />
+             <SlideShow height='200' width='900'/>
             <Sidebar
+            
               as={Menu}
               animation='overlay'
               icon='labeled'
@@ -111,9 +117,7 @@ export default props => {
                 Games
               </Menu.Item>
               <Menu.Item>
-                <Link to='/sp500' >                
-                S&P 500
-                </Link>
+                <Link to='/sp500'>S&P 500</Link>
               </Menu.Item>
             </Sidebar>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -132,7 +136,9 @@ export default props => {
 
               <SearchInput />
             </div>
-            <SlideShow />
+            <SlideShow height='200' width='900'>
+       
+            </SlideShow>
             <Header.Subheader as='h4' className='titleTop'>
               <b>&mdash; Ajay Phogat &mdash;</b>
             </Header.Subheader>
