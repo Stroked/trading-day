@@ -83,7 +83,7 @@ export default function SquareButtons(props) {
         return (
           <button
             id={period}
-            onClick={() => setActive(period)}
+            onClick={(e) => {e.preventDefault();setActive(period);}}
             className={`mm-item ${active === period ? " active" : ''}`}
             
             >

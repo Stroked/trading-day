@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {Grid} from 'semantic-ui-react';
-import SquareButtons from './SquareButtons';
+import { Grid } from "semantic-ui-react";
+import SquareButtons from "./SquareButtons";
 
 const RoundButtonStyles = styled.div`
   main {
     background-color: #e6e6e6;
   }
-
- 
 
   .button-test {
     display: flex;
@@ -118,7 +116,10 @@ export default function RoundButtons(props) {
             <Grid.Column>
               <button
                 className={`round play${active === "play" ? " active" : ""}`}
-                onClick={() => setActive("play")}>
+                onClick={e => {
+                  e.preventDefault();
+                  setActive("play");
+                }}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   x='0px'
@@ -141,10 +142,11 @@ export default function RoundButtons(props) {
                 </svg>
               </button>
               <button
-                className={`round pause${
-                  active === "pause" ? " active" : ""
-                }`}
-                onClick={() => setActive("pause")}>
+                className={`round pause${active === "pause" ? " active" : ""}`}
+                onClick={e => {
+                  e.preventDefault();
+                  setActive("pause");
+                }}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   x='0px'
@@ -179,7 +181,10 @@ export default function RoundButtons(props) {
               </button>
               <button
                 className={`round stop${active === "stop" ? " active" : ""}`}
-                onClick={() => setActive("stop")}>
+                onClick={e => {
+                  e.preventDefault();
+                  setActive("stop");
+                }}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   x='0px'

@@ -113,6 +113,7 @@ export default function DarkButton(props) {
               className={activePeriod === period ? "active" : null}>
               <button
                 onClick={(e) => {
+                  e.preventDefault();
                   setActivePeriod(period);
                   props.clickEffect(text);
                 }}
