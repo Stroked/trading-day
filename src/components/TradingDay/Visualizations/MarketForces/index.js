@@ -15,11 +15,12 @@ const height = 900,
   /*FORCE LAYOUT SIMULATION*/
   simulation = d3
     .forceSimulation()
-    .force("center", d3.forceCenter(width / 2, height / 2)),
+    .force("center", d3.forceCenter(width / 2, height / 2))
   //.force("charge", d3.forceManyBody().strength(5))
   // .force("collide", d3.forceCollide(d => marketCapScale(d["Market Cap"]))),
   //.alphaDecay(0)
-  //.stop()
+  .stop(),
+
 
   /*SCALES*/
   sectorScale = d3
@@ -72,7 +73,9 @@ class MarketForces extends React.Component {
     simulation
       .nodes(this.state.nodes)
       .force("collide", this.collide)
-      .force("cluster", this.clustering);
+      .force("cluster", this.clustering).restart();
+      
+
   }
   componentDidUpdate() {
     this.renderCircles();

@@ -18,13 +18,13 @@ const EthereumChartWrapper = styled.div`
     bottom: 0;
     justify-content: center;
     align-items: center;
-    background-color: #f6f0f2;
+    /* background-color: #f6f0f2; */
     font-family: "Droid Sans Mono", monospace;
   }
   .container {
     height: 75vh;
     width: 90vw;
-    background-color: #ecc3c7;
+    /* background-color: #ecc3c7; */
     position: relative;
   }
   .chart-container {
@@ -33,8 +33,6 @@ const EthereumChartWrapper = styled.div`
     width: 100%;
   }
 
-  .controls {
-  }
 `;
 
 export const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
@@ -67,10 +65,8 @@ export const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
         close: +close,
         volume: +volume,
         hollow: +close > +open
-      };
-    })
-    // .reverse()
-    // .slice(0, numItems);
+      }
+    }).reverse().slice(0, numItems);
     console.log(buckets);
   const sortedBuckets = buckets.sort((a, b) => {
     return a.date - b.date;

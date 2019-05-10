@@ -16,6 +16,7 @@ import {
   AxisRight,
   AxisLeft,
   AxisBottom,
+     GradientOrangeRed 
 } from "@vx/vx";
 import * as d3 from "d3";
 import Volume from "./Volume";
@@ -124,14 +125,13 @@ class Chart extends React.Component {
     return (
       <div>
         <svg width={width} height={height} ref={s => (this.svg = s)}>
+            <defs>
+            <GradientOrangeRed id='OrangeRed' />
+            </defs>
+              
           <Group top={margin.top} left={margin.left}>
-            <LinearGradient
-              id='gradient'
-              from='#FF9A8B'
-              to='#FF6A88'
-              vertical={false}
-            />
-            <rect width={width} height={height} fill='url(#gradient)' />
+      
+            <rect width={width} height={height} fill='url(#OrangeRed)' />
             <GridRows
               lineStyle={{ pointerEvents: "none" }}
               width={width - margin.right}

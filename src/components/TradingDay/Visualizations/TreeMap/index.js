@@ -1,10 +1,52 @@
 import React from "react";
 import { Group } from "@vx/group";
 import { Treemap } from "@vx/hierarchy";
-import { hierarchy, stratify } from "d3-hierarchy";
-import shakespeare  from "./shakespeare";
-import { treemapSquarify } from "d3-hierarchy";
+import shakespeare from "./shakespeare";
 import { scaleLinear } from "@vx/scale";
+import sp500 from "../MarketForces/sp500-constituents-financials.json";
+import * as d3 from "d3";
+const parsed_SP500 = {
+  id: "S&P500",
+  children: d3
+    .nest()
+    .key(k => k.Sector)
+    .entries(
+      sp500.map(l => {
+        l.id = l.symbol;
+        l.MarketCap = +l["Market Cap"];
+        return l;
+      })
+    )
+};
+
+const sectorArray = parsed_SP500.children.map(x => {
+  let y = {};
+  y.id = x.key;
+  y.parent = "S&P500";
+  y.value = null;
+  return y;
+});
+const listings = sp500.map(x => {
+  let y = {};
+  y.id = x['Symbol'];
+  y.parent = x['Sector'];
+  y.marketCap = +x["Market Cap"];
+  y.value = +x["Market Cap"];
+  return y;
+});
+const dataArray = [
+  { id: "S&P500", parent: null, value: 0 },
+  ...sectorArray,
+  ...listings
+];
+console.log(dataArray);
+// var root = {
+//   id: "All Listings",
+//   children: [
+//     { id: "NYSE Listings", children: [{ id: "A" }, { id: "AA" }] },
+//     { id: "NASDAQ Listings", children: [{ id: "A" }, { id: "AA" }] }
+//   ]
+// };
 
 const blue = "#0373d9";
 const green = "#00ff70";
@@ -15,11 +57,30 @@ const colorScale = scaleLinear({
   range: [blue, green]
 });
 
-const data = stratify()
-  .id(d => d.id)
-  .parentId(d => d.parent)(shakespeare)
-  .sum(d => d.size || 0);
+const colorScale2 = scaleLinear({
+  domain: [0, Math.max(...dataArray.map(d => +d.value || 0))],
+  range: [blue, green]
+});
 
+const data = d3.stratify()
+  .id(d => d.id)
+  .parentId(d => d.parent)(dataArray)
+  .sum(d => {
+    console.log(d);
+    return +d.value || 0; });
+console.log(data);
+// const data2 = stratify()
+//   .id(d => d.Sector)
+//   .parentId(d => d.Sector)(sp500);
+//[d3.nest().key(k=>k.Sector).entries(sp500)]
+//console.log(data2);
+/*{
+    values:d3  .nest()
+      .key(k => k.Sector)
+      .entries(sp500.map(l => {
+          l.id = l.symbol;
+          return l;
+        }))}*/
 export default ({
   width,
   height,
@@ -31,7 +92,8 @@ export default ({
   }
 }) => {
   const yMax = height - margin.top - margin.bottom;
-  const root = hierarchy(data).sort((a, b) => b.value - a.value);
+  const root = d3.hierarchy(data).sort((a, b) => b.value - a.value);
+  console.log(root);
 
   return (
     <svg width={width} height={height}>
@@ -39,7 +101,7 @@ export default ({
       <Treemap
         root={root}
         size={[width, yMax]}
-        tile={treemapSquarify}
+        tile={d3.treemapSquarify}
         round={true}>
         {treemap => {
           const nodes = treemap.descendants().reverse();
@@ -48,11 +110,9 @@ export default ({
               {nodes.map((node, i) => {
                 const width = node.x1 - node.x0;
                 const height = node.y1 - node.y0;
+                console.log(width,height)
                 return (
-                  <Group
-                    key={`treemap-node-${i}`}
-                    top={node.y0}
-                    left={node.x0}>
+                  <Group key={`treemap-node-${i}`} top={node.y0} left={node.x0}>
                     {node.depth == 1 && (
                       <rect
                         width={width}
@@ -61,18 +121,18 @@ export default ({
                         strokeWidth={4}
                         fill={"transparent"}
                         onClick={event => {
-                         console.log(node);
+                          console.log(node);
                         }}
                       />
                     )}
-                    {node.depth > 2 && (
+                    {node.depth >1 && (
                       <rect
                         width={width}
                         height={height}
                         stroke={bg}
-                        fill={colorScale(node.value)}
+                        fill={colorScale2(node.value)}
                         onClick={event => {
-                         console.log(node);
+                          console.log(node);
                         }}
                       />
                     )}

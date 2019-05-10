@@ -24,15 +24,14 @@ const margin = { top: 0, bottom: 0, left: 0, right: 0 },
   fisheyeScale = scaleType => d3_fisheye_scale(scaleType(), 3, 0);
 
 const StyleWrapper = styled.div`
+
   margin-top: ${margin.top};
   margin-bottom: ${margin.bottom};
   margin-left: ${margin.left};
-  margin-right: ${margin.right};
-  padding: 0;
-  svg {
-    margin: 0;
-    border: 5px solid black;
-  }
+  margin-right: ${margin.right}; 
+  padding: 0;   
+   border: 5px solid black;
+
   line {
     pointer-events: none;
   }
@@ -40,6 +39,12 @@ const StyleWrapper = styled.div`
     pointer-events: none;
   }
   rect {
+    margin-left: ${margin.left};
+    margin-right: ${margin.right};
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-padding-before: 0;
+    -webkit-padding-after: 0;
     pointer-events: none;
   }
 `;
@@ -62,32 +67,64 @@ class FisheyeSlideshow extends React.Component {
       .select(this.state.svgRef.current)
       .attr("width", this.props.width)
       .attr("height", this.props.height)
-      .on("mouseover", () => {
-        this.xLine.transition().delay(500).duration(500);
-        this.textLabels.transition().duration(500);
-        this.gradients.transition().duration(500);
-      })
-      .on("mousemove", () => this.handleMove(this.getMousePoint()))
+      // .on("mouseover", () => {
+      //   this.xLine.transition(d3.easeLinear).duration(200);
+      //   this.textLabels.transition(d3.easeLinear).duration(200);
+      //   this.gradients.transition(d3.easeLinear).duration(200);
+      // })
       .on("touchmove", () => this.handleMove(this.getTouchPoint()))
       //.on("touchmove", this.getTouchPoints)
-      .on("mouseout touchend", this.disableFishlens);
+      .on("mouseout touchend", this.disableFishlens)
+      .on("mouseenter", () => {
+        this.xLine
+          .interrupt()
+        this.textLabels
+          .interrupt()
+
+        this.gradients
+          .interrupt()
+      })
+      .on("mousemove", () => this.handleMove(this.getMousePoint()));
     this.renderSlideDeck();
   }
 
   disableFishlens = () => {
+    
     this.xLine
+      // .on("mouseenter", () => {
+      //   this.xLine.interrupt();
+      //   this.handleMove(this.getMousePoint());
+      //   console.log(this);
+      //   debugger;
+      // })
       .transition()
       .duration(1000)
       .attr("x1", this.state.regularScale.invert)
       .attr("x2", this.state.regularScale.invert);
     this.textLabels
+      // .on("mouseenter", ()=> {
+      //  // this.textLabels.interrupt();
+      //    this.textLabels.interrupt();
+      //  this.handleMove(
+      //                            this.getMousePoint()
+      //                          );
+      // })
       .transition()
       .duration(1000)
+
       .text(d => this.state.regularScale(d).toFixed(2))
       .attr("x", this.state.regularScale.invert);
     this.gradients
+      //   .on("mouseenter", () => {
+      //  // this.gradients.interrupt();
+      //   this.gradients.interrupt(); this.handleMove(
+      //                           this.getMousePoint()
+      //                         );
+
+      //   })
       .transition()
       .duration(1000)
+
       .attr("x", this.state.regularScale.invert)
       .attr("width", (d, i) =>
         this.calculateWidth(d, i, this.state.regularScale)
@@ -140,16 +177,13 @@ class FisheyeSlideshow extends React.Component {
   getMousePoint = () => d3.clientPoint(d3.event.target, d3.event);
   handleMove = mouse => {
     this.state.xFisheye.focus(mouse[0]);
-    this.state.yFisheye(mouse[1])
-    ;
+    this.state.yFisheye(mouse[1]);
     this.xLine.attr("x1", this.state.xFisheye).attr("x2", this.state.xFisheye);
     this.textLabels
-
       .text(d => this.state.xFisheye(d).toFixed(2))
       .attr("x", this.state.xFisheye);
 
     this.gradients
-
       .attr("x", this.state.xFisheye)
       .attr("width", (d, i) => this.calculateWidth(d, i, this.state.xFisheye));
   };

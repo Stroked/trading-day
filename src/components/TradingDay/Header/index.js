@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import {Link} from 'react-router-dom'
 import styled from "styled-components";
+import ScrollBasedBezier from './Curvy';
 import {
   Header,
   Segment,
@@ -18,7 +19,6 @@ import SearchInput from "../Search";
 const StyleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: "100%";
   align-items: center;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -26,9 +26,7 @@ const StyleWrapper = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  Segment {
-    width: 100vw;
-  }
+
 
   .titleTop {
     color: white;
@@ -67,8 +65,8 @@ export default props => {
   const { fetchingIncidies, indiciesData } = useContext(DataContext);
   const [visible, setVisible] = useState(false);
   const handleSidebarHide = () => setVisible(false);
-  return (
-    <Sidebar.Pushable as={Segment}>
+  return (<>
+    <Sidebar.Pushable as={Segment} style={{ border: 0 }}>
       <StyleWrapper>
         <Segment center inverted color='black'>
           <Header textAlign='center'>
@@ -97,9 +95,7 @@ export default props => {
 
               <b>&mdash; The Global Financial Markets &mdash;</b>
             </Header.Subheader>
-             <SlideShow height='200' width='900'/>
             <Sidebar
-            
               as={Menu}
               animation='overlay'
               icon='labeled'
@@ -134,17 +130,20 @@ export default props => {
                 ay
               </Header.Content>
 
-              <SearchInput />
+              <Header.Subheader as='h4' className='titleTop'>
+                <b>&mdash; Ajay Phogat &mdash;</b>
+              </Header.Subheader>
             </div>
-            <SlideShow height='200' width='900'>
-       
-            </SlideShow>
-            <Header.Subheader as='h4' className='titleTop'>
-              <b>&mdash; Ajay Phogat &mdash;</b>
-            </Header.Subheader>
+            <SlideShow
+              height={window.innerHeight / 3}
+              width={window.innerWidth - 200}
+            />
+            <SearchInput />
           </Header>
         </Segment>
       </StyleWrapper>
     </Sidebar.Pushable>
+        <ScrollBasedBezier headerHeight={100} />
+        </>
   );
 };
