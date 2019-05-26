@@ -88,6 +88,8 @@ export const DataProvider = props => {
       
       setFetchingChartData({ loading: true, error: null });
       const data = await makeApiCall(symbol, period);
+      console.log(data);
+      debugger;
       setFetchingChartData({ loading: false, error: null });
       setChartData(data);
     } catch (error) {
@@ -103,8 +105,11 @@ export const DataProvider = props => {
       // fetch quote data
       setFetchingQuote({ loading: true, error: null });
       const data = await fetchQuoteData(symbol);
+      const chart = await  makeApiCall(symbol, '1Y');
+      setChartData(chart)
       setQuoteData(data);
       setSymbol(symbol);
+      
       setFetchingQuote({ loading: false, error: null });
 
       // set new refresh interval
@@ -136,6 +141,7 @@ export const DataProvider = props => {
         fetchingChartData,
         dataRange,
         getPeers,
+        chartDataFetcher:makeApiCall,
         ...props
       }}>
       {fetchingIncidies.loading && <Loading />}

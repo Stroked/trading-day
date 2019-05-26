@@ -17,7 +17,7 @@ export default class App extends React.Component {
         <WithInstantSearch>
           <DataProvider>
             <Header />
-            <Nav /> 
+
             <Routes />
           </DataProvider>
         </WithInstantSearch>

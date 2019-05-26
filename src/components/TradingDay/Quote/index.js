@@ -12,7 +12,8 @@ export default (props) => {
     handleSymbolChange,
     getPeers,
     quoteData,
-    requestedRangeData
+    handleChartDataRequest,
+    chartData
   } = useContext(DataContext);
   // fetch new data every symbol changes
   useEffect(() => {
@@ -30,9 +31,10 @@ export default (props) => {
         <QuoteData
           symbol={symbol}
           data={quoteData.quote}
-          rangeData={requestedRangeData}
-          // charts={quoteData.charts}
+          rangeData={handleChartDataRequest}
+          chartData={chartData}
           peers={peers}
+
         />
       )}
     </Segment>

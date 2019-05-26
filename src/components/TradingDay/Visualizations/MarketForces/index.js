@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import {  } from "@vx/vx";
 // TRADING-DAY COMPONENTS
 import {} from "../../MarketData";
+
 import sp500 from "./sp500-constituents-financials.json";
 
 const height = 900,
@@ -73,7 +74,9 @@ class MarketForces extends React.Component {
     simulation
       .nodes(this.state.nodes)
       .force("collide", this.collide)
-      .force("cluster", this.clustering).restart();
+
+      .force("cluster", this.clustering)
+      .restart();
       
 
   }
@@ -127,9 +130,12 @@ class MarketForces extends React.Component {
   hoverTooltip = () => {
     // this.circles.attr("cx", d => d.x).attr("cy", d => d.y);
   };
+
+
+  
   // Drag functions used for interactivity
   dragstarted = d => {
-    if (!d3.event.active) simulation.alphaTarget(0.3);
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
     d.fx = d.x;
     d.fy = d.y;
   };
@@ -142,6 +148,20 @@ class MarketForces extends React.Component {
     d.fx = null;
     d.fy = null;
   };
+
+  
+ centroid=(nodes) =>{
+  let x = 0;
+  let y = 0;
+  let z = 0;
+  for (const d of nodes) {
+    let k = d.r ** 2;
+    x += d.x * k;
+    y += d.y * k;
+    z += k;
+  }
+  return {x: x / z, y: y / z};
+}
   clustering = alpha => {
     this.state.nodes.forEach(function(d) {
       var cluster = clusters[d.cluster];
@@ -159,6 +179,43 @@ class MarketForces extends React.Component {
       }
     });
   };
+
+   forceCollide =()=>{
+  const alpha = 0.4; // fixed for greater rigidity!
+  const padding1 = 2; // separation between same-color nodes
+  const padding2 = 6; // separation between different-color nodes
+  let nodes;
+  let maxRadius;
+
+  function force() {
+    const quadtree = d3.quadtree(nodes, d => d.x, d => d.y);
+    for (const d of nodes) {
+      const r = d.r + maxRadius;
+      const nx1 = d.x - r, ny1 = d.y - r;
+      const nx2 = d.x + r, ny2 = d.y + r;
+      quadtree.visit((q, x1, y1, x2, y2) => {
+        if (!q.length) do {
+          if (q.data !== d) {
+            const r = d.r + q.data.r + (d.data.group === q.data.data.group ? padding1 : padding2);
+            let x = d.x - q.data.x, y = d.y - q.data.y, l = Math.hypot(x, y);
+            if (l < r) {
+              l = (l - r) / l * alpha;
+              d.x -= x *= l;
+               d.y -= y *= l;
+              q.data.x += x;
+              q.data.y += y;
+            }
+          }
+        } while (q = q.next);
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      });
+    }
+  }
+
+  force.initialize = _ => maxRadius = d3.max(nodes = _, d => d.r) + Math.max(padding1, padding2);
+
+  return force;
+}
   collide = alpha => {
     var quadtree = d3
       .quadtree()

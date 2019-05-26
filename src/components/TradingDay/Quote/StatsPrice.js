@@ -5,25 +5,29 @@ import { Statistic } from 'semantic-ui-react';
 
 const StatWrap = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: right;
   flex-direction: column;
-  align-items: center;
+  align-items: right;
 
-  @media (min-width: 768px) {
+  /* @media (min-width: 768px) {
     justify-content: space-around;
     flex-direction: inherit;
-  }
+  } */
 `;
 
 const ChangeWrap = styled.div`
-  @media (max-width: 768px) {
+left:0;
+
+  /* @media (max-width: 768px) {
     margin-top: 0.5rem;
-  }
+  } */
 `;
 
 const Dollar = styled.span`
-  font-size: 2rem;
-  text-align: center;
+  font-size: 3rem;
+  text-align: start;
+  text-anchor:start;
+  /* text-justify: */
 `;
 
 const StatsPrice = ({ last, change, percent, color }) => {

@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import * as d3 from "d3";
-import {
-  Rail,
-  Grid,
-  Segment,
-  Header,
-  Image,
-  Label
-} from "semantic-ui-react";
+import { Rail, Grid, Segment, Header, Image, Label } from "semantic-ui-react";
 
 import Clock from "react-live-clock";
 
@@ -42,50 +35,6 @@ const PeerPerformance = ({ peers, peerData }) => {
     />
   ));
 };
-export const makeApiCall = async (symbol, period = "1y") => {
-  let timeParser = d3.timeParse("%Y-%m-%d");
-  if (period === "1d") timeParser = d3.timeParse("%Y%m%d%H:%M");
-
-  let prices = [];
-  let times = [];
-  const d = await d3.json(
-    `https://api.iextrading.com/1.0/stock/${symbol}/chart/${period}`
-  );
-
-  // Check for failure to retry.
-  if (d[0]["date"] == null) {
-    makeApiCall(symbol, period);
-    return;
-  }
-
-  for (let i = 0; i < d.length; i++) {
-    if (d[i]["marketNumberOfTrades"] === 0 || d[i]["marketAverage"] === -1) {
-      d.splice(i, 1);
-      i--;
-      continue;
-    }
-
-    if (period === "1d") {
-      d[i]["close"] = d[i]["marketAverage"];
-      d[i]["date"] = timeParser(d[i]["date"] + d[i]["minute"]);
-    } else {
-      d[i]["date"] = timeParser(d[i]["date"]);
-    }
-
-    times.push(d[i]["date"]);
-    prices.push(d[i]["close"]);
-  }
-
-  return { times, prices, d };
-
-  // this.setState({
-  //   fetched: true,
-  //   times: times,
-  //   prices: prices,
-  //   interval: frequency,
-  //   d: d
-  // });
-};
 
 const QuoteData = props => {
   if (props.data) {
@@ -94,111 +43,135 @@ const QuoteData = props => {
 
     const display = quoteFormatting(quote, stats);
     setTitle(display.symbol, display.latestPrice);
-    const [ohlcData, setOhlc] = useState(null);
+ 
     console.log(logo);
     const [activePeriod, setActivePeriod] = useState("1Y");
     const [imgSrc, setImgSrc] = useState(logo.url);
     useEffect(() => {
       setImgSrc(logo.url);
     }, [logo.url]);
-    useEffect(() => {
-      const fetchData = async (symbol, range) => {
-        const data = await makeApiCall(symbol, range);
 
-        setOhlc(data);
-      };
-      fetchData(display.symbol, activePeriod);
+    //when chart range changed, get new chart data
+    useEffect(() => {
+      props.rangeData(display.symbol, activePeriod);
     }, [activePeriod]);
 
-      return (
-        <Segment>
-          <Grid columns={2}>
-            <Grid.Column width={3}>
-              {imgSrc ? <Image bottom src={imgSrc} size='small' /> : null}
-            </Grid.Column>
-            <Grid.Column width={12}>
-              <Header
-                style={{
-                  fontFamily: "Dancing Script",
-                  fontSize: "4vw",
-                  fontWeight: "800"
-                }}
-                textAlign='center'>
-                {display.companyName} ({display.symbol})
-              </Header>
-              <StatsPrice
-                last={display.latestPriceSimple}
-                change={display.change}
-                percent={display.changePercent}
-                color={display.status}
-              />
-              <Rail attached position='right'>
-                <Label>
-                  <Clock
-                    format={"HH:mm:ss"}
-                    ticking={true}
-                    timezone={"America/New_York"}
-                    interval={1000}
-                  />
-                </Label>
-              </Rail>
-            </Grid.Column>
-          </Grid>
 
-          <Segment basic>
-            <Grid stackable>
-              <StatsDetails data={display} />
-              <DarkButtons
-                default={"ytd"}
-                timeRangeArray={[
-                  "d1",
-                  "m1",
-                  "m3",
-                  "m6",
-                  "y1",
-                  "y5",
-                  "ytd"
-                ]}
-                clickEffect={setActivePeriod}
+
+    return (
+      <Segment>
+        <Grid columns={3}>
+          <Grid.Column width={2}>
+            {imgSrc ? (
+              <Image
+                onError={e => setImgSrc(null)}
+                bottom
+                src={imgSrc}
+                size='small'
               />
-              {ohlcData ? (
-                <>
+            ) : null}
+          </Grid.Column>
+          <Grid.Column width={11}>
+            <Header
+              style={{
+                fontFamily: "Dancing Script",
+                fontSize: "4vw",
+                fontWeight: "800"
+              }}
+              textAlign='center'>
+              {display.companyName} ({display.symbol})
+            </Header>
+          </Grid.Column>
+          <Grid.Column width={2}>
+            <StatsPrice
+              last={display.latestPriceSimple}
+              change={display.change}
+              percent={display.changePercent}
+              color={display.status}
+            />
+            {/* <Rail attached position='right'>
+              <Label>
+                <Clock
+                  format={"HH:mm:ss"}
+                  ticking={true}
+                  timezone={"America/New_York"}
+                  interval={1000}
+                />
+              </Label>
+            </Rail> */}
+          </Grid.Column>
+        </Grid>
+
+        <Segment basic>
+          <Grid stackable>
+            {props.chartData ? (
+              <>
+                {/* {console.log(ohlcData)} */}
+                <div
+                  style={{
+                    width: "100vw",
+                    display: "flex",
+                    justifyContent: "center",
+                    position: "block",
+                    border: "2px solid "
+                  }}>
                   <HeikinAshi
+                    style={{ margin: "auto" }}
                     height={600}
-                    data={ohlcData.d}
+                    data={props.chartData.d}
                     type='hybrid'
                     ticker={display.symbol}
                     xAxis='date'
                     yAxis='volume'
                   />
-                  <Segment>
-                    <StylizedCandleStickChart
-                      height={600}
-                      width={900}
-                      data={ohlcData.d}
-                      ticker={display.symbol}
-                      logo={imgSrc}
-                    />
-                  </Segment>
-                </>
-              ) : (
-                "NO OHLC DATA"
-              )}
-              <Segment>
-                {props.peers ? (
-                  <PeerPerformance
-                    peers={props.peers.peers}
-                    peerData={props.peers.peerData}
+                </div>
+
+                <DarkButtons
+                  default={"ytd"}
+                  timeRangeArray={[
+                    "d1",
+                    "m1",
+                    "m3",
+                    "m6",
+                    "y1",
+                    "y5",
+                    "ytd"
+                  ]}
+                  clickEffect={e => {
+                    //hook-dependency
+                    setActivePeriod(e);
+                  }}
+                />
+                <StatsDetails data={display} />
+                <Segment>
+                  <StylizedCandleStickChart
+                    height={600}
+                    width={900}
+                    data={props.chartData.d}
+                    ticker={display.symbol}
+                    logo={imgSrc}
                   />
-                ) : (
-                  <h1>NO PEERS</h1>
-                )}
-              </Segment>
-              <NewsItems news={news} />
-            </Grid>
-          </Segment>
+                </Segment>
+              </>
+            ) : (
+              "NO OHLC DATA"
+            )}
+
+            <Segment>
+              {props.peers ? (
+                <PeerPerformance
+                  peers={props.peers.peers}
+                  peerData={props.peers.peerData}
+                />
+              ) : (
+                <h1>NO PEERS</h1>
+              )}
+            </Segment>
+            <NewsItems news={news} />
+          </Grid>
         </Segment>
-      );
+      </Segment>
+    );
   }
 
   return <NotFound />;

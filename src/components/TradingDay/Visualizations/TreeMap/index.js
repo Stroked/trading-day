@@ -5,6 +5,8 @@ import shakespeare from "./shakespeare";
 import { scaleLinear } from "@vx/scale";
 import sp500 from "../MarketForces/sp500-constituents-financials.json";
 import * as d3 from "d3";
+import {DataContext} from '../../MarketData'
+
 const parsed_SP500 = {
   id: "S&P500",
   children: d3
@@ -39,7 +41,7 @@ const dataArray = [
   ...sectorArray,
   ...listings
 ];
-console.log(dataArray);
+//console.log(dataArray);
 // var root = {
 //   id: "All Listings",
 //   children: [
@@ -66,9 +68,9 @@ const data = d3.stratify()
   .id(d => d.id)
   .parentId(d => d.parent)(dataArray)
   .sum(d => {
-    console.log(d);
+    //console.log(d);
     return +d.value || 0; });
-console.log(data);
+//console.log(data);
 // const data2 = stratify()
 //   .id(d => d.Sector)
 //   .parentId(d => d.Sector)(sp500);
@@ -93,7 +95,7 @@ export default ({
 }) => {
   const yMax = height - margin.top - margin.bottom;
   const root = d3.hierarchy(data).sort((a, b) => b.value - a.value);
-  console.log(root);
+  //console.log(root);
 
   return (
     <svg width={width} height={height}>
@@ -110,7 +112,7 @@ export default ({
               {nodes.map((node, i) => {
                 const width = node.x1 - node.x0;
                 const height = node.y1 - node.y0;
-                console.log(width,height)
+               // console.log(width,height)
                 return (
                   <Group key={`treemap-node-${i}`} top={node.y0} left={node.x0}>
                     {node.depth == 1 && (

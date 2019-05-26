@@ -8,12 +8,12 @@ import Home from "./Home";
 import TradingDay from "../components/TradingDay/";
 import Login from "../components/TradingDay/Login/Login";
 import Quote from "../components/TradingDay/Quote";
-import StockMarketExchanges from '../components/TradingDay/Exchanges'
+import StockMarketExchanges from '../components/TradingDay/Exchanges/Exchange'
 import EthereumChart from "../components/TradingDay/Charts/StylizedCandlestick/EthereumVX";
 import StylizedCandlestickChart from "../components/TradingDay/Charts/StylizedCandlestick";
 import SP500 from "../components/TradingDay/Visualizations/MarketForces";
 import NotFound from "../components/TradingDay/NotFound";
-
+import Header from "../components/TradingDay/Header";
 
 //ASSETS
 //---------------------------------------------------
@@ -32,7 +32,7 @@ const Router = props => (
     {/* LOGIN */}
     <Route exact path='/login' component={Login} />
     <Route exact path='/TradingDay' component={TradingDay} />
-    {/* LISTINGS */}
+    {/* LISTINGS */}        
     <Route exact path='/exchanges' component={StockMarketExchanges} />
     <Route exact path='/sp500' component={SP500} />
     <Route exact path='/mosaic' component={Mosaic} />

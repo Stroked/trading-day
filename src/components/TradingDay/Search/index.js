@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import _ from 'lodash';
-import { connectAutoComplete } from 'react-instantsearch-dom';
-import { withRouter } from 'react-router-dom';
-import { Search } from 'semantic-ui-react';
-
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import _ from "lodash";
+import { connectAutoComplete } from "react-instantsearch-dom";
+import { withRouter } from "react-router-dom";
+import { Search, Label, Message } from "semantic-ui-react";
 
 const formatHits = hits => {
   return _.chain(hits)
     .map(h => {
-      return { title: h.Symbol, description: h.Description };
+      return { ticker: h.Symbol, name: h.Description };
     })
-    .slice(0, 10)
+    .slice(0, 5)
     .value();
 };
-
+const resultRenderer = ({ ticker, name }) => (
+    <><Label>{ticker}</Label>
+  <span style={{ fontWeight: "400", fontSize: "10px", letterSpacing: 0, margin:0, paddingLeft:'5px' }}>
+     <i>{name}</i>
+  </span></>
+);
 const SearchInput = props => {
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState("");
 
   const onChange = (e, { value }) => {
     setVal(value);
@@ -25,30 +29,34 @@ const SearchInput = props => {
   };
 
   const onSelect = (e, { result }) => {
-    setVal(result.title);
+    setVal(result.ticker);
     props.history.push({
-      pathname: `${result.title.toLowerCase()}`
+      pathname: `${result.ticker.toLowerCase()}`
     });
   };
 
   return (
-      <Search color="black"
-        transparent
-        icon='search'
-        iconPosition='left'
-        style={{ width: "100%" }}
-        fluid
-        input={{ style: { width: "100%" } }}
-        size='large'
-        placeholder='Enter Company or Symbol'
-        value={val}
-        onSearchChange={onChange}
-        onResultSelect={onSelect}
-        results={formatHits(props.hits)}
-      />
+    <Search
+      color='black'
+      transparent
+      icon='search'
+      iconPosition='right'
+      style={{ width: "100%" }}
+      fluid
+      input={{ style: { width: "100%" } }}
+      size='small'
+      placeholder='Enter Company or Symbol'
+      value={val}
+      onSearchChange={_.debounce(onChange, 2000, {
+        leading: true
+      })}
+      selectFirstResult
+      onResultSelect={onSelect}
+      results={formatHits(props.hits)}
+      resultRenderer={resultRenderer}
+    />
   );
 };
-
 
 SearchInput.propTypes = {
   refine: PropTypes.func.isRequired,
