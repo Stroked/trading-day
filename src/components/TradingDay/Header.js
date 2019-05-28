@@ -66,7 +66,15 @@ export default props => {
   const handleSidebarHide = () => setVisible(false);
   return (
     <>
-      <Sidebar.Pushable as={Segment} style={{ border: 0 }}>
+      <Sidebar.Pushable
+        as={Segment}
+        style={{
+          overflow: "visible",
+          border: 0,
+          marginBottom: 0,
+          paddingBottom: 0,
+          zIndex: 1
+        }}>
         <StyleWrapper>
           <Segment center inverted color='black'>
             <Header textAlign='center'>
@@ -99,12 +107,13 @@ export default props => {
                   //attached
                   internal
                   position='left'>
-                  <SearchInput />
+                  <SearchInput  />
                 </Rail>
 
                 <b>&mdash; The Global Financial Markets &mdash;</b>
               </Header.Subheader>
               <Sidebar
+                style={{ overflow: "visible" }}
                 as={Menu}
                 animation='overlay'
                 icon='labeled'
@@ -112,14 +121,11 @@ export default props => {
                 //onHide={handleSidebarHide}
                 vertical
                 visible={visible}
+                height='thin'
                 width='thin'>
                 <Menu.Item as='a'>
                   <Icon name='' />
                   Home
-                </Menu.Item>
-                <Menu.Item as='a'>
-                  <Icon name='' />
-                  Games
                 </Menu.Item>
                 <Menu.Item>
                   <Link to='/sp500'>S&P 500</Link>
@@ -143,15 +149,11 @@ export default props => {
                   <b>&mdash; Ajay Phogat &mdash;</b>
                 </Header.Subheader>
               </div>
-
-              <SlideShow
-                height={window.innerHeight / 3}
-                width={window.innerWidth - 200}
-              />
             </Header>
           </Segment>
         </StyleWrapper>
       </Sidebar.Pushable>
+      <SlideShow height={window.innerHeight / 3} width={window.innerWidth} />
       <ScrollBasedBezier headerHeight={100} />
     </>
   );

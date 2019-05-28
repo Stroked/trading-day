@@ -13,6 +13,7 @@ export default (props) => {
     getPeers,
     quoteData,
     handleChartDataRequest,
+    fetchingChartData,
     chartData
   } = useContext(DataContext);
   // fetch new data every symbol changes

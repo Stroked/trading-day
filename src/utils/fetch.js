@@ -46,6 +46,23 @@ export const fetchQuote = async symbol => {
   });
   return data;
 };
+
+export const fetchIntradayData = async (symbol) => {
+  const period = '1min';
+  const data = await d3.json(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${period}&apikey=TRDGNTGBQG2BI9J0`);
+  return {d:Object.entries(data["Time Series (1min)"]).map(([date, cols]) => {
+    return {
+      date: date,
+      open: cols["1. open"],
+      high: cols["2. high"],
+      low: cols["3. low"],
+      close: cols["4. close"],
+      volume: cols["5. volume"]
+    };
+  })};
+
+};
+
 export const makeApiCall = async (symbol, period = "1y") => {
   let timeParser = d3.timeParse("%Y-%m-%d");
   if (period === "1d") timeParser = d3.timeParse("%Y%m%d%H:%M");

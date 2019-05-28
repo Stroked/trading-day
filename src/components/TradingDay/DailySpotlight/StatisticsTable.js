@@ -7,7 +7,15 @@ class StatisticsTable extends React.Component {
     const stats = this.props.data.map((e, i) => (
       <Table.Row key={i} selectable>
         <Table.Cell textAlign='center' selectable>
-          <Link to={"/" + e["symbol"]}>{e["symbol"]}</Link>
+          <Link
+            to={"/" + e["symbol"]}
+            onClick={evt =>
+              this.props.history.push({
+                pathname: `${e["symbol"]}`
+              })
+            }>
+            {e["symbol"]}
+          </Link>
         </Table.Cell>
 
         <Table.Cell textAlign='right'>
@@ -43,7 +51,7 @@ class StatisticsTable extends React.Component {
     const { name, color, ...rest } = this.props;
     return (
       <div className='statisticsTable card'>
-        <Header textAlign='center'  color={color} as='h2' attached='top'>
+        <Header textAlign='center' color={color} as='h2' attached='top'>
           <Icon name={this.props.icon} />
           {this.props.name}
         </Header>
@@ -52,12 +60,8 @@ class StatisticsTable extends React.Component {
             <Table.Row>
               <Table.HeaderCell textAlign='center'>Symbol</Table.HeaderCell>
               <Table.HeaderCell textAlign='right'>Latest</Table.HeaderCell>
-              <Table.HeaderCell textAlign='right'>
-                Change ($)
-              </Table.HeaderCell>
-              <Table.HeaderCell textAlign='left'>
-                Change (%)
-              </Table.HeaderCell>
+              <Table.HeaderCell textAlign='right'>Change ($)</Table.HeaderCell>
+              <Table.HeaderCell textAlign='left'>Change (%)</Table.HeaderCell>
               <Table.HeaderCell>Volume</Table.HeaderCell>
             </Table.Row>
           </Table.Header>

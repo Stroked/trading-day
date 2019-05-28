@@ -5,7 +5,8 @@ import Loading from "./Loading";
 import {
   fetchQuoteData,
   fetchIndiciesData,
-  makeApiCall
+  makeApiCall,
+  fetchIntradayData
 } from "../../utils/fetch";
 
 const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
@@ -87,9 +88,8 @@ export const DataProvider = props => {
     try {
       
       setFetchingChartData({ loading: true, error: null });
-      const data = await makeApiCall(symbol, period);
-      console.log(data);
-      debugger;
+
+      const data = period==='1D' ? await fetchIntradayData(symbol): await makeApiCall(symbol, period);
       setFetchingChartData({ loading: false, error: null });
       setChartData(data);
     } catch (error) {
@@ -102,13 +102,13 @@ export const DataProvider = props => {
       // clear previous refresh interval
       clearInterval(refresh);
 
+      setSymbol(symbol);
       // fetch quote data
       setFetchingQuote({ loading: true, error: null });
       const data = await fetchQuoteData(symbol);
+      setQuoteData(data);
       const chart = await  makeApiCall(symbol, '1Y');
       setChartData(chart)
-      setQuoteData(data);
-      setSymbol(symbol);
       
       setFetchingQuote({ loading: false, error: null });
 
@@ -137,11 +137,10 @@ export const DataProvider = props => {
         indiciesData,
         handleSymbolChange,
         handleChartDataRequest,
-        chartData,
         fetchingChartData,
+        chartData,
         dataRange,
         getPeers,
-        chartDataFetcher:makeApiCall,
         ...props
       }}>
       {fetchingIncidies.loading && <Loading />}

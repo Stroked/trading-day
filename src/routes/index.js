@@ -9,7 +9,6 @@ import TradingDay from "../components/TradingDay/";
 import Login from "../components/TradingDay/Login/Login";
 import Quote from "../components/TradingDay/Quote";
 import StockMarketExchanges from '../components/TradingDay/Exchanges/Exchange'
-import EthereumChart from "../components/TradingDay/Charts/StylizedCandlestick/EthereumVX";
 import StylizedCandlestickChart from "../components/TradingDay/Charts/StylizedCandlestick";
 import SP500 from "../components/TradingDay/Visualizations/MarketForces";
 import NotFound from "../components/TradingDay/NotFound";
@@ -37,7 +36,6 @@ const Router = props => (
     <Route exact path='/sp500' component={SP500} />
     <Route exact path='/mosaic' component={Mosaic} />
     <Route exact path='/slide-show' component={FisheyeSlideshow} />
-    <Route exact path='/ethereum' component={EthereumChart} />
     <Route
       exact
       path='/styled-candlesticks'

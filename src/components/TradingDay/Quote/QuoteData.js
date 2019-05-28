@@ -17,7 +17,7 @@ import { quoteFormatting } from "../../../utils/format";
 import setTitle from "../../../utils/title";
 
 import HeikinAshi from "../Charts/HeikinAshi";
-import { StylizedCandleStickChart } from "../Charts/StylizedCandlestick";
+import  StylizedCandleStickChart  from "../Charts/StylizedCandlestick";
 
 const PeerPerformance = ({ peers, peerData }) => {
   return peers.map((peer, i) => (
@@ -104,7 +104,8 @@ const QuoteData = props => {
 
         <Segment basic>
           <Grid stackable>
-            {props.chartData ? (
+            {/*props.chartData*/ 
+            true? (
               <>
                 {/* {console.log(ohlcData)} */}
                 <div
@@ -125,7 +126,6 @@ const QuoteData = props => {
                     yAxis='volume'
                   />
                 </div>
-
                 <DarkButtons
                   default={"ytd"}
                   timeRangeArray={[

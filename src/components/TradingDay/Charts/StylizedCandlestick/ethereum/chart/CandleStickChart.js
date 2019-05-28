@@ -16,7 +16,7 @@ import {
   AxisRight,
   AxisLeft,
   AxisBottom,
-     GradientOrangeRed 
+  GradientOrangeRed
 } from "@vx/vx";
 import * as d3 from "d3";
 import Volume from "./Volume";
@@ -28,7 +28,6 @@ import React from "react";
 const formatPrice = d3.format("$,.2f");
 const formatNumber = d3.format(",.0f");
 const formatTime = d3.timeFormat("%I:%M%p");
-
 
 const xStock = d => new Date(d.date);
 const xSelector = d => new Date(d.date);
@@ -43,9 +42,9 @@ class Chart extends React.Component {
     };
   }
 
- handleTooltip = ({ event, data, xSelector, xScale, yScale }) => {
-  console.log(`INSIDE HANDLE TOOLTIP${data}${event}`);  
-  const { showTooltip } = this.props;
+  handleTooltip = ({ event, data, xSelector, xScale, yScale }) => {
+    console.log(`INSIDE HANDLE TOOLTIP${data}${event}`);
+    const { showTooltip } = this.props;
     const { x } = localPoint(event);
     const x0 = xScale.invert(x);
     const index = bisectDate(data, x0, 1);
@@ -73,23 +72,7 @@ class Chart extends React.Component {
       tooltipTop,
       tooltipData
     } = this.props;
-    const {
-      buckets,
-      start,
-      end,
-      maxHighPrice,
-      minLowPrice,
-      maxVolume     
-    } = data;
- console.log(
-   " width is" + width,
-   " height is" + height,
-   " margin is" + margin,
-   " hideTooltip is" + hideTooltip,
-   " tooltipData is" + tooltipData,
-   " tooltipTop is" + tooltipTop,
-   " tooltipLeft is" + tooltipLeft
- );
+    const { buckets, start, end, maxHighPrice, minLowPrice, maxVolume } = data;
     const { activeBucket, yPoint } = this.state;
 
     const margin = {
@@ -125,12 +108,10 @@ class Chart extends React.Component {
     return (
       <div>
         <svg width={width} height={height} ref={s => (this.svg = s)}>
-            <defs>
+          <defs>
             <GradientOrangeRed id='OrangeRed' />
-            </defs>
-              
+          </defs>
           <Group top={margin.top} left={margin.left}>
-      
             <rect width={width} height={height} fill='url(#OrangeRed)' />
             <GridRows
               lineStyle={{ pointerEvents: "none" }}
@@ -204,12 +185,13 @@ class Chart extends React.Component {
               hideZero
               hideTicks
               hideAxisLine
+              tickStroke='white'
               tickValues={yVolumeScale.ticks(3)}
               tickLabelProps={(value, index) => ({
                 dx: "2em",
                 dy: "-0.5em",
                 textAnchor: "middle",
-                fill: "white",
+                fill: "black",
                 fontSize: 8,
                 fillOpacity: 0.8
               })}
@@ -223,12 +205,12 @@ class Chart extends React.Component {
             hideTicks
             hideZero
             tickFormat={formatPrice}
-            tickStroke='white'
+            tickStroke='black'
             tickValues={yScale.ticks(3)}
             tickLabelProps={(value, index) => ({
               dy: "0.5em",
               textAnchor: "end",
-              fill: "white",
+              fill: "black",
               fontSize: 8,
               fillOpacity: 0.8
             })}
@@ -291,7 +273,7 @@ class Chart extends React.Component {
             scale={timeScale}
             stroke='rgba(255,255,255,0.5)'
             tickStroke='rgba(255,255,255,0.5)'
-            tickFormat={formatTime}
+            tickFormat={d3.timeFormat("%Y-%m-%d")}
             tickLabelProps={(value, index) => ({
               textAnchor: "middle",
               fill: "white",
@@ -306,7 +288,7 @@ class Chart extends React.Component {
             <TimeMarker
               top={height - margin.bottom + 3}
               xScale={xScale}
-              formatTime={formatTime}
+              formatTime={d3.timeFormat("%Y-%m-%d")}
               time={activeBucket.date}
             />
             <Details

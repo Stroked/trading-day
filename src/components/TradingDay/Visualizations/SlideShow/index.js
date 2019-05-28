@@ -30,8 +30,8 @@ const StyleWrapper = styled.div`
   margin-left: ${margin.left};
   margin-right: ${margin.right}; 
   padding: 0;   
-   border: 5px solid black;
-
+ /* border: 5px solid black; */
+  /* box-sizing:content-box; */
   line {
     pointer-events: none;
   }
