@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import {Button} from 'semantic-ui-react';
 const DarkButtonStyles = styled.div`
   display: inline-block;
   top: 0;
@@ -95,7 +96,6 @@ export default function DarkButton(props) {
   // useEffect(() => {
   //   props.clickEffect(activePeriod);
   // }, [props.clickEffect, activePeriod]);
-
   return (
     <DarkButtonStyles className='buttons-container'>
       <ul>
@@ -112,8 +112,11 @@ export default function DarkButton(props) {
               key={period}
               className={activePeriod === period ? "active" : null}>
               <button
+              type='button'
+              
                 onClick={(e) => {
                   e.preventDefault();
+             //     e.stopPropagation();
                   setActivePeriod(period);
                   props.clickEffect(text);
                 }}

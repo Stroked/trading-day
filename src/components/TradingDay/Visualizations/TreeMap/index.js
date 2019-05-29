@@ -1,7 +1,6 @@
 import React from "react";
 import { Group } from "@vx/group";
 import { Treemap } from "@vx/hierarchy";
-import shakespeare from "./shakespeare";
 import { scaleLinear } from "@vx/scale";
 import sp500 from "../MarketForces/sp500-constituents-financials.json";
 import * as d3 from "d3";
@@ -54,10 +53,6 @@ const blue = "#0373d9";
 const green = "#00ff70";
 const bg = "#3436b8";
 
-const colorScale = scaleLinear({
-  domain: [0, Math.max(...shakespeare.map(d => d.size || 0))],
-  range: [blue, green]
-});
 
 const colorScale2 = scaleLinear({
   domain: [0, Math.max(...dataArray.map(d => +d.value || 0))],
