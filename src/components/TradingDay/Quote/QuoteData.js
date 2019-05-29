@@ -102,10 +102,10 @@ const QuoteData = props => {
           </Grid.Column>
         </Grid>
 
-        <Segment basic>
           <Grid stackable>
-            {/*props.chartData*/ 
-            true? (
+            {/*props.chartData*/
+
+            true ? (
               <>
                 {/* {console.log(ohlcData)} */}
                 <div
@@ -113,8 +113,7 @@ const QuoteData = props => {
                     width: "100vw",
                     display: "flex",
                     justifyContent: "center",
-                    position: "block",
-                    border: "2px solid "
+                    position: "block"
                   }}>
                   <HeikinAshi
                     style={{ margin: "auto" }}
@@ -143,15 +142,21 @@ const QuoteData = props => {
                   }}
                 />
                 <StatsDetails data={display} />
-                <Segment>
+                <div
+                  style={{
+                    width: "100vw",
+                    display: "flex",
+                    justifyContent: "center",
+                    position: "block"
+                  }}>
                   <StylizedCandleStickChart
+            style={{margin:"auto"}}
                     height={600}
-                    width={900}
                     data={props.chartData.d}
                     ticker={display.symbol}
                     logo={imgSrc}
                   />
-                </Segment>
+                </div>
               </>
             ) : (
               "NO OHLC DATA"
@@ -169,7 +174,6 @@ const QuoteData = props => {
             </Segment>
             <NewsItems news={news} />
           </Grid>
-        </Segment>
       </Segment>
     );
   }

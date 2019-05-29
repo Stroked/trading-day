@@ -58,32 +58,18 @@ const Logo = withParentSize(function({ parentWidth, parentHeight }) {
 });
 
 const StyledBanner = styled.div`
-  .banner {
+  
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translate(-40px, 45%);
+    transform: translate(-40px, 75%);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .title-container {
-    padding: 0.5rem;
-    background-color: white;
+
+  image {
     display: flex;
-    align-items: center;
-    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
-  }
-  .title {
-    padding: 1rem 2rem;
-    border: 2px solid #ff6b88;
-    color: #ff6b88;
-    font-weight: 100;
-  }
-  .logo {
-    display: flex;
-    margin: 0 0.5rem;
     background-color: white;
     width: 80px;
     height: 80px;
@@ -98,7 +84,6 @@ const StyledBanner = styled.div`
     align-items: center;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
     user-select: none;
-    margin-left: 30vw;
   }
   .numitems {
     margin: 0 0.5rem;
@@ -115,16 +100,12 @@ export default function Banner({
 }) {
   return (
     <StyledBanner>
-      <div className='banner'>
-        <div className='logo'>
-          <Image src={logo}/>
-        </div>
         <div className='controls'>
           <button onClick={increaseNumItems}>+</button>
           <span className='numitems'>{numItems}</span>
           <button onClick={decreaseNumItems}>-</button>
-        </div>
-      </div>
+        </div>   
+        <Image style={{}} src={logo}/>     
     </StyledBanner>
   );
 }

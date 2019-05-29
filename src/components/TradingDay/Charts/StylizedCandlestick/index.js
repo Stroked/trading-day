@@ -1,25 +1,29 @@
-import { TopCorner, Banner, Chart } from "./ethereum";
+import { default as TopCorner } from "./topcorner/TopCorner";
+import { default as Banner } from "./banner/Banner";
+import { default as Chart } from "./chart/CandleStickChart";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const StyleWrapper = styled.div`
   @import url("https://fonts.googleapis.com/css?family=Droid+Sans+Mono");
 
-  .ethereum {
-    display: flex;
-    flex-direction: column;
+  .stylizedCandleStick {
+
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     justify-content: center;
-    align-items: center;
+    align-content: center;
+    
     /* background-color: #f6f0f2; */
     font-family: "Droid Sans Mono", monospace;
+    padding:0;
+    margin:0;
   }
   .container {
     height: 75vh;
-    width: 90vw;
+    width: 95vw;
     /* background-color: #ecc3c7; */
     position: relative;
   }
@@ -28,10 +32,9 @@ const StyleWrapper = styled.div`
     height: 100%;
     width: 100%;
   }
-
 `;
 
- const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
+const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
   if (data) {
     const [numItems, setNumItems] = useState(180);
     const [imgSrc, setImgSrc] = useState(logo);
@@ -49,41 +52,42 @@ const StyleWrapper = styled.div`
       setNumItems(numItems - 20);
     };
 
-  const buckets = data
-    .map(b => {
-      const { date, open, high, low, close, volume } = b;
-      console.log(b);
-      return {
-        date: new Date(date),
-        open: +open,
-        high: +high,
-        low: +low,
-        close: +close,
-        volume: +volume,
-        hollow: +close > +open
-      }
-    }).reverse().slice(0, numItems);
+    const buckets = data
+      .map(b => {
+        const { date, open, high, low, close, volume } = b;
+        return {
+          date: new Date(date),
+          open: +open,
+          high: +high,
+          low: +low,
+          close: +close,
+          volume: +volume,
+          hollow: +close > +open
+        };
+      })
+      .reverse()
+      .slice(0, numItems);
     console.log(buckets);
-  const sortedBuckets = buckets.sort((a, b) => {
-    return a.date - b.date;
-  });
-  const maxHighPrice = Math.max(
-    ...buckets.map(b => Math.max(...[b.high, b.open, b.close]))
-  );
-  const minLowPrice = Math.min(
-    ...buckets.map(b => Math.min(...[b.low, b.open, b.close]))
-  );
-  const maxVolume = Math.max(...buckets.map(b => b.volume));
+    const sortedBuckets = buckets.sort((a, b) => {
+      return a.date - b.date;
+    });
+    const maxHighPrice = Math.max(
+      ...buckets.map(b => Math.max(...[b.high, b.open, b.close]))
+    );
+    const minLowPrice = Math.min(
+      ...buckets.map(b => Math.min(...[b.low, b.open, b.close]))
+    );
+    const maxVolume = Math.max(...buckets.map(b => b.volume));
 
-  const start = sortedBuckets[0].date;
-  const end = sortedBuckets[sortedBuckets.length - 1].date;
- 
+    const start = sortedBuckets[0].date;
+    const end = sortedBuckets[sortedBuckets.length - 1].date;
+
     return !data ? (
       <h1>NO DATA</h1>
     ) : (
       <StyleWrapper>
-        <div className='ethereum'>
-          <div className='container'>
+        <div className='stylizedCandleStick'>
+          <div className='container' width={props.width}>
             <div className='chart-container'>
               <Chart
                 data={{
@@ -111,6 +115,5 @@ const StyleWrapper = styled.div`
   }
   return null;
 };
-
 
 export default StylizedCandleStickChart;
