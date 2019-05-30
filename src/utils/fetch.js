@@ -15,9 +15,8 @@ export const fetchChart = async (symbol, range) => {
   return data;
 };
 export const fetchAllCharts = async symbol => {
-  console.log("NOT FETCHING ALL CHARTS!!");
-  return null;
   const data = await Promise.all([
+    // await fetchIntradayData(symbol, "1d"),
     await fetchChart(symbol, "1d"),
     await fetchChart(symbol, "1m"),
     await fetchChart(symbol, "3m"),
@@ -28,13 +27,13 @@ export const fetchAllCharts = async symbol => {
   ]);
 
   return {
-    d1: formatDayChart(data[0]),
-    m1: data[1],
-    m3: data[2],
-    m6: data[3],
-    y1: data[4],
-    y5: data[5],
-    ytd: data[6]
+    '1D': data[0],
+    '1M': data[1],
+    '3M': data[2],
+    '6M': data[3],
+    '1Y': data[4],
+    '5Y': data[5],
+    'YTD': data[6]
   };
 };
 
@@ -50,7 +49,7 @@ export const fetchQuote = async symbol => {
 export const fetchIntradayData = async (symbol) => {
   const period = '1min';
   const data = await d3.json(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${period}&apikey=TRDGNTGBQG2BI9J0`);
-  return {d:Object.entries(data["Time Series (1min)"]).map(([date, cols]) => {
+  return [...Object.entries(data["Time Series (1min)"]).map(([date, cols]) => {
     return {
       date: date,
       open: cols["1. open"],
@@ -59,11 +58,11 @@ export const fetchIntradayData = async (symbol) => {
       close: cols["4. close"],
       volume: cols["5. volume"]
     };
-  })};
+  })];
 
 };
 
-export const makeApiCall = async (symbol, period = "1y") => {
+const makeApiCall = async (symbol, period = "1y") => {
   let timeParser = d3.timeParse("%Y-%m-%d");
   if (period === "1d") timeParser = d3.timeParse("%Y%m%d%H:%M");
 
@@ -110,13 +109,13 @@ export const makeApiCall = async (symbol, period = "1y") => {
 export const fetchQuoteData = async (symbol, frequency) => {
   const data = await Promise.all([
     await fetchQuote(symbol),
-    //await fetchAllCharts(symbol),
-    await makeApiCall(symbol, frequency)
+    await fetchAllCharts(symbol),
+    //await makeApiCall(symbol, frequency)
   ]);
   //charts: data[1],
   return {
     quote: data[0],
-    requestedRangeData: data[1]
+    rangeData: data[1]
   };
 };
 

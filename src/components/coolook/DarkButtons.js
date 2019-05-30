@@ -100,30 +100,23 @@ export default function DarkButton(props) {
     <DarkButtonStyles className='buttons-container'>
       <ul>
         {props.timeRangeArray.map(period => {
-          const text =
-            period === "ytd"
-              ? "YTD"
-              : [...period]
-                  .sort()
-                  .join("")
-                  .toUpperCase();
+      
           return (
             <li
               key={period}
               className={activePeriod === period ? "active" : null}>
               <button
-              type='button'
-              
-                onClick={(e) => {
+                type='button'
+                onClick={e => {
                   e.preventDefault();
-             //     e.stopPropagation();
+                  e.stopPropagation();
                   setActivePeriod(period);
-                  props.clickEffect(text);
+                  props.clickEffect(period);
                 }}
                 className={
                   activePeriod === period ? "active-text" : null
                 }>
-                {text}
+                {period}
               </button>
             </li>
           );

@@ -12,14 +12,14 @@ const AppWrapper = styled.div``;
 export default class App extends React.Component {
   render() {
     return (
-          <DataProvider>
       <AppWrapper>
+          <DataProvider>
         <WithInstantSearch>
             <Header />
-            <Routes />
         </WithInstantSearch>
-      </AppWrapper>
+            <Routes />
           </DataProvider>
+      </AppWrapper>
     );
   }
 }
