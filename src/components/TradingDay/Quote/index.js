@@ -33,7 +33,7 @@ export default props => {
     if (props.symbol && props.symbol !== symbol)
       handleSymbolChange(props.symbol);
     getPeers(props.symbol);
-  }, [handleSymbolChange, getPeers,props.symbol, props.match.params.id]);
+  }, [handleSymbolChange, getPeers,props.symbol]);
   return (
     <Segment
       loading={fetchingQuote.loading && !fetchingIncidies.loading}
