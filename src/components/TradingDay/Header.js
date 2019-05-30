@@ -9,7 +9,8 @@ import {
   Label,
   Sidebar,
   Menu,
-  Icon
+  Icon,
+  Image
 } from "semantic-ui-react";
 // TRADING-DAY COMPONENTS
 import SlideShow from "./Visualizations/SlideShow";
@@ -80,8 +81,7 @@ export default props => {
             <Header textAlign='center'>
               <Header.Subheader className='titleTop'>
                 <Rail
-                  // style={{ pointerEvents: "none" }}
-                  compact
+                  style={{ pointerEvents: "none" }}
                   attached
                   internal
                   position='right'>
@@ -103,7 +103,6 @@ export default props => {
                 <Rail
                   //style={{ margin: "0 20px" }}
                   // style={{ pointerEvents: "none" }}
-                  compact
                   //attached
                   internal
                   position='left'>
@@ -133,6 +132,7 @@ export default props => {
               </Sidebar>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <Header.Content className='title' size='huge'>
+                {/* <img src='./../../assets/orange-wheel-art-800x800.png' style={{left:0, height:50, width:50}}></img> */}
                   <span
                     onClick={() => setVisible(true)}
                     className='tradingdayTD'>
@@ -153,8 +153,8 @@ export default props => {
           </Segment>
         </StyleWrapper>
       </Sidebar.Pushable>
-      <SlideShow height={window.innerHeight / 3} width={window.innerWidth} />
-      <ScrollBasedBezier headerHeight={100} />
+      {/* <SlideShow height={window.innerHeight / 3} width={window.innerWidth} />
+      <ScrollBasedBezier headerHeight={100} /> */}
     </>
   );
 };

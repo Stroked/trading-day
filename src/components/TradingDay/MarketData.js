@@ -5,7 +5,7 @@ import Loading from "./Loading";
 import {
   fetchQuoteData,
   fetchIndiciesData,
-  makeApiCall,
+  // makeApiCall,
   fetchIntradayData
 } from "../../utils/fetch";
 
@@ -56,7 +56,7 @@ export const DataProvider = props => {
       setIndiciesData(data);
       setFetchingIndicies({ loading: false, error: null });
       // init refresh interval
-      fetchIncidiesInterval();
+    //  fetchIncidiesInterval();
     } catch (error) {
       setFetchingIndicies({ loading: false, error });
     }
@@ -78,24 +78,20 @@ export const DataProvider = props => {
       });
     }
   };
-  const [dataRange,setDataRange] = useState('1Y');
-  const [chartData, setChartData] = useState(null);
-  const [fetchingChartData, setFetchingChartData] = useState({
-    loading: true,
-    error: null
-  });
-  const handleChartDataRequest = async (symbol, period) => {
-    try {
-      
-      setFetchingChartData({ loading: true, error: null });
+  // const handleChartDataRequest = async (symbol, period) => {
+  //   try {
+  //     setFetchingChartData({ loading: true, error: null });
 
-      const data = period==='1D' ? await fetchIntradayData(symbol): await makeApiCall(symbol, period);
-      setFetchingChartData({ loading: false, error: null });
-      setChartData(data);
-    } catch (error) {
-      setFetchingChartData({ loading: false, error });
-    }
-  };
+  //     const data =
+  //       period === "1D"
+  //         ? await fetchIntradayData(symbol)
+  //         : await makeApiCall(symbol, period);
+  //     setFetchingChartData({ loading: false, error: null });
+  //     setChartData(data);
+  //   } catch (error) {
+  //     setFetchingChartData({ loading: false, error });
+  //   }
+  // };
 
   const handleSymbolChange = async symbol => {
     try {
@@ -106,13 +102,13 @@ export const DataProvider = props => {
       // fetch quote data
       setFetchingQuote({ loading: true, error: null });
       const data = await fetchQuoteData(symbol);
+      console.log(data);
+     // debugger;
       setQuoteData(data);
-      const chart = await  makeApiCall(symbol, '1Y');
-      setChartData(chart)
-      
+
       setFetchingQuote({ loading: false, error: null });
 
-      // set new refresh interval
+   //   set new refresh interval
       const interval = setInterval(() => {
         fetchQuoteInterval(symbol);
       }, INTERVAL);
@@ -136,10 +132,6 @@ export const DataProvider = props => {
         quoteData,
         indiciesData,
         handleSymbolChange,
-        handleChartDataRequest,
-        fetchingChartData,
-        chartData,
-        dataRange,
         getPeers,
         ...props
       }}>

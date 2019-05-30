@@ -35,7 +35,7 @@ const StyleWrapper = styled.div`
 `;
 
 const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
-  if (data) {
+
     const [numItems, setNumItems] = useState(180);
     const [imgSrc, setImgSrc] = useState(logo);
     useEffect(() => {
@@ -112,8 +112,7 @@ const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
         </div>
       </StyleWrapper>
     );
-  }
-  return null;
+ 
 };
 
 export default StylizedCandleStickChart;

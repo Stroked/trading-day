@@ -1,21 +1,13 @@
 import React from "react";
 import { Table, Icon, Header } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import * as d3 from "d3";
 class StatisticsTable extends React.Component {
   render() {
     const stats = this.props.data.map((e, i) => (
-      <Table.Row key={i} selectable>
+      <Table.Row key={Math.Random + "-" + i} selectable>
         <Table.Cell textAlign='center' selectable>
-          <Link
-            to={"/" + e["symbol"]}
-            onClick={evt =>
-              this.props.history.push({
-                pathname: `${e["symbol"]}`
-              })
-            }>
-            {e["symbol"]}
-          </Link>
+          <Link to={"/" + e["symbol"]}>{e["symbol"]}</Link>
         </Table.Cell>
 
         <Table.Cell textAlign='right'>
@@ -72,4 +64,5 @@ class StatisticsTable extends React.Component {
   }
 }
 
+// export default withRouter(StatisticsTable);
 export default StatisticsTable;

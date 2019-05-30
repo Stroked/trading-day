@@ -54,6 +54,7 @@ class Spotlight extends React.Component {
         <Grid.Column>
           {this.state.fetchedLosers ? (
             <StatisticsTable
+            key='TopLosers'
               name='Top Losers'
               color='red'
               data={this.state.losers}
@@ -66,6 +67,7 @@ class Spotlight extends React.Component {
         <Grid.Column>
           {this.state.fetchedActive ? (
             <StatisticsTable
+            key='MostActive'
               name='Most Active'
               color='black'
               inverted
@@ -79,10 +81,12 @@ class Spotlight extends React.Component {
         <Grid.Column>
           {this.state.fetchedGainers ? (
             <StatisticsTable
+            key='TopGainers'
               name='Top Gainers'
               color='green'
               data={this.state.gainers}
               icon='arrow up'
+              // onClick={evt=>evt.stopPropogration}
             />
           ) : (
             <h1> Loading</h1>
