@@ -7,17 +7,25 @@ const iex = axios.create({
 });
 
 export const fetchChart = async (symbol, range) => {
-  const { data } = await iex.get(`/${symbol}/chart/${range}`, {
+ const data = await d3.json(
+   `https://api.iextrading.com/1.0/stock/${symbol}/chart/${range}?chartReset=true`,
+   d3.autoType
+ );
+
+ return data;
+ 
+  const { data2 } = await iex.get(`/${symbol}/chart/${range}`, {
     params: {
       chartReset: true
     }
   });
-  return data;
+  return data2;
 };
 export const fetchAllCharts = async symbol => {
   const data = await Promise.all([
-    // await fetchIntradayData(symbol, "1d"),
-    await fetchChart(symbol, "1d"),
+    await fetchDynamicTodayData(symbol),
+    
+    //await fetchChart(symbol, "dynamic"),
     await fetchChart(symbol, "1m"),
     await fetchChart(symbol, "3m"),
     await fetchChart(symbol, "6m"),
@@ -38,12 +46,38 @@ export const fetchAllCharts = async symbol => {
 };
 
 export const fetchQuote = async symbol => {
-  const { data } = await iex.get(`/${symbol}/batch`, {
-    params: {
-      types: "quote,logo,stats,news"
-    }
-  });
+
+  const data = await d3.json(
+    `https://api.iextrading.com/1.0/stock/${symbol}/batch?types=quote,logo,stats,news`,d3.autoType
+  );
   return data;
+};
+
+
+export const fetchDynamicTodayData = async (symbol) => {
+//  PROBLEM WITH THIS DATA: 15 MIN DELAY
+/*
+   WHILE WE DO HAVE SOME DATA FOR THOSE 15 * 1 MINUTE INTERVALS 
+   IEX PROVIDES ONLY THEIR OWN DATA ONLY
+   NOT MARKET WIDE....SO THE VOLUME FOR THE LAST
+   DELAYED DATA WILL BE LESS THAN THE REST OF THE DATASET
+*/
+  const range= 'today';
+ {
+   const data = await d3.json(
+     `https://api.iextrading.com/1.0/stock/aapl/chart/dynamic?chartReset=true`
+   );
+
+   data.data.forEach(d => {
+     let year = d.date.slice(0, 4);
+     let month = d.date.slice(4, 6);
+     let day = d.date.slice(6, 8);
+     const stringDate = `${year}-${month}-${day}T${d.minute}`;
+     d._stringDate = stringDate;
+     d.date = new Date(stringDate);
+   });
+   return data.data.reverse();
+ }
 };
 
 export const fetchIntradayData = async (symbol) => {

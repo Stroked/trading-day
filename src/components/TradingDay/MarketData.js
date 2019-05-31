@@ -6,7 +6,7 @@ import {
   fetchQuoteData,
   fetchIndiciesData,
   // makeApiCall,
-  fetchIntradayData
+  // fetchIntradayData
 } from "../../utils/fetch";
 
 const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
@@ -96,7 +96,7 @@ export const DataProvider = props => {
   const handleSymbolChange = async symbol => {
     try {
       // clear previous refresh interval
-      clearInterval(refresh);
+      // clearInterval(refresh);
 
       setSymbol(symbol);
       // fetch quote data
@@ -109,10 +109,10 @@ export const DataProvider = props => {
       setFetchingQuote({ loading: false, error: null });
 
    //   set new refresh interval
-      const interval = setInterval(() => {
-        fetchQuoteInterval(symbol);
-      }, INTERVAL);
-      setRefresh(interval);
+      // const interval = setInterval(() => {
+      //   fetchQuoteInterval(symbol);
+      // }, INTERVAL);
+      // setRefresh(interval);
     } catch (error) {
       setFetchingQuote({ loading: false, error });
     }

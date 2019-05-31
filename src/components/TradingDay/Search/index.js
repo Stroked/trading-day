@@ -31,7 +31,7 @@ const SearchInput = props => {
   const onSelect = (e, { result }) => {
     setVal(result.ticker);
     props.history.push({
-      pathname: `${result.ticker.toLowerCase()}`
+      pathname: `${result.ticker}`
     });
   };
 

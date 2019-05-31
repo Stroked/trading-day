@@ -44,7 +44,7 @@ const QuoteData = props => {
   setTitle(display.symbol, display.latestPrice);
 
   const [activePeriod, setActivePeriod] = useState("YTD");
-  const [imgSrc, setImgSrc] = useState(logo.url);
+  const [imgSrc, setImgSrc] = useState(null);
   useEffect(() => {
     setImgSrc(logo.url);
   }, [logo.url]);

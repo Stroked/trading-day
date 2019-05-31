@@ -12,7 +12,7 @@ const Markets = props => {
   return (
     <Segment>
       <Header>
-        <TickerScroll />
+        {/* <TickerScroll /> */}
       </Header>
       <StocksSpotlight />
       {!context.fetchingIncidies.loading && (
