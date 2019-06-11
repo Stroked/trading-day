@@ -44,7 +44,7 @@ const Router = props => (
     <Route
       exact
       path='/:id'
-      render={props => <Quote symbol={props.match.params.id} {...props} />}
+      render={props => <Quote symbol={props.match.params.id.toLowerCase()} {...props} />}
     />
     <Route component={NotFound} />
   </Switch>

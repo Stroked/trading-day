@@ -11,3 +11,4 @@ const PREMADE_GRADIENTS = [
   "SteelPurple"
 ];
 export default PREMADE_GRADIENTS;
+

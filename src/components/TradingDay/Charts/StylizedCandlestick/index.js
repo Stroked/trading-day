@@ -3,6 +3,11 @@ import { default as Banner } from "./banner/Banner";
 import { default as Chart } from "./chart/CandleStickChart";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import {ascending} from 'd3'
+import { fitWidth } from "react-stockcharts/lib/helper";
+import { customTimeFormatter } from "../../../../utils/formatDate";
+
+
 
 const StyleWrapper = styled.div`
   @import url("https://fonts.googleapis.com/css?family=Droid+Sans+Mono");
@@ -65,12 +70,10 @@ const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
           hollow: +close > +open
         };
       })
-      .reverse()
+      // .sort(d=>d.date,ascending)
       .slice(0, numItems);
     console.log(buckets);
-    const sortedBuckets = buckets.sort((a, b) => {
-      return a.date - b.date;
-    });
+    const sortedBuckets = buckets.sort(d=>d.date,ascending);
     const maxHighPrice = Math.max(
       ...buckets.map(b => Math.max(...[b.high, b.open, b.close]))
     );
@@ -115,4 +118,4 @@ const StylizedCandleStickChart = ({ ticker, data, logo, ...props }) => {
  
 };
 
-export default StylizedCandleStickChart;
+export default fitWidth(StylizedCandleStickChart);

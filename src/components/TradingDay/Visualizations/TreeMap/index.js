@@ -6,6 +6,9 @@ import sp500 from "../MarketForces/sp500-constituents-financials.json";
 import * as d3 from "d3";
 import {DataContext} from '../../MarketData'
 
+
+
+
 const parsed_SP500 = {
   id: "S&P500",
   children: d3
@@ -35,6 +38,8 @@ const listings = sp500.map(x => {
   y.value = +x["Market Cap"];
   return y;
 });
+
+
 const dataArray = [
   { id: "S&P500", parent: null, value: 0 },
   ...sectorArray,

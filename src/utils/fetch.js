@@ -7,13 +7,13 @@ const iex = axios.create({
 });
 
 export const fetchChart = async (symbol, range) => {
- const data = await d3.json(
-   `https://api.iextrading.com/1.0/stock/${symbol}/chart/${range}?chartReset=true`,
-   d3.autoType
- );
+  const data = await d3.json(
+    `https://api.iextrading.com/1.0/stock/${symbol}/chart/${range}?chartReset=true`,
+    d3.autoType
+  );
 
- return data;
- 
+  return data;
+
   const { data2 } = await iex.get(`/${symbol}/chart/${range}`, {
     params: {
       chartReset: true
@@ -23,8 +23,9 @@ export const fetchChart = async (symbol, range) => {
 };
 export const fetchAllCharts = async symbol => {
   const data = await Promise.all([
-    await fetchDynamicTodayData(symbol),
-    
+    await fetchIntradayData(symbol),
+    //await fetchDynamicTodayData(symbol),
+
     //await fetchChart(symbol, "dynamic"),
     await fetchChart(symbol, "1m"),
     await fetchChart(symbol, "3m"),
@@ -35,65 +36,68 @@ export const fetchAllCharts = async symbol => {
   ]);
 
   return {
-    '1D': data[0],
-    '1M': data[1],
-    '3M': data[2],
-    '6M': data[3],
-    '1Y': data[4],
-    '5Y': data[5],
-    'YTD': data[6]
+    "1D": data[0],
+    "1M": data[1],
+    "3M": data[2],
+    "6M": data[3],
+    "1Y": data[4],
+    "5Y": data[5],
+    YTD: data[6]
   };
 };
 
 export const fetchQuote = async symbol => {
-
   const data = await d3.json(
-    `https://api.iextrading.com/1.0/stock/${symbol}/batch?types=quote,logo,stats,news`,d3.autoType
+    `https://api.iextrading.com/1.0/stock/${symbol}/batch?types=quote,logo,stats,news`,
+    d3.autoType
   );
   return data;
 };
 
-
-export const fetchDynamicTodayData = async (symbol) => {
-//  PROBLEM WITH THIS DATA: 15 MIN DELAY
-/*
+export const fetchDynamicTodayData = async symbol => {
+  //  PROBLEM WITH THIS DATA: 15 MIN DELAY
+  /*
    WHILE WE DO HAVE SOME DATA FOR THOSE 15 * 1 MINUTE INTERVALS 
    IEX PROVIDES ONLY THEIR OWN DATA ONLY
    NOT MARKET WIDE....SO THE VOLUME FOR THE LAST
    DELAYED DATA WILL BE LESS THAN THE REST OF THE DATASET
 */
-  const range= 'today';
- {
-   const data = await d3.json(
-     `https://api.iextrading.com/1.0/stock/aapl/chart/dynamic?chartReset=true`
-   );
+  const range = "today";
+  {
+    const data = await d3.json(
+      `https://api.iextrading.com/1.0/stock/aapl/chart/dynamic?chartReset=true`
+    );
 
-   data.data.forEach(d => {
-     let year = d.date.slice(0, 4);
-     let month = d.date.slice(4, 6);
-     let day = d.date.slice(6, 8);
-     const stringDate = `${year}-${month}-${day}T${d.minute}`;
-     d._stringDate = stringDate;
-     d.date = new Date(stringDate);
-   });
-   return data.data.reverse();
- }
+    data.data.forEach(d => {
+      let year = d.date.slice(0, 4);
+      let month = d.date.slice(4, 6);
+      let day = d.date.slice(6, 8);
+      const stringDate = `${year}-${month}-${day}T${d.minute}`;
+      d.date = new Date(stringDate);
+    });
+    return data.data;
+  }
 };
 
-export const fetchIntradayData = async (symbol) => {
-  const period = '1min';
-  const data = await d3.json(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${period}&apikey=TRDGNTGBQG2BI9J0`);
-  return [...Object.entries(data["Time Series (1min)"]).map(([date, cols]) => {
-    return {
-      date: date,
-      open: cols["1. open"],
-      high: cols["2. high"],
-      low: cols["3. low"],
-      close: cols["4. close"],
-      volume: cols["5. volume"]
-    };
-  })];
+export const fetchIntradayData = async symbol => {
+  const period = "1min";
+  const data = await d3.json(
+    `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${period}&outputsize=full&apikey=TRDGNTGBQG2BI9J0`
+  );
 
+  return [
+    ...Object.entries(data["Time Series (1min)"]).map(([date, cols]) => {
+      return {
+        ...cols,
+        date: new Date(date),
+        open: +cols["1. open"],
+        high: +cols["2. high"],
+        low: +cols["3. low"],
+        close: +cols["4. close"],
+        volume: +cols["5. volume"]
+      };
+    })
+  ];
 };
 
 const makeApiCall = async (symbol, period = "1y") => {
@@ -143,7 +147,7 @@ const makeApiCall = async (symbol, period = "1y") => {
 export const fetchQuoteData = async (symbol, frequency) => {
   const data = await Promise.all([
     await fetchQuote(symbol),
-    await fetchAllCharts(symbol),
+    await fetchAllCharts(symbol)
     //await makeApiCall(symbol, frequency)
   ]);
   //charts: data[1],

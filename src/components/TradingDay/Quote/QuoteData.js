@@ -20,7 +20,10 @@ import HeikinAshi from "../Charts/HeikinAshi";
 import StylizedCandleStickChart from "../Charts/StylizedCandlestick";
 
 const PeerPerformance = ({ peers, peerData }) => {
+  // console.log(peerData)
   return peers.map((peer, i) => (
+  !peerData[peer] ? null :
+    !peerData[peer].chart.length>0 ? null :
     <LineChart
       style={{ display: "inlineBlock" }}
       key={`${i}-${peerData[peer].quote.symbol}`}
@@ -140,7 +143,8 @@ const QuoteData = props => {
           </>
         }
 
-        <Segment>
+        {/* <Segment>
+        {console.log(props.peers)}
           {props.peers ? (
             <PeerPerformance
               peers={props.peers.peers}
@@ -149,7 +153,7 @@ const QuoteData = props => {
           ) : (
             <h1>NO PEERS</h1>
           )}
-        </Segment>
+        </Segment> */}
         <NewsItems news={news} />
       </Grid>
     </Segment>

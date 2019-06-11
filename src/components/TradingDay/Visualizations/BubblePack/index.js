@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import * as d3 from "d3";
 import React from "react";
 import { Group } from "@vx/group";
 import { Pack } from "@vx/hierarchy";
@@ -7,23 +7,13 @@ import { hierarchy } from "d3-hierarchy";
 import { scaleQuantize } from "@vx/scale";
 //import data from "./exoplanets";
 import sp500 from "../MarketForces/sp500-constituents-financials";
-var sp500_dto=sp500.map(x=>{
-x.name=x.symbol;
+
+var data = sp500.map(x => {
+  x.name = x.symbol;
   x.radius = x.Price;
   x.distance = x["Market Cap"];
-    return x;
-})
-const data=sp500_dto;
-//const sp500_data = JSON.parse(sp500)
-
-/*map(x => {
-  let y={};
-  x.name = y.Symbol;
-  x.radius = y.Price;
-  x.distance = y["Market Cap"]);
   return x;
-});*/
-
+});
 
 const extent = (data, value = d => d) => [
   Math.min(...data.map(value)),
@@ -58,7 +48,6 @@ export default ({
         a.data.distance - b.data.distance
       );
     });
-
   return (
     <svg width={width} height={height}>
       <rect width={width} height={height} rx={14} fill='#ffffff' />

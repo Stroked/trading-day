@@ -84,8 +84,8 @@ const CandleStick = (props) => {
     calculatedData
   );
 
-  const start = xAccessor(last(data));
-  const end = xAccessor(data[Math.max(0, data.length - 150)]);
+  const start = xAccessor(d3.min(data,d=>d.date));
+  const end = xAccessor(d3.max(data,d=>d.date));
   const xExtents = [start, end];
  const height = props.height;
   return (

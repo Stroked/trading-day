@@ -39,19 +39,20 @@ class LineChart extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!nextProps.data) return null; // data hasn't been loaded yet so do nothing
+    debugger;
     const { data } = nextProps;
     const { xScale, yScale, lineGenerator } = prevState;
-    const qualifiedData = _.filter(data, values => values.average > 0);
+    const qualifiedData = _.filter(data, values => +values.close > 0);
 
     // data has changed, so recalculate scale domains
     const timeDomain = d3.extent(qualifiedData, d =>
-      timeParser(d["date"] + d["minute"])
+     new Date(`${d["date"]}T${d["minute"]}`)
     );
     xScale.domain(timeDomain);
-    yScale.domain(d3.extent(qualifiedData, d => +d.average));
+    yScale.domain(d3.extent(qualifiedData, d => +d.close));
 
     // calculate line for lows
-    lineGenerator.x(d => xScale(timeParser(d["date"] + d["minute"])));
+    lineGenerator.x(d => xScale(new Date(`${d["date"]}T${d["minute"]}`)));
     // lineGenerator.y(d => yScale(+d.low));
     // const lows = lineGenerator(data);
     // and then highs
@@ -70,12 +71,15 @@ class LineChart extends Component {
     let latestPrice = Math.round(this.props.latestPrice * 100) / 100;
     let changePercent = Math.round(this.props.changePercent * 10000) / 100;
     const { highs } = this.state;
+
+    console.log(this.props)
     return (
       <Segment>
         <Link
           to={"/" + this.props.name}
           className={this.props.name}
-          onClick={window.scrollTo(0, 0)}>
+          // onClick={window.scrollTo(0, 0)}
+          >
           <Grid columns={3}>
             <Grid.Column width={10}>
               <Header>

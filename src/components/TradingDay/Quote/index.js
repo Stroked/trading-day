@@ -10,17 +10,21 @@ export default props => {
     fetchingQuote,
     fetchingIncidies,
     handleSymbolChange,
-    getPeers,
+    //getPeers,
     quoteData
   } = useContext(DataContext);
   const [ticker, setTicker] = useState(props.symbol);
 
   useEffect(() => {
     handleSymbolChange(ticker);
-    getPeers(ticker);
+    //getPeers(ticker);
   }, [ticker]);
   useEffect(() => setTicker(props.symbol), [props.symbol]);
+    //  console.log(quoteData);
+    //  console.log(peers);
+    //  debugger;
   return (
+ 
     <Segment
       loading={fetchingQuote.loading && !fetchingIncidies.loading}
       style={{ minHeight: "300px" }}>

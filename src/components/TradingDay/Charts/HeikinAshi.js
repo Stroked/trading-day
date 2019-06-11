@@ -1,9 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { utcDays } from "d3-time";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
-
+import * as d3  from 'd3';
 import { ChartCanvas, Chart } from "react-stockcharts";
 import {
   BarSeries,
@@ -28,25 +26,16 @@ import {
 import { ema, heikinAshi, sma } from "react-stockcharts/lib/indicator";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last } from "react-stockcharts/lib/utils";
-import { timeParse } from "d3-time-format";
 import styled from "styled-components";
+
+import { customTimeFormatter } from "../../../utils/formatDate";
 
 const ChartStyles = styled.div`
   /* background: #666; */
 `;
 
 class HeikinAshi extends React.Component {
-  parseData = days =>
-    days.map(day => {
-      day.date = new Date(day.date);
-      day.open = +day.open;
-      day.high = +day.high;
-      day.low = +day.low;
-      day.close = +day.close;
-      day.volume = +day.volume;
-      return day;
-    });
-
+ 
   render() {
     //   console.log(typeof days);
     //   daysArray = Array.from(days);
@@ -89,7 +78,7 @@ class HeikinAshi extends React.Component {
       day.close = +day.close;
       day.volume = +day.volume;
       return day;
-    });
+    }).sort(d=>d.date,d3.ascending);
     const calculatedData = smaVolume50(ema50(ema20(ha(parsedData))));
     const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
       d => d.date
@@ -98,9 +87,13 @@ class HeikinAshi extends React.Component {
       calculatedData
     );
 
-    const start = xAccessor(last(data));
-    const end = xAccessor(data[Math.max(0, data.length - 150)]);
-    const xExtents = [start, end];
+const start = xAccessor(last(data));
+const end = xAccessor(data[Math.max(0, data.length - 150)]);
+const xExtents = [start, end];
+  // const start = xAccessor(last(data, d => d.date));
+
+  // const end = xAccessor(min(data, d => d.date));
+  //   const xExtents = [start, end];
 
     return (
       <ChartStyles>
@@ -226,7 +219,7 @@ class HeikinAshi extends React.Component {
             <MouseCoordinateX
               at='bottom'
               orient='bottom'
-              displayFormat={timeFormat("%Y-%m-%d")}
+              displayFormat={customTimeFormatter}
             />
             <MouseCoordinateY
               at='left'

@@ -24,15 +24,13 @@ const SearchInput = props => {
   const [val, setVal] = useState("");
 
   const onChange = (e, { value }) => {
-    setVal(value);
-    props.refine(value);
+    setVal(value.toUpperCase());
+    props.refine(value.toUpperCase());
   };
 
   const onSelect = (e, { result }) => {
     setVal(result.ticker);
-    props.history.push({
-      pathname: `${result.ticker}`
-    });
+    props.history.push(`${result.ticker}`);
   };
 
   return (
