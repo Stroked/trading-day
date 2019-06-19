@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@observablehq/runtime": "4",
+    "@stroked/major-indexes-angry-bird-edition": "https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz?v=3",
+    "@stroked/market-indexes-s-p500-nasdaq100-dow30": "https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz?v=3",
     "@vx/vx": "^0.0.189",
+    "add": "^2.0.6",
     "algotrader": "^2.4.9",
     "axios": "^0.18.0",
     "d3": "^5.9.2",
@@ -26,7 +30,8 @@
     "react-stockcharts": "^0.7.8",
     "react-ticker": "^1.1.2",
     "semantic-ui-react": "^0.87.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "yarn": "^1.16.0"
   },
   "scripts": {
     "start": "react-scripts start",

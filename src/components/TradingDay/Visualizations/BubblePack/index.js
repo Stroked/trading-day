@@ -6,7 +6,7 @@ import { Pack } from "@vx/hierarchy";
 import { hierarchy } from "d3-hierarchy";
 import { scaleQuantize } from "@vx/scale";
 //import data from "./exoplanets";
-import sp500 from "../MarketForces/sp500-constituents-financials";
+import sp500 from "../SP500/sp500-constituents-financials";
 
 var data = sp500.map(x => {
   x.name = x.symbol;

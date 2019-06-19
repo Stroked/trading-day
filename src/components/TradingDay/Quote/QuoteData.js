@@ -39,6 +39,11 @@ const PeerPerformance = ({ peers, peerData }) => {
   ));
 };
 
+const fetchChartData = activePeriod=>{
+
+}
+
+
 const QuoteData = props => {
   // format quote data
   const { quote, stats, logo, news } = props.data.quote;
@@ -48,6 +53,14 @@ const QuoteData = props => {
 
   const [activePeriod, setActivePeriod] = useState("YTD");
   const [imgSrc, setImgSrc] = useState(null);
+  // useEffect(()=>{
+  //   const fetcher =async p=>{
+  //    data = await d3.json(`http://cors-anywhere.herokuapp.com/`);
+  //   }
+
+  // },[activePeriod])
+
+
   useEffect(() => {
     setImgSrc(logo.url);
   }, [logo.url]);

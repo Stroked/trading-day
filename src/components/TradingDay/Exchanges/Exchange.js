@@ -5,6 +5,11 @@ const StyleWrapper = styled.div`
   font-weight: 400;
 `;
 
+//const ExchangeHierarchy_CirclePacking = 'OBSERVABLE NOTEBOOK TO BE EMBEDDED'
+
+
+
+
 export default class StockMarketExchanges extends Component {
   render() {
     return (
@@ -31,14 +36,16 @@ export default class StockMarketExchanges extends Component {
           Jones Industrial Average?
         </p>
         <p>
-          Today’s chart breaks down the composition of the 4,500+ large cap
-          stocks that are traded on the NYSE and NASDAQ, showing how the indices
-          are currently derived. (For another refresher, check out our post on
-          <a href='http://www.visualcapitalist.com/whats-difference-dow-sp-500-nasdaq/'>
-            the difference between the Dow, S&amp;P 500, and the NASDAQ
-          </a>
+          Today’s chart breaks down the composition of the 6000+ large cap
+          stocks that are traded on the NYSE and NASDAQ, showing how the market 
+is currently split, in a hierarchy derived from circle-packing.
           .)
         </p>
+
+{/* ${OBSERVABLE_NODEBOOK.ExchangeHierarchy.CirclePacking} */}
+
+
+
         <p>
           The <strong>S&amp;P 500</strong>, founded in 1923, is considered one
           of the best overall indicators of the U.S. stock market. Composed of

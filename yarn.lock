@@ -1112,6 +1112,31 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@observablehq/inspector@^3.0.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@observablehq/inspector/-/inspector-3.1.0.tgz#4726f9aabc58aa410a4ba27adf89b180fa9a302b"
+  integrity sha512-DOx40q05QZdQnYpUsKch+8raWGmKSBh5DIAinQRoK+ij7Eq/PKpHJvNrrhThF4+2b/qViUhZGOwMLPhlC2qMzg==
+  dependencies:
+    esm "^3.0.84"
+
+"@observablehq/runtime@4":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@observablehq/runtime/-/runtime-4.2.1.tgz#7a700873856f938cc39be9477c5e0c81d9d2790a"
+  integrity sha512-LgD8NtkqTMDsuCrZfOgfgifZ2tFe00SbeVGb1FbAZ1j8768Wq28LWnXkq9fkzys1B6cC3OtwT3Iigd+qLeoa6w==
+  dependencies:
+    "@observablehq/inspector" "^3.0.0"
+    "@observablehq/stdlib" "^3.0.0"
+    esm "^3.0.84"
+
+"@observablehq/stdlib@^3.0.0":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@observablehq/stdlib/-/stdlib-3.0.2.tgz#3db9d86b44fb8d2c38bcdd6c2d510360ad547de3"
+  integrity sha512-ggAHBPVfTTD+oy5ZVxKfd7Qn9e6I+6U1pjfG6XLIW5vFeu+XzkzWHeOwqCOYJAM4o3TNYZPRIL7XHiPIy0SHTg==
+  dependencies:
+    d3-require "^1.2.0"
+    esm "^3.0.84"
+    marked "https://github.com/observablehq/marked.git#94c6b946f462fd25db4465d71a6859183f86c57f"
+
 "@semantic-ui-react/event-stack@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@semantic-ui-react/event-stack/-/event-stack-3.1.0.tgz#aadbe4a28b0dd7703c5f451640d0fefe66dd9208"
@@ -1119,6 +1144,14 @@
   dependencies:
     exenv "^1.2.2"
     prop-types "^15.6.2"
+
+"@stroked/major-indexes-angry-bird-edition@https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz?v=3":
+  version "792.0.0"
+  resolved "https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz?v=3#0454e497403459bfdf4f0dbad5754b2a2bcc6aca"
+
+"@stroked/market-indexes-s-p500-nasdaq100-dow30@https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz?v=3":
+  version "722.0.0"
+  resolved "https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz?v=3#ffb8d07e5ae683102887862e73f4e573df36ce5b"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
@@ -1845,6 +1878,11 @@ acorn@^6.0.1, acorn@^6.0.4, acorn@^6.0.5, acorn@^6.0.7:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
   integrity sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==
+
+add@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+  integrity sha1-JI8Kn25aUo7yKV2+7DBTITCuIjU=
 
 address@1.0.3:
   version "1.0.3"
@@ -3832,6 +3870,11 @@ d3-random@1, d3-random@^1.0.3:
   resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-1.1.2.tgz#2833be7c124360bf9e2d3fd4f33847cfe6cab291"
   integrity sha512-6AK5BNpIFqP+cx/sreKzNjWbwZQCSUatxq+pPRmFIQaWuoD+NrbVWw7YWpHiXpCQ/NanKdtGDuB+VQcZDaEmYQ==
 
+d3-require@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/d3-require/-/d3-require-1.2.2.tgz#1f7a3f8846ae3496140e0350299db0905cbeed35"
+  integrity sha512-ZavUWWNjgv+mkORr49dzmKa8KrI6HfBQ5T2GzXZZaIfs/aaf7aeGtcZuJu4MCfJq5IERrHowjFici8MwLmHlYQ==
+
 d3-scale-chromatic@1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/d3-scale-chromatic/-/d3-scale-chromatic-1.3.3.tgz#dad4366f0edcb288f490128979c3c793583ed3c0"
@@ -4678,6 +4721,11 @@ eslint@^5.16.0:
     strip-json-comments "^2.0.1"
     table "^5.2.3"
     text-table "^0.2.0"
+
+esm@^3.0.84:
+  version "3.2.25"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
+  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
 
 espree@^5.0.1:
   version "5.0.1"
@@ -7348,6 +7396,10 @@ marked@^0.3.16, marked@~0.3.6:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
   integrity sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
+
+"marked@https://github.com/observablehq/marked.git#94c6b946f462fd25db4465d71a6859183f86c57f":
+  version "0.3.12"
+  resolved "https://github.com/observablehq/marked.git#94c6b946f462fd25db4465d71a6859183f86c57f"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -12220,6 +12272,11 @@ yargs@^12.0.2:
     which-module "^2.0.0"
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
+
+yarn@^1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.16.0.tgz#5701b58ac555ff91f7b889b7d791b3dc86f8f999"
+  integrity sha512-cfemyGlnWKA1zopUUgebTPf8C4WkPIZ+TJmklwcEAJ4u6oWPtJeAzrsamaGGh/+b1XWe8W51yzAImC4AWbWR1g==
 
 yeast@0.1.2:
   version "0.1.2"

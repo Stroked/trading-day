@@ -6,9 +6,11 @@ const iex = axios.create({
   baseURL: "https://api.iextrading.com/1.0/stock"
 });
 
+//https://cloud.iexapis.com/stable/stock/aapl/chart/1y?token=pk_930da6c1c50b4e33914febac3ab39fcb
 export const fetchChart = async (symbol, range) => {
   const data = await d3.json(
-    `https://api.iextrading.com/1.0/stock/${symbol}/chart/${range}?chartReset=true`,
+    `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${range}?token=pk_930da6c1c50b4e33914febac3ab39fcb`,
+    
     d3.autoType
   );
 
@@ -47,8 +49,9 @@ export const fetchAllCharts = async symbol => {
 };
 
 export const fetchQuote = async symbol => {
+  //https://cloud.iexapis.com/stable/stock/AIG/batch?token=pk_930da6c1c50b4e33914febac3ab39fcb&types=quote,logo,stats,news
   const data = await d3.json(
-    `https://api.iextrading.com/1.0/stock/${symbol}/batch?types=quote,logo,stats,news`,
+    `https://cloud.iexapis.com/stable/stock/${symbol}/batch?token=pk_930da6c1c50b4e33914febac3ab39fcb&types=quote,logo,stats,news`,
     d3.autoType
   );
   return data;

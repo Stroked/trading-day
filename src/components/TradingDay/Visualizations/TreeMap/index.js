@@ -2,7 +2,7 @@ import React from "react";
 import { Group } from "@vx/group";
 import { Treemap } from "@vx/hierarchy";
 import { scaleLinear } from "@vx/scale";
-import sp500 from "../MarketForces/sp500-constituents-financials.json";
+import sp500 from "../SP500/sp500-constituents-financials.json";
 import * as d3 from "d3";
 import {DataContext} from '../../MarketData'
 
