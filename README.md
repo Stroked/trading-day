@@ -2,8 +2,9 @@
 ---
 Great things about this UI is that:
 1) No page refresh (everything async)
-2) algolia-instant-search component is pretty spiffy
-3) a visually stunning configuration of react-stock-chart's heikin-ashi candle-stick-charts
+2) algolia-instant-search component is a fantastic component to use.
+3) a visually stunning configuration of [react-stock-chart](https://github.com/rrag/react-stockcharts)'s heikin-ashi candle-stick-charts
+
     - lets not forget about a stylized candlestick rescued from vx/demo. 
 4) It embraces skeumorphic design principles to render analog styled UI
 
