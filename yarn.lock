@@ -1145,13 +1145,6 @@
     exenv "^1.2.2"
     prop-types "^15.6.2"
 
-"@stroked/major-indexes-angry-bird-edition@https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz?v=3":
-  version "792.0.0"
-  resolved "https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz?v=3#0454e497403459bfdf4f0dbad5754b2a2bcc6aca"
-
-"@stroked/market-indexes-s-p500-nasdaq100-dow30@https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz?v=3":
-  version "722.0.0"
-  resolved "https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz?v=3#ffb8d07e5ae683102887862e73f4e573df36ce5b"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
