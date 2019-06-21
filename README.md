@@ -20,6 +20,22 @@ On the visualization front:
    - Major Indexes in a Circle Pack
 
 
+
+
+---
+UPDATE: 2019-05-29
+
+![stock-chart](./screenshots/exchange-listings.png)
+
+
+---
+
+UPDATE: 2019-06-10
+![market-spotlight](./screenshots/major-indexes.png)
+
+---
+
+
 2019-april
 ---
 
