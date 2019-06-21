@@ -5,7 +5,7 @@
   "dependencies": {
     "@observablehq/runtime": "4",
     
-   "@vx/vx": "^0.0.189",
+    "@vx/vx": "^0.0.189",
     "add": "^2.0.6",
     "algotrader": "^2.4.9",
     "axios": "^0.18.0",
