@@ -3,7 +3,6 @@ import styled from "styled-components";
 import * as d3 from "d3";
 import { event as currentEvent } from "d3-selection";
 import _ from "lodash";
-import { Segment } from "semantic-ui-react";
 import {
   Bar,
   withParentSize,

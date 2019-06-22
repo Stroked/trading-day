@@ -1,10 +1,10 @@
-import axios from "axios";
+// import axios from "axios";
 import _ from "lodash";
 import { formatDayChart } from "./format";
 import * as d3 from "d3";
-const iex = axios.create({
-  baseURL: "https://api.iextrading.com/1.0/stock"
-});
+// const iex = axios.create({
+//   baseURL: "https://api.iextrading.com/1.0/stock"
+// });
 
 //https://cloud.iexapis.com/stable/stock/aapl/chart/1y?token=pk_930da6c1c50b4e33914febac3ab39fcb
 export const fetchChart = async (symbol, range) => {
@@ -16,12 +16,12 @@ export const fetchChart = async (symbol, range) => {
 
   return data;
 
-  const { data2 } = await iex.get(`/${symbol}/chart/${range}`, {
-    params: {
-      chartReset: true
-    }
-  });
-  return data2;
+  // const { data2 } = await iex.get(`/${symbol}/chart/${range}`, {
+  //   params: {
+  //     chartReset: true
+  //   }
+  // });
+  // return data2;
 };
 export const fetchAllCharts = async symbol => {
   const data = await Promise.all([
@@ -160,31 +160,36 @@ export const fetchQuoteData = async (symbol, frequency) => {
   };
 };
 
-export const fetchBatchData = async symbols => {
-  const { data } = await iex.get(`/market/batch`, {
-    params: {
-      symbols,
-      types: "quote"
-    }
-  });
-  return data;
-};
+// export const fetchBatchData = async symbols => {
+//   const { data } = await iex.get(`/market/batch`, {
+//     params: {
+//       symbols,
+//       types: "quote"
+//     }
+//   });
+//   return data;
+// };
 
-export const fetchMarketNews = async () => {
-  const { data } = await iex.get(`/market/news`);
-  return data;
-};
+// export const fetchMarketNews = async () => {
+//   const { data } = await iex.get(`/market/news`);
+//   return data;
+// };
 
-export const fetchInFocus = async () => {
-  const { data } = await iex.get(`/market/list/infocus`);
-  return data;
-};
+// export const fetchInFocus = async () => {
+//   const { data } = await iex.get(`/market/list/infocus`);
+//   return data;
+// };
 
 export const fetchIndiciesData = async symbols => {
   const data = await Promise.all([
-    await fetchBatchData(_.toString(symbols)),
-    await fetchMarketNews(),
-    await fetchInFocus()
+    await d3.json(
+      `http://cors-anywhere.herokuapp.com/query1.finance.yahoo.com/v7/finance/spark?symbols=${symbols.join(
+        ","
+      )}&range=1d&interval=5m&indicators=close&includeTimestamps=false`
+    )
+    //  (_.toString(symbols)),
+    //await fetchMarketNews(),
+    //await fetchInFocus()
   ]);
 
   return { quotes: data[0], news: data[1], infocus: data[2] };

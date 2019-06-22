@@ -4,13 +4,26 @@ import PropTypes from "prop-types";
 import Loading from "./Loading";
 import {
   fetchQuoteData,
-  fetchIndiciesData
+   fetchIndiciesData
   // makeApiCall,
   // fetchIntradayData
 } from "../../utils/fetch";
 import _ from 'lodash';
 
 const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
+const MajorIndexes = [
+  "%5EGSPC",
+  "%5EDJI",
+  "%5EIXIC",
+  "%5ERUT",
+  "CL%3DF",
+  "SI%3DF",
+  "GC%3DF",
+  "%5ETNX",
+  "%5EVIX",
+];
+
+const Currencies = ["EURUSD%3DX", "GBPUSD%3DX", "USDJPY%3DX", "BTC-USD"];
 const INTERVAL = 60000;
 
 export const DataContext = React.createContext();
@@ -36,24 +49,24 @@ export const DataProvider = props => {
     news: []
   });
 
-  const fetchIncidiesInterval = () => {
-    setInterval(async () => {
-      const data = await fetchIndiciesData(COLLECTION);
-      setIndiciesData(data);
-    }, INTERVAL);
-  };
+  // const fetchIncidiesInterval = () => {
+  //   setInterval(async () => {
+  //     const data = await fetchIndiciesData(MajorIndexes);
+  //     setIndiciesData(data);
+  //   }, INTERVAL);
+  // };
 
-  const fetchQuoteInterval = async symbol => {
-    if (symbol) {
-      const data = await fetchQuoteData(symbol);
-      setQuoteData(data);
-    }
-  };
+  // const fetchQuoteInterval = async symbol => {
+  //   if (symbol) {
+  //     const data = await fetchQuoteData(symbol);
+  //     setQuoteData(data);
+  //   }
+  // };
 
   const onMount = async () => {
     try {
       // fetch indicies data
-      const data = await fetchIndiciesData(COLLECTION);
+      const data = await fetchIndiciesData(MajorIndexes);
       setIndiciesData(data);
       setFetchingIndicies({ loading: false, error: null });
       // init refresh interval

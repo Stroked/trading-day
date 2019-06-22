@@ -27,8 +27,6 @@ import styled from "styled-components";
 import {} from "@vx/vx";
 
 import * as d3 from "d3";
-//!SUIR
-import {} from "semantic-ui-react";
 //!LODASH
 import _ from "lodash";
 

@@ -13,6 +13,8 @@ import StylizedCandlestickChart from "../components/TradingDay/Charts/StylizedCa
 // import MarketHeatmap from "../components/TradingDay/Visualizations/SP500/TreeHeatmap";
 import MarketForces from "../components/TradingDay/Visualizations/SP500/ForceLayout";
 // import MarketBubbles from "../components/TradingDay/Visualizations/MajorIndexes/CirclePack";
+import BubblyJobs from "../components/TradingDay/Visualizations/BubblyJobs";
+
 import NotFound from "../components/TradingDay/NotFound";
 import Header from "../components/TradingDay/Header";
 
@@ -39,6 +41,7 @@ const Router = props => (
     <Route exact path='/slide-show' component={FisheyeSlideshow} />
     {/* <Route exact path='/heatmap' component={MarketHeatmap} /> */}
     {/* <Route exact path='/circle-pack' component={MarketBubbles} /> */}
+    <Route exact path='/bubbly-jobs' component={BubblyJobs} />
     <Route exact path='/force' component={MarketForces} />
     <Route
       exact
