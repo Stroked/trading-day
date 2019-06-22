@@ -5,6 +5,9 @@
   "dependencies": {
     "@observablehq/runtime": "4",
     "@stroked/bubbly-jobs-charts": "https://api.observablehq.com/@stroked/bubbly-jobs-charts.tgz",
+    "@stroked/major-indexes-angry-bird-edition": "https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz",
+    "@stroked/market-indexes-s-p500-nasdaq100-dow30": "https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz",
+    
     "@vx/vx": "^0.0.189",
     "add": "^2.0.6",
     "algotrader": "^2.4.9",
