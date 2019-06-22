@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@observablehq/runtime": "4",
-    "@stroked/bubbly-jobs-charts": "https://api.observablehq.com/@stroked/bubbly-jobs-charts.tgz?v=3",
+    "@stroked/bubbly-jobs-charts": "https://api.observablehq.com/@stroked/bubbly-jobs-charts.tgz@381?v=3",
     "@vx/vx": "^0.0.189",
     "add": "^2.0.6",
     "algotrader": "^2.4.9",

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Runtime, Inspector } from "@observablehq/runtime";
 import heatMap from "@stroked/bubbly-jobs-charts";
 
+
 class MarketHeatmap extends Component {
   heatmapRef = React.createRef();
 
