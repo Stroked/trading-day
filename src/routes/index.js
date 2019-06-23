@@ -10,11 +10,11 @@ import Login from "../components/TradingDay/Login/Login";
 import Quote from "../components/TradingDay/Quote";
 import StockMarketExchanges from '../components/TradingDay/Exchanges/Exchange'
 import StylizedCandlestickChart from "../components/TradingDay/Charts/StylizedCandlestick";
-import MarketHeatmap from "../components/TradingDay/Visualizations/SP500/TreeHeatmap";
 import MarketForces from "../components/TradingDay/Visualizations/SP500/ForceLayout";
-import MarketBubbles from "../components/TradingDay/Visualizations/MajorIndexes/CirclePack";
+// import MarketHeatmap from "../components/TradingDay/Visualizations/SP500/TreeHeatmap";
+// import MarketBubbles from "../components/TradingDay/Visualizations/MajorIndexes/CirclePack";
 
-import BubblyJobs from "../components/TradingDay/Visualizations/BubblyJobs";
+// import BubblyJobs from "../components/TradingDay/Visualizations/BubblyJobs";
 
 import NotFound from "../components/TradingDay/NotFound";
 import Header from "../components/TradingDay/Header";
@@ -40,9 +40,9 @@ const Router = props => (
     <Route exact path='/exchanges' component={StockMarketExchanges} />
     <Route exact path='/mosaic' component={Mosaic} />
     <Route exact path='/slide-show' component={FisheyeSlideshow} />
-    <Route exact path='/heatmap' component={MarketHeatmap} />
-    <Route exact path='/circle-pack' component={MarketBubbles} />
-    <Route exact path='/bubbly-jobs' component={BubblyJobs} />
+    {/* <Route exact path='/heatmap' component={MarketHeatmap} /> */}
+    {/* <Route exact path='/circle-pack' component={MarketBubbles} /> */}
+    {/* <Route exact path='/bubbly-jobs' component={BubblyJobs} /> */}
     <Route exact path='/force' component={MarketForces} />
     <Route
       exact

@@ -3,6 +3,8 @@ import { json } from "d3";
 import StatisticsTable from "./StatisticsTable";
 import styled from "styled-components";
 import {Grid,Divider} from 'semantic-ui-react';
+import * as d3 from 'd3';
+
 
 const fetchMoneyFlows = async () => {
   const file = await fetch(
