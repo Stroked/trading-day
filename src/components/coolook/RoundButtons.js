@@ -8,7 +8,7 @@ const RoundButtonStyles = styled.div`
     background-color: #e6e6e6;
   }
 
-  .button-test {
+  .roundButtonControls {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +29,14 @@ const RoundButtonStyles = styled.div`
     margin: 1rem;
   }
 
-  .round:active {
+  /* .round:active {
+    box-shadow: 0px 2px 2px 0px white, 0px -2px 2px 0px rgba(0, 0, 0, 0.15),
+      0px 1px 2px 0px rgba(255, 255, 255, 0.5),
+      inset 0px -5px 2px 1px rgba(255, 255, 255, 0.25);
+    text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.5);
+    transition: all 0.2s;
+  } */
+  .round.active {
     box-shadow: 0px 2px 2px 0px white, 0px -2px 2px 0px rgba(0, 0, 0, 0.15),
       0px 1px 2px 0px rgba(255, 255, 255, 0.5),
       inset 0px -5px 2px 1px rgba(255, 255, 255, 0.25);
@@ -71,23 +78,21 @@ const RoundButtonStyles = styled.div`
     filter: drop-shadow(0px 0px 20px rgba(254, 29, 44, 0.5));
   }
 
-  /*circle {
-  fill: $base-bg-color;
-  filter:
-    drop-shadow(0px -10px 20px rgba(255, 255, 255, 1)) 
-    drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.15)) 
-    drop-shadow(0px 2px 4px rgba(255, 255, 255, .5));
-  stroke: rgba($white, 1);
-  stroke-width: 1px;
-  transition: all 1s;
-}
+  circle {
+    fill: $base-bg-color;
+    filter: drop-shadow(0px -10px 20px rgba(255, 255, 255, 1))
+      drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.15))
+      drop-shadow(0px 2px 4px rgba(255, 255, 255, 0.5));
+    stroke: rgba($white, 1);
+    stroke-width: 1px;
+    transition: all 1s;
+  }
 
-button:active circle {
-  filter:
-    drop-shadow(0 0 2px red);
-  stroke: rgba(0,0,0,0);
-  transition: all .5s;
-}*/
+  button:active circle {
+    filter: drop-shadow(0 0 2px red);
+    stroke: rgba(0, 0, 0, 0);
+    transition: all 0.5s;
+  }
 `;
 
 export default function RoundButtons(props) {
@@ -100,7 +105,7 @@ export default function RoundButtons(props) {
   return (
     <RoundButtonStyles className='buttons-container'>
       <main>
-        <div className='button-test'>
+        <div className='roundButtonControls'>
           <Grid centered stackable verticalAlign='middle' columns={3}>
             <Grid.Column>
               <SquareButtons
@@ -128,10 +133,11 @@ export default function RoundButtons(props) {
                   <g class='icon icon-play'>
                     <circle
                       class='icon-border'
-                      stroke-miterlimit='10'
+                      stroke-miterlimit='1'
                       cx='200'
                       cy='200'
                       r='198'
+
                     />
                     <polygon
                       class='icon-actual'

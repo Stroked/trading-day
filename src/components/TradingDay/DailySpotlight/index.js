@@ -3,6 +3,19 @@ import { json } from "d3";
 import StatisticsTable from "./StatisticsTable";
 import styled from "styled-components";
 import {Grid,Divider} from 'semantic-ui-react';
+
+const fetchMoneyFlows = async () => {
+  const file = await fetch(
+    "http://cors-anywhere.herokuapp.com/online.wsj.com/mdc/public/npage/2_3045-mfgppl-mfxml2csv.html"
+  );
+  let res = await file.text();
+  console.log(res);
+  let data = res.trim();
+  data = data.substring(data.indexOf("C"));
+  data = d3.tsvParse(data, d3.autoType);
+  return data;
+};
+
 const StyledSpotlight = styled.div`
 
 `;

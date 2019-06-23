@@ -4,10 +4,6 @@
   "private": true,
   "dependencies": {
     "@observablehq/runtime": "4",
-    "@stroked/bubbly-jobs-charts": "https://api.observablehq.com/@stroked/bubbly-jobs-charts.tgz",
-    "@stroked/major-indexes-angry-bird-edition": "https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz",
-    "@stroked/market-indexes-s-p500-nasdaq100-dow30": "https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz",
-    
     "@vx/vx": "^0.0.189",
     "add": "^2.0.6",
     "algotrader": "^2.4.9",
@@ -19,6 +15,8 @@
     "gh-pages": "^2.0.1",
     "google-trends-api": "^4.1.0",
     "lodash": "^4.17.11",
+    "major-indexes-angry-bird-edition": "https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz",
+    "market-indexes-s-p500-nasdaq100-dow30": "https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "prop-types": "^15.6.2",

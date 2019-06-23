@@ -9,8 +9,9 @@ import * as d3 from "d3";
 //https://cloud.iexapis.com/stable/stock/aapl/chart/1y?token=pk_930da6c1c50b4e33914febac3ab39fcb
 export const fetchChart = async (symbol, range) => {
   const data = await d3.json(
-    `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${range}?token=pk_930da6c1c50b4e33914febac3ab39fcb`,
+    `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${range}?token=pk_1b77cc50b5cc4138bf37e0c1a87768c5`,
     
+
     d3.autoType
   );
 
@@ -51,7 +52,7 @@ export const fetchAllCharts = async symbol => {
 export const fetchQuote = async symbol => {
   //https://cloud.iexapis.com/stable/stock/AIG/batch?token=pk_930da6c1c50b4e33914febac3ab39fcb&types=quote,logo,stats,news
   const data = await d3.json(
-    `https://cloud.iexapis.com/stable/stock/${symbol}/batch?token=pk_930da6c1c50b4e33914febac3ab39fcb&types=quote,logo,stats,news`,
+    `https://cloud.iexapis.com/stable/stock/${symbol}/batch?token=pk_1b77cc50b5cc4138bf37e0c1a87768c5&types=quote,logo,stats,news`,
     d3.autoType
   );
   return data;

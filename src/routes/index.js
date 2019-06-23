@@ -13,6 +13,7 @@ import StylizedCandlestickChart from "../components/TradingDay/Charts/StylizedCa
 import MarketHeatmap from "../components/TradingDay/Visualizations/SP500/TreeHeatmap";
 import MarketForces from "../components/TradingDay/Visualizations/SP500/ForceLayout";
 import MarketBubbles from "../components/TradingDay/Visualizations/MajorIndexes/CirclePack";
+
 import BubblyJobs from "../components/TradingDay/Visualizations/BubblyJobs";
 
 import NotFound from "../components/TradingDay/NotFound";
