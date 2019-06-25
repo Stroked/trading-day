@@ -88,7 +88,7 @@ class HeikinAshi extends React.Component {
     );
 
 const start = xAccessor(last(data));
-const end = xAccessor(data[Math.max(0, data.length - 150)]);
+const end = xAccessor(data[Math.max(0, data.length - 500)]);
 const xExtents = [start, end];
   // const start = xAccessor(last(data, d => d.date));
 

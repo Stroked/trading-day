@@ -1,14 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Statistic } from "semantic-ui-react";
 
 const StatWrap = styled.div`
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
-  padding-right: 5px;
-  position: left;
-  margin-top: 0;
+  align-items: stretch;
+  justify-content: flex-start;
 
   @media (min-width: 768px) {
     justify-content: space-around;
@@ -19,41 +16,28 @@ const StatWrap = styled.div`
   }
 `;
 
-;
-const Price = styled.span`
-  font-size: 4vw;
-
-`;
-const Dollar = styled.span`
-  font-size: 4vw;
-  /* text-justify: */
-`;
-const ChangeWrap = styled.span`
-  color: ${props=>props.isUp ? 'green':'red'}
-  font-size: 2vw;
-  line-height:1.5;
-
-
-`
 const StatsPrice = ({ last, change, percent, color }) => {
   return (
     <StatWrap>
-      <Price>
-        <Dollar>$</Dollar>
-        {last}
-      </Price>
-      <ChangeWrap isUp={+change > 0}>
-        {change}{<br/>}
-        {percent}
-      </ChangeWrap>
+      <div style={{ fontSize: "3vw", padding: 0, margin: 0, lineHeight: 1 }}>
+        ${last.toFixed(2)}
+      </div>
+      <div
+        style={{
+          color: +change > 0 ? "green" : "red",
+          fontSize: "1.5vw",
+          lineHeight: 1,
+          padding: 0,
+          margin: 0
+        }}>
+        {change.toFixed(2)}
+        <br />
+        {percent.toFixed(2)}%
+      </div>
     </StatWrap>
   );
 };
 
-StatsPrice.propTypes = {
-  last: PropTypes.string.isRequired,
-  change: PropTypes.string.isRequired,
-  percent: PropTypes.string.isRequired
-};
+
 
 export default StatsPrice;

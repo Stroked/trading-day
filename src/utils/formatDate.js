@@ -44,7 +44,7 @@ export function formatDateTime(date){
 
 export function customTimeFormatter(date) {
     
-    printAllFormats(date);
+   // printAllFormats(date);
     
   const format = (
       d3.timeSecond(date) > date
@@ -62,8 +62,7 @@ export function customTimeFormatter(date) {
     : d3.timeYear(date) > date
     ? formatMonth
     : formatYear)(date);
-    console.log(format)
-    debugger;
+    // console.log(format)
 
 return format;
 }

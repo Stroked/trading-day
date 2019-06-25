@@ -9,6 +9,7 @@ import {
   // fetchIntradayData
 } from "../../utils/fetch";
 import _ from 'lodash';
+const unixTimeParser = d3.timeParse("%s");
 
 const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
 const MajorIndexes = [
@@ -78,6 +79,38 @@ export const DataProvider = props => {
 
 
   
+const YahooQuoteFetcher = async (symbol) => {
+   let quote = await d3.json(
+    `https://cors-anywhere.herokuapp.com/query1.finance.yahoo.com/v7/finance/quote?symbols=${symbol}`,d3.autoType
+  );
+  return { quote: quote.quoteResponse.result[0] };
+};
+
+const YahooChartDataFetcher = async (symbol, interval, p1,p2) => {
+  let fetched = await d3.json(
+    `https://cors-anywhere.herokuapp.com/query1.finance.yahoo.com/v8/finance/chart/?symbol=${symbol}&period1=${p1}&period2=${p2}&interval=${interval}`,
+    d3.autoType
+  );
+  let chartData = await extractChartData(fetched);
+  return chartData.sort((a,b)=>b.date-a.date, d3.ascending);
+};
+
+
+
+const extractChartData = fetchedData => {
+  let result = fetchedData.chart.result[0];
+  let ohlcv = result.indicators.quote[0];
+  return result.timestamp.map((x, i) => {
+    let obj = { date: unixTimeParser(x) };
+    obj.open = ohlcv.open[i];
+    obj.high = ohlcv.high[i];
+    obj.low = ohlcv.low[i];
+    obj.close = ohlcv.close[i];
+    obj.volume = ohlcv.volume[i];
+    return obj;
+  });
+};
+
 const fetchMoneyFlows = async () => {
   const file = await fetch(
     "http://cors-anywhere.herokuapp.com/online.wsj.com/mdc/public/npage/2_3045-mfgppl-mfxml2csv.html"
@@ -138,8 +171,8 @@ const fetchMoneyFlows = async () => {
       setSymbol(symbol);
       // fetch quote data
       setFetchingQuote({ loading: true, error: null });
-      const data = await fetchQuoteData(symbol);
-      console.log(data);
+      const data = await YahooQuoteFetcher(symbol);
+      // console.log(data);
       // debugger;
       setQuoteData(data);
 
@@ -163,7 +196,8 @@ const fetchMoneyFlows = async () => {
         quoteData,
         indiciesData,
         handleSymbolChange,
-  
+        YahooChartDataFetcher,
+        YahooQuoteFetcher,
         ...props
       }}>
       {fetchingIncidies.loading && <Loading />}

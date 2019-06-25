@@ -110,12 +110,12 @@ export default function DarkButton(props) {
                   e.preventDefault();
                   e.stopPropagation();
                   setActivePeriod(period);
-                  props.clickEffect(period);
+                  props.clickEffect(period.toUpperCase());
                 }}
                 className={
                   activePeriod === period ? "active-text" : null
                 }>
-                {period}
+                {period.toUpperCase()}
               </button>
             </li>
           );

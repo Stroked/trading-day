@@ -64,5 +64,6 @@ class StatisticsTable extends React.Component {
   }
 }
 
+
 // export default withRouter(StatisticsTable);
 export default StatisticsTable;

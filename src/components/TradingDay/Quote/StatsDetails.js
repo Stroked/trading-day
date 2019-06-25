@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 import { Grid, List } from 'semantic-ui-react';
 
 const Item = ({ title, value }) => {
+  let formattedValue=value;
+  let num =+value;
+  
+  if(num && num.toString().includes('.')) 
+    formattedValue=num.toFixed(2)
   return (
     <List.Item>
-      <List.Content floated="right">{value}</List.Content>
+      <List.Content floated="right">{formattedValue}</List.Content>
       <List.Content floated="left" style={{ color: '#a0a0a0' }}>
         {title}
       </List.Content>
@@ -19,34 +24,33 @@ const StatsDetails = ({ data }) => {
       <Grid.Row columns={4}>
         <Grid.Column>
           <List>
-            <Item title="Open" value={data.open} />
-            <Item title="High" value={data.high} />
-            <Item title="Low" value={data.low} />
+            <Item title='Open' value={data.regularMarketOpen} />
+            <Item title='High' value={data.regularMarketDayHigh} />
+            <Item title='Low' value={data.regularMarketDayLow} />
           </List>
         </Grid.Column>
         <Grid.Column>
           <List>
-            <Item title="Vol" value={data.vol} />
-            <Item title="P/E" value={data.peRatio} />
-            <Item title="Mkt Cap" value={data.marketCap} />
+            <Item title='Volume' value={data.regularMarketVolume} />
+            <Item title='P/E' value={data.forwardPE} />
+            <Item title='Mkt Cap' value={data.marketCap} />
           </List>
         </Grid.Column>
         <Grid.Column>
           <List>
-            <Item title="52W H" value={data.week52High} />
-            <Item title="52W L" value={data.week52Low} />
-            <Item title="52W Ch" value={data.week52Ch} />
+            <Item title='52W H' value={data.fiftyTwoWeekHigh} />
+            <Item title='52W L' value={data.fiftyTwoWeekLow} />
+            <Item title='52W Ch' value={data.fiftyTwoWeekHighChangePercent} />
           </List>
         </Grid.Column>
         <Grid.Column>
           <List>
-            <Item title="Yield" value={data.yield} />
-            <Item title="Beta" value={data.beta} />
-            <Item title="EPS" value={data.eps} />
+            <Item title='Yield' value={data.trailingAnnualDividendRate} />
+            <Item title='Ex-Div' value={data.dividendDate} />
+            <Item title='EPS' value={data.epsTrailingTwelveMonths} />
           </List>
         </Grid.Column>
       </Grid.Row>
-     
     </React.Fragment>
   );
 };

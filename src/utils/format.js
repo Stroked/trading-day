@@ -73,7 +73,7 @@ export const formatDayChart = data => {
 export const quoteFormatting = (quote, stats) => {
   return {
     symbol: upper(quote.symbol),
-    companyName: quote.companyName,
+    companyName: quote.longName,
     latestPrice: price(quote.latestPrice),
     latestPriceSimple: priceSimple(quote.latestPrice),
     change: price(quote.change),

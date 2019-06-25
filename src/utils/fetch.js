@@ -58,30 +58,6 @@ export const fetchQuote = async symbol => {
   return data;
 };
 
-export const fetchDynamicTodayData = async symbol => {
-  //  PROBLEM WITH THIS DATA: 15 MIN DELAY
-  /*
-   WHILE WE DO HAVE SOME DATA FOR THOSE 15 * 1 MINUTE INTERVALS 
-   IEX PROVIDES ONLY THEIR OWN DATA ONLY
-   NOT MARKET WIDE....SO THE VOLUME FOR THE LAST
-   DELAYED DATA WILL BE LESS THAN THE REST OF THE DATASET
-*/
-  const range = "today";
-  {
-    const data = await d3.json(
-      `https://api.iextrading.com/1.0/stock/aapl/chart/dynamic?chartReset=true`
-    );
-
-    data.data.forEach(d => {
-      let year = d.date.slice(0, 4);
-      let month = d.date.slice(4, 6);
-      let day = d.date.slice(6, 8);
-      const stringDate = `${year}-${month}-${day}T${d.minute}`;
-      d.date = new Date(stringDate);
-    });
-    return data.data;
-  }
-};
 
 export const fetchIntradayData = async symbol => {
   const period = "1min";
