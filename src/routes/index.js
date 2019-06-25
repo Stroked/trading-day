@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Home from "./Home";
+import Home, { ObservableNotebook } from "./Home";
 //TRADING-DAY
 //---------------------------------------------------
 //ROUTES
@@ -44,6 +44,8 @@ const Router = props => (
     {/* <Route exact path='/circle-pack' component={MarketBubbles} /> */}
     {/* <Route exact path='/bubbly-jobs' component={BubblyJobs} /> */}
     <Route exact path='/force' component={MarketForces} />
+    <Route exact path='/observable-notebook' component={ObservableNotebook} />
+
     <Route
       exact
       path='/styled-candlesticks'
@@ -60,5 +62,7 @@ const Router = props => (
     <Route component={NotFound} />
   </Switch>
 );
+
+
 
 export default Router;
