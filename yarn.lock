@@ -953,6 +953,10 @@
   dependencies:
     "@hapi/hoek" "6.x.x"
 
+"@jashkenas/how-to-embed-a-notebook-in-a-react-app@https://api.observablehq.com/@observablehq/how-to-embed-a-notebook-in-a-react-app.tgz?v=3":
+  version "426.0.0"
+  resolved "https://api.observablehq.com/@observablehq/how-to-embed-a-notebook-in-a-react-app.tgz?v=3#403944c588b9090881e10601b0ee7b5dd41adb62"
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
@@ -1144,18 +1148,6 @@
   dependencies:
     exenv "^1.2.2"
     prop-types "^15.6.2"
-
-"@stroked/bubbly-jobs-charts@https://api.observablehq.com/@stroked/bubbly-jobs-charts.tgz":
-  version "381.0.0"
-  resolved "https://api.observablehq.com/@stroked/bubbly-jobs-charts.tgz#4ddbdfa67dd0331ec797546e8cb37cf0438d00d1"
-
-"@stroked/major-indexes-angry-bird-edition@https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz", "major-indexes-angry-bird-edition@https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz":
-  version "798.0.0"
-  resolved "https://api.observablehq.com/@stroked/major-indexes-angry-bird-edition.tgz#b89a29170e9fa9aa4e97d1c8d314d976dc63c091"
-
-"@stroked/market-indexes-s-p500-nasdaq100-dow30@https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz", "market-indexes-s-p500-nasdaq100-dow30@https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz":
-  version "724.0.0"
-  resolved "https://api.observablehq.com/@stroked/market-indexes-s-p500-nasdaq100-dow30.tgz#215602bba2b7b137d4e4792734c55405ea9e05f3"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
