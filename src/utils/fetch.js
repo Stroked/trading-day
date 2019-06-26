@@ -1,6 +1,6 @@
 // import axios from "axios";
 import _ from "lodash";
-import { formatDayChart } from "./format";
+// import { formatDayChart } from "./format";
 import * as d3 from "d3";
 // const iex = axios.create({
 //   baseURL: "https://api.iextrading.com/1.0/stock"

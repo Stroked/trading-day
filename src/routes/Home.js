@@ -6,7 +6,7 @@ import TickerScroll from "../components/TradingDay/TickerScroll";
 import setTitle from "../utils/title";
 import styled from "styled-components";
 import {Runtime, Inspector} from "@observablehq/runtime";
-import notebook from "@observablehq/how-to-embed-a-notebook-in-a-react-app";
+import notebook from "@jashkenas/how-to-embed-a-notebook-in-a-react-app";
 
 class ObservableNotebook extends Component {
   animationRef = React.createRef();
