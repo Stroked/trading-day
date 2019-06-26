@@ -13,7 +13,7 @@ import NewsItems from "../News";
 import NotFound from "../NotFound";
 import LineChart from "../Charts/LineChart";
 
-import { quoteFormatting } from "../../../utils/format";
+// import { quoteFormatting } from "../../../utils/format";
 import setTitle from "../../../utils/title";
 
 import HeikinAshi from "../Charts/HeikinAshi";

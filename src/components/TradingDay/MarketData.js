@@ -13,18 +13,18 @@ const unixTimeParser = d3.timeParse("%s");
 
 const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
 const MajorIndexes = [
-  "%5EGSPC",
-  "%5EDJI",
-  "%5EIXIC",
-  "%5ERUT",
-  "CL%3DF",
-  "SI%3DF",
-  "GC%3DF",
-  "%5ETNX",
-  "%5EVIX",
+  "^GSPC",
+  "^DJI",
+  "^IXIC",
+  "^RUT",
+  "CL=F",
+  "SI=F",
+  "GC=F",
+  "^TNX",
+  "^VIX",
 ];
 
-const Currencies = ["EURUSD%3DX", "GBPUSD%3DX", "USDJPY%3DX", "BTC-USD"];
+const Currencies = ["EURUSD=X", "GBPUSD=X", "USDJPY=X", "BTC-USD"];
 const INTERVAL = 60000;
 
 export const DataContext = React.createContext();

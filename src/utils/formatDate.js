@@ -1,4 +1,4 @@
-import { timeFormat } from "d3-time-format";
+import { timeFormat } from "d3";
 import * as d3 from "d3";
 
 

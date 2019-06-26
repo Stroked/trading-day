@@ -1,6 +1,6 @@
 import React from "react";
-import { format } from "d3-format";
-import { timeFormat } from "d3-time-format";
+import {format, timeFormat} from 'd3';
+
 import { ChartCanvas, Chart } from "react-stockcharts";
 import {
   BarSeries,

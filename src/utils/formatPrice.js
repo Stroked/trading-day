@@ -1,2 +1,3 @@
-import { format } from 'd3-format';
+import { format } from 'd3';
+
 export default format('$,.2f');

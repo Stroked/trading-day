@@ -2,7 +2,7 @@
 ---
 Great things about this UI is that:
 1) No page refresh (everything async)
-2) algolia-instant-search component is a fantastic component to use.
+2) algolia-instant-search component is fantasticly easy to use.
 3) a visually stunning configuration of [react-stock-chart](https://github.com/rrag/react-stockcharts)'s heikin-ashi candle-stick-charts
 
     - lets not forget about a stylized candlestick rescued from vx/demo. 
