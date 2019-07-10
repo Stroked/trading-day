@@ -3,8 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@jashkenas/how-to-embed-a-notebook-in-a-react-app": "https://api.observablehq.com/@jashkenas/how-to-embed-a-notebook-in-a-react-app.tgz?v=3",
-    "@observablehq/runtime": "^4.2.1",
     "@vx/vx": "^0.0.189",
     "d3": "^5.9",
     "lodash": "^4.17.11",

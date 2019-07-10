@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as d3 from "d3";
+import InteractiveSparkChart from '../SparkLines'
 import _ from "lodash";
 import {
   Bar,
@@ -49,6 +50,7 @@ const StyleWrapper = styled.div`
 const xSteps = (width, length) => d3.range(0, width, width / length);
 class FisheyeSlideshow extends React.Component {
   state = {
+    data:this.props.data,
     svgRef: React.createRef(),
     xSteps: xSteps(this.props.width, 15),
     xFisheye: fisheyeScale(d3.scaleIdentity)
@@ -162,6 +164,8 @@ class FisheyeSlideshow extends React.Component {
       .selectAll("text")
       .data(this.state.xSteps)
       .join("text");
+
+  
     this.textLabels = text
       .attr("x", this.state.regularScale)
       .attr("y", this.props.height / 2)
@@ -205,11 +209,17 @@ class FisheyeSlideshow extends React.Component {
             <GradientPinkRed id='PinkRed' vertical={false} />
             <GradientPurpleOrange id='PurpleOrange' vertical={false} />
             <GradientPurpleRed id='PurpleRed' vertical={false} />
-            <RadialGradient from='#55bdd5' to='#4f3681' id='Radial' r={"80%"} />
+            <RadialGradient
+              from='#55bdd5'
+              to='#4f3681'
+              id='Radial'
+              r={"80%"}
+            />
             <GradientSteelPurple id='SteelPurple' vertical={false} />
             <GradientTealBlue id='TealBlue' vertical={false} />
           </defs>
         </svg>
+       
       </StyleWrapper>
     );
   }

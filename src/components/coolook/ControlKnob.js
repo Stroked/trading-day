@@ -20,6 +20,7 @@ const Knob = styled.div`
   left: 0.5em;
   cursor: pointer;
   transition: 1000ms ease-in-out;
+  
   border-radius: 50%;
   animation: knob-spin infinite 60s linear;
   background: linear-gradient(

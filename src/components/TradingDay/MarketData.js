@@ -12,19 +12,25 @@ import _ from 'lodash';
 const unixTimeParser = d3.timeParse("%s");
 
 const COLLECTION = ["SPY", "QQQ", "TLT", "VXX"];
+ 
+const Currencies = [{symbol: "EURUSD=X", url_symbol:"EURUSD%3DX"},
+{symbol: "GBPUSD=X", url_symbol:"GBPUSD%3DX"},
+{symbol:  "USDJPY=X", url_symbol:"USDJPY%3DX"},
+{symbol: "BTC-USD", url_symbol:"BTC%3DUSD"}]
+
 const MajorIndexes = [
-  "^GSPC",
-  "^DJI",
-  "^IXIC",
-  "^RUT",
-  "CL=F",
-  "SI=F",
-  "GC=F",
-  "^TNX",
-  "^VIX",
+  {symbol:  "^GSPC", url_symbol:"%5EGSPC" },
+ {symbol:"^DJI" ,url_symbol: "%5EDJI"},
+ {symbol: "^IXIC" ,url_symbol: "%5EIXIC"},
+ {symbol: "^RUT" ,url_symbol: "%5ERUT"},
+ {symbol:   "^TNX",url_symbol: "%5ETNX"},
+ {symbol:"^VIX" ,url_symbol: "%5EVIX"},
+ {symbol:"CL=F", url_symbol: "CL%3DF"},
+ {symbol:"SI=F" ,url_symbol:  "SI%3DF"},
+ {symbol:  "GC=F" ,url_symbol: "GC%3DF"}
+
 ];
 
-const Currencies = ["EURUSD=X", "GBPUSD=X", "USDJPY=X", "BTC-USD"];
 const INTERVAL = 60000;
 
 export const DataContext = React.createContext();
@@ -45,10 +51,7 @@ export const DataProvider = props => {
   const [peers, setPeers] = useState(null);
   const [refresh, setRefresh] = useState(null);
 
-  const [indiciesData, setIndiciesData] = useState({
-    quotes: {},
-    news: []
-  });
+  const [indiciesData, setIndiciesData] = useState(null);
 
   // const fetchIncidiesInterval = () => {
   //   setInterval(async () => {
@@ -67,7 +70,8 @@ export const DataProvider = props => {
   const onMount = async () => {
     try {
       // fetch indicies data
-      const data = await fetchIndiciesData(MajorIndexes);
+      const data = await fetchIndiciesData(COLLECTION);
+
       setIndiciesData(data);
       setFetchingIndicies({ loading: false, error: null });
       // init refresh interval

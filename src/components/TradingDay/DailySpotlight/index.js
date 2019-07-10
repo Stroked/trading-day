@@ -33,26 +33,22 @@ const StyledSpotlight = styled.div`
 
   }
 `;
-class Spotlight extends React.Component {
+
+
+
+class MoneyFlows extends React.Component {
   state = {
-    fetchedGainers: false,
-    fetchedLosers: false,
-    fetchedActive: false,
     fetchedBuyingOnWeakness: false,
     fetchedSellingOnStrength: false,
-    gainers: [],
-    losers: [],
-    active: [],
     buyingOnWeakness: [],
     sellingOnStrength: []
   };
+
   componentDidMount() {
-    // this.getGainers();
-    // this.getLosers();
-    // this.getActive();
     this.getSellingOnStrength();
     this.getBuyingOnWeakness();
   }
+
 
   getSellingOnStrength = async () => {
     const data = await fetchMoneyFlows(
@@ -76,41 +72,15 @@ class Spotlight extends React.Component {
     console.log(data);
   };
 
-  getGainers = async () => {
-    const data = await json(
-      "https://api.iextrading.com/1.0/stock/market/list/gainers"
-    );
-    this.setState({
-      fetchedGainers: true,
-      gainers: data
-    });
-  };
-  getLosers = async () => {
-    const data = await json(
-      "https://api.iextrading.com/1.0/stock/market/list/losers"
-    );
-    this.setState({
-      fetchedLosers: true,
-      losers: data
-    });
-  };
 
-  getActive = async () => {
-    const data = await json(
-      "https://api.iextrading.com/1.0/stock/market/list/mostactive"
-    );
-    this.setState({
-      fetchedActive: true,
-      active: data
-    });
-  };
-  render() {
-    return (
+render()
+{
+   return (
       <StyledSpotlight>
         <div class='spotlight'>
-          <Grid columns={2} relaxed='very' divided stackable>
-            <Grid.Column>
-            
+        <Grid columns={3} relaxed='very' divided stackable>
+      <Grid.Column>
+              
                 {this.state.fetchedSellingOnStrength ? (
                   <MoneyFlowsTable
                     className='sellingOnStrength'
@@ -119,27 +89,15 @@ class Spotlight extends React.Component {
                     color='red'
                     data={this.state.sellingOnStrength}
                     icon='arrow right'
-                    // onClick={evt=>evt.stopPropogration}
+                     onClick={evt=>evt.stopPropogration}
                   />
                 ) : (
                   <h1> Loading</h1>
                 )}
-        
-              {/* {this.state.fetchedLosers ? (
-                <StatisticsTable
-                  key='TopLosers'
-                  name='Top Losers'
-                  color='red'
-                  data={this.state.losers}
-                  icon='arrow down'
-                />
-              ) : (
-                <h1> Loading</h1>
-              )} */}
-            </Grid.Column>
          
+            </Grid.Column>
             <Grid.Column>
-          
+              
                 {this.state.fetchedBuyingOnWeakness ? (
                   <MoneyFlowsTable
                     className='buyingOnWeakness'
@@ -153,25 +111,110 @@ class Spotlight extends React.Component {
                 ) : (
                   <h1> Loading</h1>
                 )}
-            
-              {/* {this.state.fetchedGainers ? (
+           
+            </Grid.Column></Grid>        </div>
+      </StyledSpotlight>)
+
+}
+
+}
+class Spotlight extends React.Component {
+  state = {
+    fetchedGainers: false,
+    fetchedLosers: false,
+    fetchedActive: false,
+    gainers: [],
+    losers: [],
+    active: [],
+  };
+  componentDidMount() {
+    this.getGainers();
+    this.getLosers();
+    this.getActive();
+  }
+
+
+  getGainers = async () => {
+    const data = await json(
+      "https://cloud.iexapis.com/stable/stock/market/list/gainers?token=pk_930da6c1c50b4e33914febac3ab39fcb"
+    );
+    this.setState({
+      fetchedGainers: true,
+      gainers: data
+    });
+  };
+  getLosers = async () => {
+    const data = await json(
+      "https://cloud.iexapis.com/stable/stock/market/list/losers?token=pk_930da6c1c50b4e33914febac3ab39fcb"
+    );
+    this.setState({
+      fetchedLosers: true,
+      losers: data
+    });
+  };
+
+  getActive = async () => {
+    const data = await json(
+      "https://cloud.iexapis.com/stable/stock/market/list/mostactive?token=pk_930da6c1c50b4e33914febac3ab39fcb"
+    );
+    this.setState({
+      fetchedActive: true,
+      active: data
+    });
+  };
+  render() {
+    return (
+      <StyledSpotlight>
+        <div class='spotlight'>
+          <Grid columns={3} relaxed='very' divided stackable>
+            <Grid.Column>
+              {this.state.fetchedLosers ? (
+                <StatisticsTable
+                  key='TopLosers'
+                  name='Top Losers'
+                  color='red'
+                  data={this.state.losers}
+                  icon='arrow down'
+                />
+              ) : (
+                <h1> Loading</h1>
+              )}
+            </Grid.Column>
+            <Grid.Column>
+              {this.state.fetchedActive ? (
+                <StatisticsTable
+                  key='MostActive'
+                  name='Most Active'
+                  color='black'
+                  inverted
+                  data={this.state.active}
+                  icon='bolt'
+                />
+              ) : (
+                <h1> Loading</h1>
+              )}
+            </Grid.Column>
+            <Grid.Column>
+              {this.state.fetchedGainers ? (
                 <StatisticsTable
                   key='TopGainers'
                   name='Top Gainers'
                   color='green'
                   data={this.state.gainers}
                   icon='arrow up'
-                  // onClick={evt=>evt.stopPropogration}
                 />
               ) : (
                 <h1> Loading</h1>
-              )} */}
+              )}
             </Grid.Column>
+          
           </Grid>
         </div>
       </StyledSpotlight>
     );
   }
 }
+
+
 
 export default Spotlight;

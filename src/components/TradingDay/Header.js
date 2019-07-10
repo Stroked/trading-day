@@ -114,7 +114,7 @@ export default props => {
           </Header>
         </Segment>
       </StyleWrapper>
-      <SlideShow height={window.innerHeight / 5} width={window.innerWidth} />
+     
       <RoundButtons></RoundButtons>
       {/* <ScrollBasedBezier headerHeight={100} /> */}
     </>

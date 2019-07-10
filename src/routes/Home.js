@@ -1,4 +1,4 @@
-import React, { useContext, Component } from "react";
+import React, { useContext, Component, useRef } from "react";
 import { DataContext } from "../components/TradingDay/MarketData";
 import NewsItems from "../components/TradingDay/News";
 import StocksSpotlight from "../components/TradingDay/DailySpotlight";
@@ -7,6 +7,9 @@ import setTitle from "../utils/title";
 import styled from "styled-components";
 import {Runtime, Inspector} from "@observablehq/runtime";
 import notebook from "@jashkenas/how-to-embed-a-notebook-in-a-react-app";
+import * as d3 from 'd3'
+import SlideShow from '../components/TradingDay/Visualizations/SlideShow'
+import InteractiveSparkChart from "../components/TradingDay/Visualizations/SparkLines";
 
 class ObservableNotebook extends Component {
   animationRef = React.createRef();
@@ -32,6 +35,7 @@ class ObservableNotebook extends Component {
 export {ObservableNotebook};
 
 const Markets = props => {
+  
   const context = useContext(DataContext);
   setTitle(null, null);
   return (
@@ -39,16 +43,25 @@ const Markets = props => {
       {/* <Header>
         <TickerScroll />
       </Header> */}
-
-      <StocksSpotlight />
       {!context.fetchingIncidies.loading && (
         <React.Fragment>
           <h1 style={{ fontWeight: 300, fontSize: "2rem" }}>
-            Latest Headlines
+            Market Indexes
           </h1>
-          <NewsItems news={context.indiciesData.news} slice={10} />
+         
+          {context.indiciesData.map(each => {
+            return (<InteractiveSparkChart
+                key={each.symbol + Math.random(0, 1)}
+                data={each}
+              />
+            );
+          })
+          }
+          {/* <NewsItems news={context.indiciesData} slice={10} /> */}
         </React.Fragment>
       )}
+
+      <StocksSpotlight />
     </>
   );
 };

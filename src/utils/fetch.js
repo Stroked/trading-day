@@ -156,21 +156,59 @@ export const fetchQuoteData = async (symbol, frequency) => {
 //   const { data } = await iex.get(`/market/list/infocus`);
 //   return data;
 // };
+// export const fetchIndiciesData_IEX = async symbols => {
+
+//   const data = await Promise.all([
+//     // await fetchBatchData(_.toString(symbols)),
+//     await fetchMarketNews(),
+//     // await fetchInFocus()
+//   ]);
+
+//   return { quotes: data[0], news: data[1], infocus: data[2] };
+// };
+
+// export const fetchMarketNews = async () => {
+//   const { data } = await d3.json(`https://cloud.iexapis.com/stable/stock/${symbol}/batch?token=pk_1b77cc50b5cc4138bf37e0c1a87768c5&types=news`);
+//   return data;
+// };
+
+  const parseSparkData = data => data.map(x=>{  
+  let closes = x.response[0].indicators.quote[0].close;
+  let timestamps = x.response[0].timestamp.map(ts=>unixTimeParser(ts));
+  let dataZip = d3.zip(closes,timestamps);
+
+  const sparkData = {
+    symbol: x.symbol,
+    data: dataZip.map(d => {
+      return { date: d[1], value: d[0] };
+    })
+  };
+
+  return sparkData;
+  }) 
+
+  const unixTimeParser = d3.timeParse("%s");
 
 export const fetchIndiciesData = async symbols => {
-  const data = await Promise.all([
-    await d3.json(
-      `http://cors-anywhere.herokuapp.com/query1.finance.yahoo.com/v7/finance/spark?symbols=${symbols.join(
-        ","
-      )}&range=1d&interval=5m&indicators=close&includeTimestamps=false`
-    )
+  const data = await d3.json(
+    `http://cors-anywhere.herokuapp.com/query1.finance.yahoo.com/v7/finance/spark?symbols=${symbols.join(
+      ","
+    )}&range=5y&interval=1d&indicators=close&includeTimestamps=false&includePrePost=false`,
+    d3.autoType
+  );
+
+const   parsedData = parseSparkData(data.spark.result);
+    return parsedData;
+
+}
+    // spark_data_fetcher=async (symbolsArr)=>JSON.parse(await (await soFetch(`https://query1.finance.yahoo.com/v7/finance/spark?symbols=${symbolsArr.join(',')}&range=5y&interval=1d&indicators=close&includeTimestamps=false&includePrePost=false`))
     //  (_.toString(symbols)),
     //await fetchMarketNews(),
     //await fetchInFocus()
-  ]);
+  
 
-  return { quotes: data[0], news: data[1], infocus: data[2] };
-};
+  //return { quotes: data[0], news: data[1], infocus: data[2] };
+
 /*
 
 import axios from 'axios';
@@ -247,23 +285,10 @@ export const fetchBatchData = async symbols => {
   return data;
 };
 
-export const fetchMarketNews = async () => {
-  const { data } = await iex.get(`/market/news`);
-  return data;
-};
-
 export const fetchInFocus = async () => {
   const { data } = await iex.get(`/market/list/infocus`);
   return data;
 };
 
-export const fetchIndiciesData = async symbols => {
-  const data = await Promise.all([
-    await fetchBatchData(_.toString(symbols)),
-    await fetchMarketNews(),
-    await fetchInFocus(),
-  ]);
 
-  return { quotes: data[0], news: data[1], infocus: data[2] };
-};
 */
