@@ -5,34 +5,33 @@ import StocksSpotlight from "../components/TradingDay/DailySpotlight";
 import TickerScroll from "../components/TradingDay/TickerScroll";
 import setTitle from "../utils/title";
 import styled from "styled-components";
-import {Runtime, Inspector} from "@observablehq/runtime";
-import notebook from "@jashkenas/how-to-embed-a-notebook-in-a-react-app";
+// import {Runtime, Inspector} from "@observablehq/runtime";
 import * as d3 from 'd3'
 import SlideShow from '../components/TradingDay/Visualizations/SlideShow'
 import InteractiveSparkChart from "../components/TradingDay/Visualizations/SparkLines";
 
-class ObservableNotebook extends Component {
-  animationRef = React.createRef();
+// class ObservableNotebook extends Component {
+//   animationRef = React.createRef();
 
-  componentDidMount() {
-    const runtime = new Runtime();
-    runtime.module(notebook, name => {
-      if (name === "animation") {
-        return new Inspector(this.animationRef.current);
-      }
-    });
-  }
+//   componentDidMount() {
+//     const runtime = new Runtime();
+//     runtime.module(notebook, name => {
+//       if (name === "animation") {
+//         return new Inspector(this.animationRef.current);
+//       }
+//     });
+//   }
 
-  render() {
-    return (
-      <div className="App">
-        <div ref={this.animationRef}></div>
-      </div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div className="App">
+//         <div ref={this.animationRef}></div>
+//       </div>
+//     );
+//   }
+// }
 
-export {ObservableNotebook};
+// export {ObservableNotebook};
 
 const Markets = props => {
   
