@@ -115,7 +115,6 @@ export default props => {
         </Segment>
       </StyleWrapper>
      
-      <RoundButtons></RoundButtons>
       {/* <ScrollBasedBezier headerHeight={100} /> */}
     </>
   );

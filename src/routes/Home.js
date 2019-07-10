@@ -7,7 +7,6 @@ import setTitle from "../utils/title";
 import styled from "styled-components";
 // import {Runtime, Inspector} from "@observablehq/runtime";
 import * as d3 from 'd3'
-import SlideShow from '../components/TradingDay/Visualizations/SlideShow'
 import InteractiveSparkChart from "../components/TradingDay/Visualizations/SparkLines";
 
 // class ObservableNotebook extends Component {
