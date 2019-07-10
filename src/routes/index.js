@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-// import Home, { ObservableNotebook } from "./Home";
+import Home from "./Home";
 //TRADING-DAY
 //---------------------------------------------------
 //ROUTES
