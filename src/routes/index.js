@@ -44,7 +44,7 @@ const Router = props => (
     {/* <Route exact path='/circle-pack' component={MarketBubbles} /> */}
     {/* <Route exact path='/bubbly-jobs' component={BubblyJobs} /> */}
     <Route exact path='/force' component={MarketForces} />
-    <Route exact path='/observable-notebook' component={ObservableNotebook} />
+    {/* <Route exact path='/observable-notebook' component={ObservableNotebook} /> */}
 
     <Route
       exact
