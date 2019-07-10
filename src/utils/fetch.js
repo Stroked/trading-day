@@ -191,7 +191,7 @@ export const fetchQuoteData = async (symbol, frequency) => {
 
 export const fetchIndiciesData = async symbols => {
   const data = await d3.json(
-    `http://cors-anywhere.herokuapp.com/query1.finance.yahoo.com/v7/finance/spark?symbols=${symbols.join(
+    `https://cors-anywhere.herokuapp.com/query1.finance.yahoo.com/v7/finance/spark?symbols=${symbols.join(
       ","
     )}&range=2y&interval=1d&indicators=close&includeTimestamps=false&includePrePost=false`,
     d3.autoType
