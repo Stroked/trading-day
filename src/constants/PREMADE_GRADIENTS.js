@@ -1,3 +1,17 @@
+import {
+  GradientDarkgreenGreen,
+  GradientLightgreenGreen,
+  GradientOrangeRed,
+  GradientPinkBlue,
+  GradientPinkRed,
+  GradientPurpleOrange,
+  GradientPurpleRed,
+  GradientPurpleTeal,
+  GradientSteelPurple,
+  GradientTealBlue,
+  RadialGradient
+} from "@vx/vx";
+
 const PREMADE_GRADIENTS = [
   "Radial",
   "DarkgreenGreen",
@@ -10,5 +24,8 @@ const PREMADE_GRADIENTS = [
   "PurpleRed",
   "SteelPurple"
 ];
+
+
+
 export default PREMADE_GRADIENTS;
 

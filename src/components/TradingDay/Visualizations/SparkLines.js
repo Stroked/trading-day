@@ -1,7 +1,8 @@
 import React, { useContext, Component, useRef } from "react";
 import styled from "styled-components";
 import * as d3 from "d3";
-import { GradientDarkgreenGreen,
+import {
+  GradientDarkgreenGreen,
   GradientLightgreenGreen,
   GradientOrangeRed,
   GradientPinkBlue,
@@ -11,7 +12,8 @@ import { GradientDarkgreenGreen,
   GradientPurpleTeal,
   GradientSteelPurple,
   GradientTealBlue,
-  RadialGradient} from '@vx/vx'
+  RadialGradient
+} from "@vx/vx";
 import PREMADE_GRADIENTS from "../../../constants/PREMADE_GRADIENTS";
 
 
@@ -23,15 +25,16 @@ class InteractiveSparkChart extends React.Component {
   };
 
   renderChart(data) {
+                      // removed the minute formatting %H:%m 
                       const formatTime = d3.timeFormat(
-                        "%Y-%m-%d %H:%m"
+                        "%Y-%m-%d"
                       );
                       const numberFormat = d3.format(".4");
                       const bisect = d3.bisector(
                         d => d.date
                       );
                       const sparkHeight = 150;
-                      
+
                       const height = sparkHeight;
                       const width = window.innerWidth;
                       const colorKeys = Object.keys(
@@ -40,9 +43,7 @@ class InteractiveSparkChart extends React.Component {
 
                       const x = d3
                         .scaleTime()
-                        .domain(
-                          d3.extent(data.data, d => d.date)
-                        )
+                        .domain(  d3.extent(data.data,d => d.date))
                         .range([0, width]);
 
                       const y = d3
@@ -70,7 +71,10 @@ class InteractiveSparkChart extends React.Component {
                         .attr("stroke", "gray")
                         .attr(
                           "fill",
-                          ColorObject[
+                          `url(#${this.state.gradient})`
+                        );
+                      /*  
+                      ColorObject[
                             colorKeys[
                               ~~d3.randomUniform(
                                 1,
@@ -78,17 +82,13 @@ class InteractiveSparkChart extends React.Component {
                               )()
                             ]
                           ]
-                        );
-                      
+                      */
                       svg
                         .append("text")
                         .text(d => d.symbol)
                         .attr("x", 0)
-                        .attr("y", 0)
-                        .attr(
-                          "dominant-baseline",
-                          "hanging"
-                        )
+                        .attr("y", sparkHeight / 2)
+                        .attr("dominant-baseline", "middle")
                         .attr("text-anchor", "start")
                         .attr("fill", "black")
                         .attr("stroke", "black")
@@ -98,7 +98,7 @@ class InteractiveSparkChart extends React.Component {
                       svg
                         .append("path")
                         .attr("fill", "none")
-                        .attr("stroke", "steelblue")
+                        .attr("stroke", "black")
                         .attr("stroke-width", 1.5)
                         .attr("stroke-linejoin", "round")
                         .attr("stroke-linecap", "round")
@@ -150,11 +150,25 @@ class InteractiveSparkChart extends React.Component {
                                 data.data[i].date
                               )}: $${data.data[i].value}`
                             )
-                            .attr("x", x(data.data[i].date))
+                            .attr(
+                              "x",
+                              0
+                              //x(data.data[i].date)
+                            )
                             .attr(
                               "y",
-                              y(data.data[i].value)
-                            );
+                              0
+                              //y(data.data[i].value)
+                            )
+                            .attr(
+                              "dominant-baseline",
+                              "hanging"
+                            )
+                            .attr("text-anchor", "start")
+                            .style("font-weight", 400)
+                            .style("font-size", "2em")
+                            .style("fill", "black")
+                            .style("stroke", "white");
                           marker
                             .attr(
                               "cx",
@@ -193,7 +207,23 @@ class InteractiveSparkChart extends React.Component {
     return (
       <div>
         <svg ref={this.state.svgRef}>
-          <defs>
+    <defs>
+            <GradientDarkgreenGreen id='DarkgreenGreen' />
+            <GradientLightgreenGreen id='LightgreenGreen' />
+            <GradientOrangeRed id='OrangeRed' />
+            <GradientPinkBlue id='PinkBlue' />
+            <GradientPinkRed id='PinkRed' vertical={false} />
+            <GradientPurpleOrange id='PurpleOrange' vertical={false} />
+            <GradientPurpleRed id='PurpleRed' vertical={false} />
+            <RadialGradient
+              from='#55bdd5'
+              to='#4f3681'
+              id='Radial'
+              r={"80%"}
+            />
+            <GradientSteelPurple id='SteelPurple' vertical={false} />
+            <GradientTealBlue id='TealBlue' vertical={false} />
+          </defs>
             {/* <linearGradient id='grad1' x1='0%' y1='0%' x2='100%' y2='0'>
                 <stop
                   offset='0%'
@@ -204,7 +234,6 @@ class InteractiveSparkChart extends React.Component {
                   style='stop-color:hsl(51,100%,50%);stop-opacity:1'
                 />
             </linearGradient> */}
-          </defs>
         </svg>
       </div>
     );

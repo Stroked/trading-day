@@ -43,9 +43,9 @@ const Markets = props => {
       </Header> */}
       {!context.fetchingIncidies.loading && (
         <React.Fragment>
-          <h1 style={{ fontWeight: 300, fontSize: "2rem" }}>
+          {/* <h1 style={{ textAlign:"center", fontWeight: 500, fontSize: "2rem" }}>
             Market Indexes
-          </h1>
+          </h1> */}
          
           {context.indiciesData.map(each => {
             return (<InteractiveSparkChart
