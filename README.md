@@ -1,6 +1,6 @@
 2019-may
 ---
-Great things about this UI is that:
+Great things about this UI are:
 1) No page refresh (everything async)
 2) algolia-instant-search component is fantasticly easy to use.
 3) a visually stunning configuration of [react-stock-chart](https://github.com/rrag/react-stockcharts)'s heikin-ashi candle-stick-charts
