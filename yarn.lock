@@ -964,10 +964,6 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
-"@jashkenas/how-to-embed-a-notebook-in-a-react-app@https://api.observablehq.com/@observablehq/how-to-embed-a-notebook-in-a-react-app@426.tgz?v=3":
-  version "426.0.0"
-  resolved "https://api.observablehq.com/@observablehq/how-to-embed-a-notebook-in-a-react-app@426.tgz?v=3#e8b72aa887d4db515e987423aa1e59000e3f5113"
-
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
@@ -1126,31 +1122,6 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
-
-"@observablehq/inspector@^3.0.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@observablehq/inspector/-/inspector-3.1.0.tgz#4726f9aabc58aa410a4ba27adf89b180fa9a302b"
-  integrity sha512-DOx40q05QZdQnYpUsKch+8raWGmKSBh5DIAinQRoK+ij7Eq/PKpHJvNrrhThF4+2b/qViUhZGOwMLPhlC2qMzg==
-  dependencies:
-    esm "^3.0.84"
-
-"@observablehq/runtime@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@observablehq/runtime/-/runtime-4.2.1.tgz#7a700873856f938cc39be9477c5e0c81d9d2790a"
-  integrity sha512-LgD8NtkqTMDsuCrZfOgfgifZ2tFe00SbeVGb1FbAZ1j8768Wq28LWnXkq9fkzys1B6cC3OtwT3Iigd+qLeoa6w==
-  dependencies:
-    "@observablehq/inspector" "^3.0.0"
-    "@observablehq/stdlib" "^3.0.0"
-    esm "^3.0.84"
-
-"@observablehq/stdlib@^3.0.0":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@observablehq/stdlib/-/stdlib-3.0.2.tgz#3db9d86b44fb8d2c38bcdd6c2d510360ad547de3"
-  integrity sha512-ggAHBPVfTTD+oy5ZVxKfd7Qn9e6I+6U1pjfG6XLIW5vFeu+XzkzWHeOwqCOYJAM4o3TNYZPRIL7XHiPIy0SHTg==
-  dependencies:
-    d3-require "^1.2.0"
-    esm "^3.0.84"
-    marked "https://github.com/observablehq/marked.git#94c6b946f462fd25db4465d71a6859183f86c57f"
 
 "@semantic-ui-react/event-stack@^3.1.0":
   version "3.1.0"
@@ -3592,11 +3563,6 @@ d3-random@1, d3-random@^1.0.3:
   resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-1.1.2.tgz#2833be7c124360bf9e2d3fd4f33847cfe6cab291"
   integrity sha512-6AK5BNpIFqP+cx/sreKzNjWbwZQCSUatxq+pPRmFIQaWuoD+NrbVWw7YWpHiXpCQ/NanKdtGDuB+VQcZDaEmYQ==
 
-d3-require@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/d3-require/-/d3-require-1.2.2.tgz#1f7a3f8846ae3496140e0350299db0905cbeed35"
-  integrity sha512-ZavUWWNjgv+mkORr49dzmKa8KrI6HfBQ5T2GzXZZaIfs/aaf7aeGtcZuJu4MCfJq5IERrHowjFici8MwLmHlYQ==
-
 d3-scale-chromatic@1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/d3-scale-chromatic/-/d3-scale-chromatic-1.3.3.tgz#dad4366f0edcb288f490128979c3c793583ed3c0"
@@ -3784,9 +3750,9 @@ decamelize@^2.0.0:
     xregexp "4.0.0"
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-equal@^1.0.1:
   version "1.0.1"
@@ -4359,11 +4325,6 @@ eslint@^5.16.0:
     strip-json-comments "^2.0.1"
     table "^5.2.3"
     text-table "^0.2.0"
-
-esm@^3.0.84:
-  version "3.2.25"
-  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
-  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
 
 espree@^5.0.1:
   version "5.0.1"
@@ -6799,10 +6760,6 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
-
-"marked@git+https://github.com/observablehq/marked.git#94c6b946f462fd25db4465d71a6859183f86c57f":
-  version "0.3.12"
-  resolved "git+https://github.com/observablehq/marked.git#94c6b946f462fd25db4465d71a6859183f86c57f"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
